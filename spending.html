@@ -29,6 +29,410 @@
 			.steps { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.7rem; }
 			.steps li { background:rgba(168,230,207,.42); border:1.5px dashed rgba(0,105,92,.35); border-radius:14px; padding:.85rem; }
 			.step-title { font-weight:800; }
+
+			.play-lab {
+				margin-top: 1rem;
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: .8rem;
+			}
+
+			.tool-card {
+				background: rgba(250,250,247,.96);
+				border-radius: 18px;
+				border: 2px solid rgba(0,105,92,.16);
+				padding: .9rem;
+				box-shadow: 0 10px 22px rgba(0,105,92,.08);
+			}
+
+			.tool-card h2 {
+				font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+				line-height: 1.15;
+			}
+
+			.tool-help {
+				font-size: .9rem;
+				margin-top: .35rem;
+				opacity: .9;
+			}
+
+			.quiz-item {
+				margin-top: .6rem;
+				padding-top: .55rem;
+				border-top: 1px dashed rgba(0,105,92,.28);
+			}
+
+			.quiz-item p {
+				margin: 0 0 .45rem;
+				font-weight: 700;
+				font-size: .95rem;
+			}
+
+			.quiz-options {
+				display: flex;
+				flex-wrap: wrap;
+				gap: .4rem;
+			}
+
+			.quiz-btn {
+				border: 1.5px solid rgba(0,105,92,.28);
+				background: rgba(255, 249, 196, .48);
+				color: var(--deep-teal);
+				border-radius: 999px;
+				padding: .34rem .62rem;
+				font: inherit;
+				font-size: .85rem;
+				font-weight: 700;
+				cursor: pointer;
+			}
+
+			.quiz-btn.active {
+				background: var(--mint-green);
+				border-color: rgba(0,105,92,.45);
+			}
+
+			.quiz-result {
+				margin-top: .65rem;
+				background: rgba(168,230,207,.36);
+				border: 1.5px dashed rgba(0,105,92,.35);
+				border-radius: 12px;
+				padding: .55rem .65rem;
+				font-size: .92rem;
+				font-weight: 700;
+			}
+
+			.slider-wrap {
+				margin-top: .65rem;
+			}
+
+			.slider-label {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-weight: 700;
+				margin-bottom: .3rem;
+			}
+
+			input[type="range"] {
+				width: 100%;
+				accent-color: var(--deep-teal);
+			}
+
+			.impact {
+				margin-top: .65rem;
+				display: grid;
+				gap: .45rem;
+			}
+
+			.impact-row {
+				background: rgba(255, 211, 182, .4);
+				border-radius: 12px;
+				padding: .5rem .65rem;
+				border: 1px solid rgba(0,105,92,.2);
+				display: flex;
+				justify-content: space-between;
+				align-items: baseline;
+				gap: .45rem;
+			}
+
+			.impact-row strong {
+				font-size: 1rem;
+			}
+
+			.sorter {
+				margin-top: .65rem;
+				display: grid;
+				gap: .6rem;
+			}
+
+			.item-bank,
+			.drop-zones {
+				display: grid;
+				gap: .5rem;
+			}
+
+			.drop-zones {
+				grid-template-columns: 1fr 1fr;
+			}
+
+			.drop-zone {
+				background: rgba(168,230,207,.24);
+				border: 2px dashed rgba(0,105,92,.3);
+				border-radius: 12px;
+				padding: .55rem;
+				min-height: 110px;
+			}
+
+			.drop-zone h3 {
+				font-size: .96rem;
+				margin-bottom: .4rem;
+			}
+
+			.drop-zone.over {
+				background: rgba(255,249,196,.55);
+			}
+
+			.drag-item {
+				display: inline-block;
+				padding: .3rem .58rem;
+				border-radius: 999px;
+				border: 1.4px solid rgba(0,105,92,.25);
+				background: rgba(250,250,247,.95);
+				font-size: .84rem;
+				font-weight: 700;
+				margin: .22rem;
+				cursor: grab;
+				user-select: none;
+			}
+
+			.drag-item:active {
+				cursor: grabbing;
+			}
+
+			.sorter-controls {
+				display: flex;
+				justify-content: space-between;
+				gap: .5rem;
+				align-items: center;
+				flex-wrap: wrap;
+			}
+
+			.ghost-btn {
+				border: 1.5px solid rgba(0,105,92,.25);
+				background: rgba(250,250,247,.95);
+				border-radius: 999px;
+				padding: .34rem .62rem;
+				font: inherit;
+				font-size: .82rem;
+				font-weight: 700;
+				color: var(--deep-teal);
+				cursor: pointer;
+			}
+
+			.sorter-score {
+				font-weight: 800;
+				font-size: .9rem;
+			}
+
+			.snapshot {
+				margin-top: 1rem;
+				background: rgba(250,250,247,.97);
+				border: 2px solid rgba(0,105,92,.18);
+				border-radius: 20px;
+				padding: .95rem;
+				box-shadow: 0 12px 28px rgba(0,105,92,.08);
+			}
+
+			.snapshot-head h2 {
+				font-size: clamp(1.35rem, 3vw, 2rem);
+			}
+
+			.snapshot-grid {
+				margin-top: .85rem;
+				display: grid;
+				grid-template-columns: 1.15fr .95fr;
+				gap: .8rem;
+			}
+
+			.snapshot-card {
+				background: rgba(255,255,255,.62);
+				border: 1.5px solid rgba(0,105,92,.18);
+				border-radius: 14px;
+				padding: .75rem;
+			}
+
+			.monthly-income-wrap {
+				display: grid;
+				grid-template-columns: 1fr 180px;
+				gap: .55rem;
+				align-items: end;
+			}
+
+			.snapshot label {
+				display: block;
+				font-size: .9rem;
+				font-weight: 700;
+				margin-bottom: .24rem;
+			}
+
+			.snapshot input[type="number"] {
+				width: 100%;
+				padding: .52rem .58rem;
+				border-radius: 10px;
+				border: 1.5px solid rgba(0,105,92,.24);
+				background: rgba(250,250,247,.95);
+				font: inherit;
+				color: var(--deep-teal);
+			}
+
+			.spending-rows {
+				margin-top: .7rem;
+				display: grid;
+				gap: .5rem;
+			}
+
+			.spend-row {
+				display: grid;
+				grid-template-columns: 1.35fr 1.2fr .75fr .6fr;
+				gap: .4rem;
+				align-items: center;
+				background: rgba(168,230,207,.14);
+				border-radius: 10px;
+				padding: .35rem .45rem;
+			}
+
+			.spend-name {
+				font-weight: 700;
+				font-size: .9rem;
+			}
+
+			.spend-row input[type="number"] {
+				padding: .34rem .4rem;
+				font-size: .86rem;
+			}
+
+			.spend-share {
+				font-size: .82rem;
+				font-weight: 800;
+				text-align: right;
+			}
+
+			.snapshot-total {
+				margin-top: .75rem;
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: .55rem;
+			}
+
+			.total-card {
+				border-radius: 12px;
+				padding: .55rem .65rem;
+				background: rgba(255, 211, 182, .35);
+				border: 1px solid rgba(0,105,92,.2);
+			}
+
+			.total-card strong {
+				display: block;
+				font-size: 1.18rem;
+				margin-top: .12rem;
+			}
+
+			.total-card.leftover {
+				background: rgba(168,230,207,.38);
+			}
+
+			.snapshot-chart {
+				display: grid;
+				gap: .65rem;
+			}
+
+			.pie-spot {
+				width: min(230px, 100%);
+				aspect-ratio: 1/1;
+				margin-inline: auto;
+				border-radius: 50%;
+				box-shadow: 0 10px 22px rgba(0,105,92,.12);
+				transition: background 320ms ease;
+			}
+
+			.snapshot-bars {
+				display: grid;
+				gap: .38rem;
+			}
+
+			.snapshot-bar-row {
+				display: grid;
+				grid-template-columns: 90px 1fr 42px;
+				align-items: center;
+				gap: .35rem;
+			}
+
+			.snapshot-bar-label {
+				font-size: .78rem;
+				font-weight: 700;
+			}
+
+			.snapshot-bar-track {
+				height: 14px;
+				border-radius: 999px;
+				background: rgba(0,105,92,.12);
+				overflow: hidden;
+			}
+
+			.snapshot-bar-fill {
+				height: 100%;
+				width: 0%;
+				border-radius: inherit;
+				transition: width 320ms ease;
+			}
+
+			.snapshot-bar-pct {
+				font-size: .76rem;
+				font-weight: 800;
+				text-align: right;
+			}
+
+			.snapshot-message {
+				margin-top: .7rem;
+				padding: .65rem;
+				background: rgba(255,249,196,.45);
+				border-radius: 12px;
+				border: 1.5px dashed rgba(0,105,92,.3);
+				font-size: .92rem;
+				font-weight: 700;
+			}
+
+			.health-meter {
+				margin-top: .65rem;
+			}
+
+			.meter-track {
+				height: 16px;
+				border-radius: 999px;
+				background: rgba(0,105,92,.12);
+				overflow: hidden;
+			}
+
+			.meter-fill {
+				height: 100%;
+				width: 0%;
+				transition: width 320ms ease, background-color 320ms ease;
+			}
+
+			.meter-fill.green { background: #6fcf97; }
+			.meter-fill.yellow { background: #f2c94c; }
+			.meter-fill.coral { background: #ff8f7a; }
+
+			.meter-caption {
+				margin-top: .34rem;
+				font-size: .86rem;
+				font-weight: 800;
+			}
+
+			.what-if {
+				margin-top: .7rem;
+				background: rgba(168,230,207,.2);
+				border-radius: 12px;
+				border: 1px solid rgba(0,105,92,.22);
+				padding: .6rem;
+			}
+
+			.what-if-row {
+				display: flex;
+				justify-content: space-between;
+				gap: .5rem;
+				align-items: center;
+				font-weight: 700;
+				font-size: .9rem;
+			}
+
+			.what-if-outcome {
+				margin-top: .55rem;
+				display: grid;
+				gap: .38rem;
+				font-size: .88rem;
+				font-weight: 700;
+			}
 			footer { margin-top:1.2rem; text-align:center; }
 
 			@media (max-width: 680px) {
@@ -38,6 +442,14 @@
 				.hero { border-radius:20px; padding:1rem; }
 				.cards { grid-template-columns:1fr; gap:.75rem; }
 				.card, .steps li { padding:.8rem; }
+				.play-lab { grid-template-columns: 1fr; }
+				.drop-zones { grid-template-columns: 1fr; }
+				.snapshot-grid { grid-template-columns: 1fr; }
+				.monthly-income-wrap { grid-template-columns: 1fr; }
+				.snapshot-total { grid-template-columns: 1fr; }
+				.spend-row { grid-template-columns: 1fr; gap: .25rem; }
+				.spend-share { text-align: left; }
+				.snapshot-bar-row { grid-template-columns: 70px 1fr 38px; }
 			}
 
 			@media (max-width: 420px) {
@@ -83,7 +495,407 @@
 				<li><span class="step-title">Step 2:</span> Set one realistic limit for your largest spending category.</li>
 				<li><span class="step-title">Step 3:</span> Keep one guilt-free fun budget so your plan feels sustainable.</li>
 			</ol>
+
+			<section class="play-lab" aria-label="Smart Choices interactive tools">
+				<article class="tool-card" aria-label="Small changes calculator">
+					<span class="chip">Weekly Wins</span>
+					<h2>Small changes add up fast</h2>
+					<p class="tool-help">Move the slider to see how one small weekly cut can grow over time.</p>
+
+					<div class="slider-wrap">
+						<div class="slider-label">
+							<span>Cut per week</span>
+							<strong id="weeklyCutLabel">$20</strong>
+						</div>
+						<input id="weeklyCut" type="range" min="0" max="200" step="5" value="20" />
+					</div>
+
+					<div class="impact" aria-live="polite">
+						<div class="impact-row"><span>1 year total</span><strong id="oneYearTotal">$1,040</strong></div>
+						<div class="impact-row"><span>3 year total</span><strong id="threeYearTotal">$3,120</strong></div>
+						<div class="impact-row"><span>5 year total</span><strong id="fiveYearTotal">$5,200</strong></div>
+					</div>
+				</article>
+			</section>
+
+			<section class="snapshot" aria-label="Your Spending Snapshot">
+				<div class="snapshot-head">
+					<span class="chip">Your Spending Snapshot</span>
+					<h2>Build your monthly picture in real time</h2>
+					<p class="tool-help">Add your spending by category, then see percentages, chart updates, and friendly coaching.</p>
+				</div>
+
+				<div class="snapshot-grid">
+					<div class="snapshot-card">
+						<div class="monthly-income-wrap">
+							<div>
+								<label for="snapshotIncome">Monthly income ($)</label>
+								<input id="snapshotIncome" type="number" min="0" step="50" value="3000" />
+							</div>
+						</div>
+
+						<div class="spending-rows" id="spendingRows">
+							<div class="spend-row" data-key="housing" data-color="#a8e6cf">
+								<div class="spend-name">🏠 Rent / Housing</div>
+								<input class="spend-slider" type="range" min="0" max="3000" step="10" value="1200" />
+								<input class="spend-input" type="number" min="0" step="10" value="1200" />
+								<div class="spend-share">0%</div>
+							</div>
+							<div class="spend-row" data-key="groceries" data-color="#b8f1dd">
+								<div class="spend-name">🥗 Groceries</div>
+								<input class="spend-slider" type="range" min="0" max="1500" step="10" value="350" />
+								<input class="spend-input" type="number" min="0" step="10" value="350" />
+								<div class="spend-share">0%</div>
+							</div>
+							<div class="spend-row" data-key="eatingOut" data-color="#ffd3b6">
+								<div class="spend-name">🍔 Eating Out</div>
+								<input class="spend-slider" type="range" min="0" max="1000" step="10" value="250" />
+								<input class="spend-input" type="number" min="0" step="10" value="250" />
+								<div class="spend-share">0%</div>
+							</div>
+							<div class="spend-row" data-key="shopping" data-color="#ffe0c7">
+								<div class="spend-name">🛍️ Shopping</div>
+								<input class="spend-slider" type="range" min="0" max="1000" step="10" value="180" />
+								<input class="spend-input" type="number" min="0" step="10" value="180" />
+								<div class="spend-share">0%</div>
+							</div>
+							<div class="spend-row" data-key="subscriptions" data-color="#fff9c4">
+								<div class="spend-name">🎧 Subscriptions</div>
+								<input class="spend-slider" type="range" min="0" max="600" step="5" value="90" />
+								<input class="spend-input" type="number" min="0" step="5" value="90" />
+								<div class="spend-share">0%</div>
+							</div>
+							<div class="spend-row" data-key="transportation" data-color="#fef0b3">
+								<div class="spend-name">🚗 Transportation</div>
+								<input class="spend-slider" type="range" min="0" max="1200" step="10" value="260" />
+								<input class="spend-input" type="number" min="0" step="10" value="260" />
+								<div class="spend-share">0%</div>
+							</div>
+							<div class="spend-row" data-key="entertainment" data-color="#ffe2a8">
+								<div class="spend-name">🎬 Entertainment</div>
+								<input class="spend-slider" type="range" min="0" max="1000" step="10" value="150" />
+								<input class="spend-input" type="number" min="0" step="10" value="150" />
+								<div class="spend-share">0%</div>
+							</div>
+							<div class="spend-row" data-key="other" data-color="#ffdacb">
+								<div class="spend-name">📦 Other</div>
+								<input class="spend-slider" type="range" min="0" max="1200" step="10" value="140" />
+								<input class="spend-input" type="number" min="0" step="10" value="140" />
+								<div class="spend-share">0%</div>
+							</div>
+						</div>
+
+						<div class="snapshot-total" aria-live="polite">
+							<div class="total-card">
+								<span>Total spending</span>
+								<strong id="snapshotTotal">$0</strong>
+							</div>
+							<div class="total-card leftover">
+								<span>Money left</span>
+								<strong id="snapshotLeft">$0</strong>
+							</div>
+						</div>
+
+						<div class="snapshot-message" id="snapshotMessage">Start by entering your spending amounts to see your snapshot.</div>
+					</div>
+
+					<div class="snapshot-card">
+						<div class="snapshot-chart">
+							<div id="snapshotPie" class="pie-spot" role="img" aria-label="Spending category pie chart"></div>
+							<div class="snapshot-bars" id="snapshotBars"></div>
+						</div>
+
+						<div class="health-meter">
+							<div class="meter-track"><div id="healthFill" class="meter-fill green"></div></div>
+							<div id="healthCaption" class="meter-caption">Health meter: Balanced</div>
+						</div>
+
+						<div class="what-if">
+							<div class="what-if-row">
+								<span>What if you adjusted Eating Out?</span>
+								<strong id="whatIfValue">$250</strong>
+							</div>
+							<input id="whatIfEatingOut" type="range" min="0" max="1000" step="10" value="250" />
+							<div class="what-if-outcome" id="whatIfOutcome">
+								<div>You would save $0/month and $0/year.</div>
+								<div>Your savings rate stays the same.</div>
+								<div>Debt payoff timeline stays the same.</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 			<footer>Intentional spending gives your money and goals more direction.</footer>
 		</main>
+		<script>
+			(function () {
+				const weeklyCut = document.getElementById("weeklyCut");
+				const weeklyCutLabel = document.getElementById("weeklyCutLabel");
+				const oneYearTotal = document.getElementById("oneYearTotal");
+				const threeYearTotal = document.getElementById("threeYearTotal");
+				const fiveYearTotal = document.getElementById("fiveYearTotal");
+
+				function usd(value) {
+					return new Intl.NumberFormat("en-US", {
+						style: "currency",
+						currency: "USD",
+						maximumFractionDigits: 0,
+					}).format(value);
+				}
+
+				function updateImpact() {
+					const weekly = Number(weeklyCut.value);
+					const yearly = weekly * 52;
+					weeklyCutLabel.textContent = usd(weekly);
+					oneYearTotal.textContent = usd(yearly);
+					threeYearTotal.textContent = usd(yearly * 3);
+					fiveYearTotal.textContent = usd(yearly * 5);
+				}
+
+				weeklyCut.addEventListener("input", updateImpact);
+				updateImpact();
+
+				const snapshotIncome = document.getElementById("snapshotIncome");
+				const spendingRows = Array.from(document.querySelectorAll("#spendingRows .spend-row"));
+				const snapshotTotal = document.getElementById("snapshotTotal");
+				const snapshotLeft = document.getElementById("snapshotLeft");
+				const snapshotMessage = document.getElementById("snapshotMessage");
+				const snapshotPie = document.getElementById("snapshotPie");
+				const snapshotBars = document.getElementById("snapshotBars");
+				const healthFill = document.getElementById("healthFill");
+				const healthCaption = document.getElementById("healthCaption");
+				const whatIfEatingOut = document.getElementById("whatIfEatingOut");
+				const whatIfValue = document.getElementById("whatIfValue");
+				const whatIfOutcome = document.getElementById("whatIfOutcome");
+
+				const ranges = {
+					housing: { min: 25, max: 35 },
+					groceries: { min: 8, max: 15 },
+					eatingOut: { min: 0, max: 10 },
+					shopping: { min: 0, max: 8 },
+					subscriptions: { min: 0, max: 5 },
+					transportation: { min: 8, max: 15 },
+					entertainment: { min: 0, max: 10 },
+					other: { min: 0, max: 10 },
+				};
+
+				const categoryLabels = {
+					housing: "Housing",
+					groceries: "Groceries",
+					eatingOut: "Eating Out",
+					shopping: "Shopping",
+					subscriptions: "Subscriptions",
+					transportation: "Transport",
+					entertainment: "Fun",
+					other: "Other",
+				};
+
+				function animateMoney(node, target) {
+					const start = Number(node.dataset.value || 0);
+					const end = Number(target);
+					const startTime = performance.now();
+					const duration = 380;
+
+					function frame(now) {
+						const t = Math.min((now - startTime) / duration, 1);
+						const eased = 1 - Math.pow(1 - t, 3);
+						const value = start + (end - start) * eased;
+						node.textContent = usd(value);
+						if (t < 1) {
+							requestAnimationFrame(frame);
+						} else {
+							node.dataset.value = String(end);
+						}
+					}
+
+					requestAnimationFrame(frame);
+				}
+
+				function collectSnapshot() {
+					const values = {};
+					spendingRows.forEach(function (row) {
+						const key = row.dataset.key;
+						const input = row.querySelector(".spend-input");
+						values[key] = Math.max(0, Number(input.value) || 0);
+					});
+					return values;
+				}
+
+				function renderBars(values, total) {
+					snapshotBars.innerHTML = "";
+					Object.keys(values).forEach(function (key) {
+						const amount = values[key];
+						const pct = total > 0 ? (amount / total) * 100 : 0;
+						const color = spendingRows.find(function (row) { return row.dataset.key === key; }).dataset.color;
+						const row = document.createElement("div");
+						row.className = "snapshot-bar-row";
+						row.innerHTML =
+							'<div class="snapshot-bar-label">' +
+							categoryLabels[key] +
+							'</div><div class="snapshot-bar-track"><div class="snapshot-bar-fill" style="background:' +
+							color +
+							';width:' +
+							pct.toFixed(1) +
+							'%;"></div></div><div class="snapshot-bar-pct">' +
+							Math.round(pct) +
+							"%</div>";
+						snapshotBars.appendChild(row);
+					});
+				}
+
+				function renderPie(values, total) {
+					if (total <= 0) {
+						snapshotPie.style.background = "#e9f5f2";
+						return;
+					}
+					let start = 0;
+					const parts = [];
+					Object.keys(values).forEach(function (key) {
+						const amount = values[key];
+						const pct = (amount / total) * 100;
+						const end = start + pct;
+						const color = spendingRows.find(function (row) { return row.dataset.key === key; }).dataset.color;
+						parts.push(color + " " + start.toFixed(2) + "% " + end.toFixed(2) + "%");
+						start = end;
+					});
+					snapshotPie.style.background = "conic-gradient(" + parts.join(",") + ")";
+				}
+
+				function categoryShare(values, key, income) {
+					if (income <= 0) return 0;
+					return (values[key] / income) * 100;
+				}
+
+				function checkRange(pct, key) {
+					const rule = ranges[key];
+					if (!rule) return "";
+					if (pct < rule.min) return "low";
+					if (pct > rule.max) return "high";
+					return "ok";
+				}
+
+				function updateSnapshot() {
+					const income = Math.max(0, Number(snapshotIncome.value) || 0);
+					const values = collectSnapshot();
+					const total = Object.values(values).reduce(function (sum, val) { return sum + val; }, 0);
+					const left = income - total;
+
+					animateMoney(snapshotTotal, total);
+					animateMoney(snapshotLeft, left);
+
+					spendingRows.forEach(function (row) {
+						const key = row.dataset.key;
+						const slider = row.querySelector(".spend-slider");
+						slider.max = String(Math.max(income, Number(slider.max) || 0));
+						const pct = income > 0 ? (values[key] / income) * 100 : 0;
+						row.querySelector(".spend-share").textContent = Math.round(pct) + "%";
+					});
+
+					renderBars(values, total);
+					renderPie(values, total);
+
+					const housingPct = categoryShare(values, "housing", income);
+					const eatingOutPct = categoryShare(values, "eatingOut", income);
+					const housingStatus = checkRange(housingPct, "housing");
+					const eatStatus = checkRange(eatingOutPct, "eatingOut");
+
+					const leftText =
+						"You spent " +
+						usd(total) +
+						" this month. " +
+						(left >= 0 ? "You have " + usd(left) + " left." : "You are over by " + usd(Math.abs(left)) + ".");
+
+					const housingText =
+						housingStatus === "ok"
+							? "Nice. Your housing spending is right on track."
+							: housingStatus === "high"
+								? "Housing is a bit high right now. You can explore lower-cost options over time."
+								: "Housing is under the usual range, which can create room for savings goals.";
+
+					const eatText =
+						eatStatus === "ok"
+							? "Your eating out spending is in a healthy range."
+							: eatStatus === "high"
+								? "You are spending a bit high on eating out. Want to explore small swaps?"
+								: "Eating out is fairly low, which supports your bigger goals.";
+
+					snapshotMessage.innerHTML =
+						"<div>" +
+						leftText +
+						"</div><div style=\"margin-top:.32rem;\">" +
+						housingText +
+						"</div><div style=\"margin-top:.2rem;\">" +
+						eatText +
+						"</div>";
+
+					const spendRatio = income > 0 ? total / income : 0;
+					const meterWidth = Math.min(100, Math.max(0, spendRatio * 100));
+					healthFill.style.width = meterWidth.toFixed(1) + "%";
+					healthFill.classList.remove("green", "yellow", "coral");
+					if (spendRatio <= 0.8) {
+						healthFill.classList.add("green");
+						healthCaption.textContent = "Health meter: Green - balanced";
+					} else if (spendRatio <= 0.95) {
+						healthFill.classList.add("yellow");
+						healthCaption.textContent = "Health meter: Yellow - slightly off";
+					} else {
+						healthFill.classList.add("coral");
+						healthCaption.textContent = "Health meter: Coral - needs attention";
+					}
+
+					const currentEatingOut = values.eatingOut;
+					whatIfEatingOut.max = String(Math.max(currentEatingOut, 1000));
+					if (Number(whatIfEatingOut.value) > Number(whatIfEatingOut.max)) {
+						whatIfEatingOut.value = whatIfEatingOut.max;
+					}
+					const adjustedEatingOut = Number(whatIfEatingOut.value);
+					whatIfValue.textContent = usd(adjustedEatingOut);
+
+					const monthlyChange = currentEatingOut - adjustedEatingOut;
+					const yearlyChange = monthlyChange * 12;
+					const currentSavingsRate = income > 0 ? Math.max(0, left) / income : 0;
+					const newLeft = left + monthlyChange;
+					const newSavingsRate = income > 0 ? Math.max(0, newLeft) / income : 0;
+
+					const debtBalance = 3000;
+					const basePayment = 150;
+					const oldMonths = Math.ceil(debtBalance / basePayment);
+					const newPayment = Math.max(10, basePayment + Math.max(0, monthlyChange));
+					const newMonths = Math.ceil(debtBalance / newPayment);
+					const monthsSaved = Math.max(0, oldMonths - newMonths);
+
+					whatIfOutcome.innerHTML =
+						"<div>" +
+						(monthlyChange >= 0
+							? "You would save " + usd(monthlyChange) + "/month -> " + usd(yearlyChange) + "/year."
+							: "This adds " + usd(Math.abs(monthlyChange)) + "/month of spending.") +
+						"</div><div>Your savings rate changes from " +
+						Math.round(currentSavingsRate * 100) +
+						"% to " +
+						Math.round(newSavingsRate * 100) +
+						"%.</div><div>Estimated debt payoff timeline shortens by " +
+						monthsSaved +
+						" months.</div>";
+				}
+
+				spendingRows.forEach(function (row) {
+					const slider = row.querySelector(".spend-slider");
+					const input = row.querySelector(".spend-input");
+					slider.addEventListener("input", function () {
+						input.value = slider.value;
+						updateSnapshot();
+					});
+					input.addEventListener("input", function () {
+						const val = Math.max(0, Number(input.value) || 0);
+						slider.value = String(val);
+						updateSnapshot();
+					});
+				});
+
+				snapshotIncome.addEventListener("input", updateSnapshot);
+				whatIfEatingOut.addEventListener("input", updateSnapshot);
+				updateSnapshot();
+			})();
+		</script>
 	</body>
 </html>

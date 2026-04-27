@@ -29,6 +29,177 @@
 			.steps { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.7rem; }
 			.steps li { background:rgba(168,230,207,.42); border:1.5px dashed rgba(0,105,92,.35); border-radius:14px; padding:.85rem; }
 			.step-title { font-weight:800; }
+
+			.unstuck {
+				margin-top: 1rem;
+				background: rgba(250,250,247,.97);
+				border-radius: 20px;
+				border: 2px solid rgba(0,105,92,.18);
+				padding: .95rem;
+				box-shadow: 0 12px 28px rgba(0,105,92,.08);
+			}
+
+			.unstuck h2 {
+				font-size: clamp(1.35rem, 3vw, 2rem);
+			}
+
+			.unstuck p {
+				margin: .4rem 0 0;
+			}
+
+			.unstuck-grid {
+				margin-top: .85rem;
+				display: grid;
+				grid-template-columns: 1.2fr .8fr;
+				gap: .8rem;
+			}
+
+			.panel {
+				background: rgba(255,255,255,.63);
+				border-radius: 14px;
+				border: 1.5px solid rgba(0,105,92,.18);
+				padding: .75rem;
+			}
+
+			.panel h3 {
+				font-size: 1.1rem;
+			}
+
+			.debt-table {
+				margin-top: .6rem;
+				display: grid;
+				gap: .45rem;
+			}
+
+			.debt-row {
+				display: grid;
+				grid-template-columns: 1fr .95fr .9fr .95fr;
+				gap: .35rem;
+				align-items: center;
+				background: rgba(168,230,207,.14);
+				border-radius: 10px;
+				padding: .35rem .4rem;
+			}
+
+			.debt-row.head {
+				background: rgba(255,249,196,.5);
+				font-size: .8rem;
+				font-weight: 800;
+			}
+
+			.debt-name {
+				font-size: .88rem;
+				font-weight: 700;
+			}
+
+			input[type="number"],
+			select {
+				width: 100%;
+				padding: .46rem .52rem;
+				border-radius: 10px;
+				border: 1.5px solid rgba(0,105,92,.24);
+				background: rgba(250,250,247,.95);
+				font: inherit;
+				color: var(--deep-teal);
+			}
+
+			.control-strip {
+				margin-top: .65rem;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: .5rem;
+			}
+
+			.result-grid {
+				margin-top: .7rem;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: .5rem;
+			}
+
+			.result-box {
+				border-radius: 11px;
+				padding: .5rem .62rem;
+				background: rgba(255, 211, 182, .35);
+				border: 1px solid rgba(0,105,92,.2);
+			}
+
+			.result-box strong {
+				display: block;
+				font-size: 1.07rem;
+				margin-top: .1rem;
+			}
+
+			.result-box.best {
+				background: rgba(168,230,207,.35);
+			}
+
+			.helper {
+				margin-top: .55rem;
+				font-size: .88rem;
+				font-weight: 700;
+				background: rgba(255,249,196,.45);
+				border-radius: 11px;
+				border: 1.5px dashed rgba(0,105,92,.3);
+				padding: .5rem .6rem;
+			}
+
+			.mountain-wrap {
+				display: grid;
+				gap: .6rem;
+			}
+
+			.mountain-shell {
+				position: relative;
+				width: 100%;
+				height: 300px;
+				background: rgba(0,105,92,.12);
+				clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+				overflow: hidden;
+				border-radius: 6px;
+			}
+
+			.mountain-fill {
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				height: 100%;
+				background: linear-gradient(180deg, #ffb4a1 0%, #ff8f7a 100%);
+				transition: height 450ms ease;
+			}
+
+			.mountain-snow {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 22%;
+				background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.55));
+			}
+
+			.mountain-label {
+				font-size: .88rem;
+				font-weight: 700;
+				text-align: center;
+			}
+
+			.mountain-stats {
+				display: grid;
+				gap: .4rem;
+			}
+
+			.stat-row {
+				display: flex;
+				justify-content: space-between;
+				gap: .5rem;
+				padding: .45rem .55rem;
+				border-radius: 10px;
+				background: rgba(255, 211, 182, .35);
+				border: 1px solid rgba(0,105,92,.2);
+				font-size: .86rem;
+				font-weight: 700;
+			}
 			footer { margin-top:1.2rem; text-align:center; }
 
 			@media (max-width: 680px) {
@@ -38,6 +209,12 @@
 				.hero { border-radius:20px; padding:1rem; }
 				.cards { grid-template-columns:1fr; gap:.75rem; }
 				.card, .steps li { padding:.8rem; }
+				.unstuck-grid { grid-template-columns: 1fr; }
+				.debt-row { grid-template-columns: 1fr 1fr; }
+				.debt-row.head { display: none; }
+				.control-strip,
+				.result-grid { grid-template-columns: 1fr; }
+				.mountain-shell { height: 240px; }
 			}
 
 			@media (max-width: 420px) {
@@ -83,7 +260,274 @@
 				<li><span class="step-title">Step 2:</span> Choose one target debt for extra payments.</li>
 				<li><span class="step-title">Step 3:</span> Celebrate each paid-off account and roll payments forward.</li>
 			</ol>
+
+			<section class="unstuck" aria-label="Getting Unstuck interactive debt tool">
+				<span class="chip">Getting Unstuck</span>
+				<h2>Snowball vs Avalanche</h2>
+				<p>Enter your debt balances and payments. Compare payoff timelines, then watch your debt mountain shrink as you increase extra payments.</p>
+
+				<div class="unstuck-grid">
+					<div class="panel">
+						<h3>Debt Inputs</h3>
+						<div class="debt-table" id="debtTable">
+							<div class="debt-row head">
+								<div>Debt</div>
+								<div>Balance ($)</div>
+								<div>APR (%)</div>
+								<div>Min Payment ($)</div>
+							</div>
+							<div class="debt-row" data-name="Credit Card A">
+								<div class="debt-name">Credit Card A</div>
+								<input class="debt-balance" type="number" min="0" step="50" value="3200" />
+								<input class="debt-apr" type="number" min="0" max="40" step="0.1" value="24.9" />
+								<input class="debt-min" type="number" min="0" step="10" value="95" />
+							</div>
+							<div class="debt-row" data-name="Car Loan">
+								<div class="debt-name">Car Loan</div>
+								<input class="debt-balance" type="number" min="0" step="50" value="7800" />
+								<input class="debt-apr" type="number" min="0" max="40" step="0.1" value="7.4" />
+								<input class="debt-min" type="number" min="0" step="10" value="220" />
+							</div>
+							<div class="debt-row" data-name="Student Loan">
+								<div class="debt-name">Student Loan</div>
+								<input class="debt-balance" type="number" min="0" step="50" value="12500" />
+								<input class="debt-apr" type="number" min="0" max="40" step="0.1" value="5.9" />
+								<input class="debt-min" type="number" min="0" step="10" value="180" />
+							</div>
+						</div>
+
+						<div class="control-strip">
+							<div>
+								<label for="extraPayment">Extra monthly payment ($)</label>
+								<input id="extraPayment" type="number" min="0" step="10" value="150" />
+							</div>
+							<div>
+								<label for="strategyView">Highlighted strategy</label>
+								<select id="strategyView">
+									<option value="snowball">Snowball (smallest balance first)</option>
+									<option value="avalanche">Avalanche (highest APR first)</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="result-grid" aria-live="polite">
+							<div class="result-box">
+								<span>Snowball payoff timeline</span>
+								<strong id="snowballMonths">0 months</strong>
+								<span id="snowballInterest">Interest: $0</span>
+							</div>
+							<div class="result-box">
+								<span>Avalanche payoff timeline</span>
+								<strong id="avalancheMonths">0 months</strong>
+								<span id="avalancheInterest">Interest: $0</span>
+							</div>
+							<div class="result-box best" style="grid-column: 1 / -1;">
+								<span>Recommended by lower interest</span>
+								<strong id="bestMethod">-</strong>
+							</div>
+						</div>
+						<div class="helper" id="debtHelper">Adjust balances and payments to compare both methods in real time.</div>
+					</div>
+
+					<div class="panel mountain-wrap">
+						<h3>Debt Mountain</h3>
+						<div class="mountain-shell" aria-label="Debt mountain visual">
+							<div id="mountainFill" class="mountain-fill"></div>
+							<div class="mountain-snow"></div>
+						</div>
+						<div class="mountain-label" id="mountainLabel">Mountain height reflects your payoff timeline.</div>
+						<div class="mountain-stats">
+							<div class="stat-row"><span>Total debt</span><span id="totalDebt">$0</span></div>
+							<div class="stat-row"><span>Base timeline (no extra)</span><span id="baseTimeline">0 months</span></div>
+							<div class="stat-row"><span>Current timeline</span><span id="currentTimeline">0 months</span></div>
+						</div>
+					</div>
+				</div>
+			</section>
 			<footer>Consistency beats intensity when paying off debt.</footer>
 		</main>
+		<script>
+			(function () {
+				const debtRows = Array.from(document.querySelectorAll("#debtTable .debt-row:not(.head)"));
+				const extraPayment = document.getElementById("extraPayment");
+				const strategyView = document.getElementById("strategyView");
+
+				const snowballMonths = document.getElementById("snowballMonths");
+				const snowballInterest = document.getElementById("snowballInterest");
+				const avalancheMonths = document.getElementById("avalancheMonths");
+				const avalancheInterest = document.getElementById("avalancheInterest");
+				const bestMethod = document.getElementById("bestMethod");
+				const debtHelper = document.getElementById("debtHelper");
+
+				const mountainFill = document.getElementById("mountainFill");
+				const mountainLabel = document.getElementById("mountainLabel");
+				const totalDebtNode = document.getElementById("totalDebt");
+				const baseTimeline = document.getElementById("baseTimeline");
+				const currentTimeline = document.getElementById("currentTimeline");
+
+				function usd(value) {
+					return new Intl.NumberFormat("en-US", {
+						style: "currency",
+						currency: "USD",
+						maximumFractionDigits: 0,
+					}).format(value);
+				}
+
+				function formatMonths(months) {
+					if (!Number.isFinite(months) || months <= 0) return "0 months";
+					const years = Math.floor(months / 12);
+					const rem = months % 12;
+					if (years === 0) return months + " months";
+					if (rem === 0) return years + (years === 1 ? " year" : " years");
+					return years + (years === 1 ? " year " : " years ") + rem + " mo";
+				}
+
+				function getDebts() {
+					return debtRows.map(function (row) {
+						return {
+							name: row.dataset.name,
+							balance: Math.max(0, Number(row.querySelector(".debt-balance").value) || 0),
+							apr: Math.max(0, Number(row.querySelector(".debt-apr").value) || 0),
+							min: Math.max(0, Number(row.querySelector(".debt-min").value) || 0),
+						};
+					});
+				}
+
+				function orderIndices(debts, method) {
+					const active = debts
+						.map(function (d, i) { return { i: i, bal: d.balance, apr: d.apr }; })
+						.filter(function (d) { return d.bal > 0; });
+
+					active.sort(function (a, b) {
+						if (method === "snowball") {
+							if (a.bal !== b.bal) return a.bal - b.bal;
+							return b.apr - a.apr;
+						}
+						if (a.apr !== b.apr) return b.apr - a.apr;
+						return a.bal - b.bal;
+					});
+
+					return active.map(function (d) { return d.i; });
+				}
+
+				function simulatePayoff(rawDebts, extra, method) {
+					const debts = rawDebts.map(function (d) {
+						return { balance: d.balance, apr: d.apr, min: d.min };
+					});
+
+					const totalMin = debts.reduce(function (sum, d) { return sum + d.min; }, 0);
+					let months = 0;
+					let interestPaid = 0;
+					const maxMonths = 1200;
+
+					if (debts.every(function (d) { return d.balance === 0; })) {
+						return { months: 0, interestPaid: 0, paidOff: true };
+					}
+
+					if (totalMin + extra <= 0) {
+						return { months: Infinity, interestPaid: Infinity, paidOff: false };
+					}
+
+					while (months < maxMonths && debts.some(function (d) { return d.balance > 0.01; })) {
+						months += 1;
+
+						debts.forEach(function (d) {
+							if (d.balance > 0) {
+								const monthlyRate = d.apr / 1200;
+								const interest = d.balance * monthlyRate;
+								d.balance += interest;
+								interestPaid += interest;
+							}
+						});
+
+						let budget = totalMin + extra;
+
+						debts.forEach(function (d) {
+							if (d.balance <= 0) return;
+							const pay = Math.min(d.min, d.balance, budget);
+							d.balance -= pay;
+							budget -= pay;
+						});
+
+						const ordered = orderIndices(debts, method);
+						for (let i = 0; i < ordered.length && budget > 0; i += 1) {
+							const idx = ordered[i];
+							if (debts[idx].balance <= 0) continue;
+							const extraPay = Math.min(debts[idx].balance, budget);
+							debts[idx].balance -= extraPay;
+							budget -= extraPay;
+						}
+					}
+
+					const paidOff = debts.every(function (d) { return d.balance <= 0.01; });
+					return {
+						months: paidOff ? months : Infinity,
+						interestPaid: paidOff ? interestPaid : Infinity,
+						paidOff: paidOff,
+					};
+				}
+
+				function updateDebtTool() {
+					const debts = getDebts();
+					const extra = Math.max(0, Number(extraPayment.value) || 0);
+					const totalDebt = debts.reduce(function (sum, d) { return sum + d.balance; }, 0);
+
+					const snow = simulatePayoff(debts, extra, "snowball");
+					const ava = simulatePayoff(debts, extra, "avalanche");
+					const base = simulatePayoff(debts, 0, strategyView.value);
+					const highlighted = strategyView.value === "snowball" ? snow : ava;
+
+					snowballMonths.textContent = formatMonths(snow.months);
+					snowballInterest.textContent = "Interest: " + (Number.isFinite(snow.interestPaid) ? usd(snow.interestPaid) : "-" );
+					avalancheMonths.textContent = formatMonths(ava.months);
+					avalancheInterest.textContent = "Interest: " + (Number.isFinite(ava.interestPaid) ? usd(ava.interestPaid) : "-");
+
+					if (!Number.isFinite(snow.interestPaid) && !Number.isFinite(ava.interestPaid)) {
+						bestMethod.textContent = "Increase minimum or extra payments to build a valid payoff plan.";
+					} else if (snow.interestPaid < ava.interestPaid) {
+						bestMethod.textContent = "Snowball saves more in this setup and may keep motivation high.";
+					} else if (ava.interestPaid < snow.interestPaid) {
+						bestMethod.textContent = "Avalanche saves more interest in this setup.";
+					} else {
+						bestMethod.textContent = "Both methods are similar here. Choose the one you can stick with.";
+					}
+
+					totalDebtNode.textContent = usd(totalDebt);
+					baseTimeline.textContent = formatMonths(base.months);
+					currentTimeline.textContent = formatMonths(highlighted.months);
+
+					const safeBaseMonths = Number.isFinite(base.months) && base.months > 0 ? base.months : 1;
+					const safeCurrentMonths = Number.isFinite(highlighted.months) ? highlighted.months : safeBaseMonths;
+					const mountainPct = Math.max(8, Math.min(100, (safeCurrentMonths / safeBaseMonths) * 100));
+					mountainFill.style.height = mountainPct.toFixed(1) + "%";
+
+					mountainLabel.textContent =
+						"As extra payment rises, your mountain gets smaller. Current height: " + Math.round(mountainPct) + "% of baseline.";
+
+					if (totalDebt === 0) {
+						debtHelper.textContent = "You are debt-free in this planner. You can redirect payments toward savings goals.";
+					} else if (!Number.isFinite(highlighted.months)) {
+						debtHelper.textContent = "Your current payments may be too low to pay off all debt. Try increasing minimums or extra payment.";
+					} else {
+						debtHelper.textContent =
+							"With your current settings, " +
+							(strategyView.value === "snowball" ? "Snowball" : "Avalanche") +
+							" takes about " +
+							formatMonths(highlighted.months) +
+							".";
+					}
+				}
+
+				[
+					extraPayment,
+					strategyView,
+					...Array.from(document.querySelectorAll(".debt-balance, .debt-apr, .debt-min")),
+				].forEach(function (el) {
+					el.addEventListener("input", updateDebtTool);
+				});
+
+				updateDebtTool();
+			})();
+		</script>
 	</body>
 </html>

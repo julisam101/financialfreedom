@@ -29,6 +29,129 @@
 			.steps { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.7rem; }
 			.steps li { background:rgba(168,230,207,.42); border:1.5px dashed rgba(0,105,92,.35); border-radius:14px; padding:.85rem; }
 			.step-title { font-weight:800; }
+
+			.safety-net {
+				margin-top: 1rem;
+				background: rgba(250,250,247,.97);
+				border-radius: 20px;
+				border: 2px solid rgba(0,105,92,.18);
+				padding: .95rem;
+				box-shadow: 0 12px 28px rgba(0,105,92,.08);
+			}
+
+			.safety-head h2 {
+				font-size: clamp(1.35rem, 3vw, 2rem);
+			}
+
+			.safety-head p {
+				margin: .4rem 0 0;
+			}
+
+			.safety-grid {
+				margin-top: .85rem;
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: .75rem;
+			}
+
+			.tool-box {
+				background: rgba(255,255,255,.62);
+				border-radius: 14px;
+				border: 1.5px solid rgba(0,105,92,.18);
+				padding: .75rem;
+			}
+
+			.tool-box h3 {
+				font-size: 1.1rem;
+			}
+
+			.field {
+				margin-top: .55rem;
+			}
+
+			.field label {
+				display: block;
+				font-size: .88rem;
+				font-weight: 700;
+				margin-bottom: .2rem;
+			}
+
+			input[type="number"],
+			input[type="range"] {
+				width: 100%;
+			}
+
+			input[type="number"] {
+				padding: .52rem .58rem;
+				border-radius: 10px;
+				border: 1.5px solid rgba(0,105,92,.24);
+				background: rgba(250,250,247,.95);
+				font: inherit;
+				color: var(--deep-teal);
+			}
+
+			input[type="range"] {
+				accent-color: var(--deep-teal);
+			}
+
+			.range-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-size: .88rem;
+				font-weight: 700;
+				margin-bottom: .25rem;
+			}
+
+			.mini-cards {
+				margin-top: .7rem;
+				display: grid;
+				gap: .45rem;
+			}
+
+			.mini-card {
+				border-radius: 11px;
+				padding: .5rem .62rem;
+				background: rgba(255, 211, 182, .38);
+				border: 1px solid rgba(0,105,92,.2);
+			}
+
+			.mini-card strong {
+				display: block;
+				margin-top: .1rem;
+				font-size: 1.08rem;
+			}
+
+			.progress-track {
+				height: 14px;
+				border-radius: 999px;
+				background: rgba(0,105,92,.14);
+				overflow: hidden;
+				margin-top: .55rem;
+			}
+
+			.progress-fill {
+				height: 100%;
+				width: 0%;
+				background: linear-gradient(90deg, var(--mint-green), var(--lemon-yellow));
+				transition: width 420ms ease;
+			}
+
+			.helper {
+				margin-top: .45rem;
+				font-size: .88rem;
+				font-weight: 700;
+				background: rgba(255,249,196,.45);
+				border: 1.5px dashed rgba(0,105,92,.3);
+				border-radius: 11px;
+				padding: .5rem .6rem;
+			}
+
+			.compound-note {
+				margin-top: .55rem;
+				font-size: .86rem;
+				opacity: .92;
+			}
 			footer { margin-top:1.2rem; text-align:center; }
 
 			@media (max-width: 680px) {
@@ -38,6 +161,7 @@
 				.hero { border-radius:20px; padding:1rem; }
 				.cards { grid-template-columns:1fr; gap:.75rem; }
 				.card, .steps li { padding:.8rem; }
+				.safety-grid { grid-template-columns: 1fr; }
 			}
 
 			@media (max-width: 420px) {
@@ -83,7 +207,209 @@
 				<li><span class="step-title">Step 2:</span> Start with a weekly auto-transfer you can keep.</li>
 				<li><span class="step-title">Step 3:</span> Increase the amount every few months.</li>
 			</ol>
+
+			<section class="safety-net" aria-label="Your Safety Net interactive tools">
+				<div class="safety-head">
+					<span class="chip">Your Safety Net</span>
+					<h2>Plan your cushion and track your growth</h2>
+					<p>Use these calculators to build your emergency fund, monitor your savings progress, and see compound growth.</p>
+				</div>
+
+				<div class="safety-grid">
+					<article class="tool-box" aria-label="Emergency fund calculator">
+						<h3>Emergency Fund Calculator</h3>
+						<div class="field">
+							<label for="monthlyEssentials">Monthly essential expenses ($)</label>
+							<input id="monthlyEssentials" type="number" min="0" step="50" value="2200" />
+						</div>
+						<div class="field">
+							<div class="range-head">
+								<span>Months of coverage</span>
+								<strong id="coverageMonthsLabel">3 months</strong>
+							</div>
+							<input id="coverageMonths" type="range" min="1" max="12" step="1" value="3" />
+						</div>
+						<div class="field">
+							<label for="emergencySaved">Current emergency savings ($)</label>
+							<input id="emergencySaved" type="number" min="0" step="50" value="1200" />
+						</div>
+						<div class="mini-cards" aria-live="polite">
+							<div class="mini-card"><span>Target safety net</span><strong id="emergencyTarget">$0</strong></div>
+							<div class="mini-card"><span>Still needed</span><strong id="emergencyRemaining">$0</strong></div>
+						</div>
+						<div class="progress-track"><div id="emergencyProgress" class="progress-fill"></div></div>
+					</article>
+
+					<article class="tool-box" aria-label="Savings goal tracker">
+						<h3>Savings Goal Tracker</h3>
+						<div class="field">
+							<label for="goalTarget">Savings goal target ($)</label>
+							<input id="goalTarget" type="number" min="0" step="50" value="5000" />
+						</div>
+						<div class="field">
+							<label for="goalCurrent">Amount already saved ($)</label>
+							<input id="goalCurrent" type="number" min="0" step="50" value="1200" />
+						</div>
+						<div class="field">
+							<label for="goalMonthly">Monthly contribution ($)</label>
+							<input id="goalMonthly" type="number" min="0" step="10" value="250" />
+						</div>
+						<div class="progress-track"><div id="goalProgress" class="progress-fill"></div></div>
+						<div class="helper" id="goalStatus">Start entering your values to see your progress timeline.</div>
+					</article>
+
+					<article class="tool-box" aria-label="Compound interest growth">
+						<h3>Compound Interest Growth</h3>
+						<div class="field">
+							<label for="interestRate">Annual interest rate (%)</label>
+							<input id="interestRate" type="number" min="0" max="20" step="0.1" value="4.5" />
+						</div>
+						<div class="field">
+							<div class="range-head">
+								<span>Years to project</span>
+								<strong id="projectionYearsLabel">5 years</strong>
+							</div>
+							<input id="projectionYears" type="range" min="1" max="30" step="1" value="5" />
+						</div>
+						<div class="mini-cards" aria-live="polite">
+							<div class="mini-card"><span>Projected future value</span><strong id="futureValue">$0</strong></div>
+							<div class="mini-card"><span>Estimated interest earned</span><strong id="interestEarned">$0</strong></div>
+						</div>
+						<div class="compound-note">Projection uses your current saved amount plus monthly contributions from the Goal Tracker.</div>
+					</article>
+				</div>
+			</section>
 			<footer>Saving is not about being perfect. It is about being prepared.</footer>
 		</main>
+		<script>
+			(function () {
+				const monthlyEssentials = document.getElementById("monthlyEssentials");
+				const coverageMonths = document.getElementById("coverageMonths");
+				const coverageMonthsLabel = document.getElementById("coverageMonthsLabel");
+				const emergencySaved = document.getElementById("emergencySaved");
+				const emergencyTarget = document.getElementById("emergencyTarget");
+				const emergencyRemaining = document.getElementById("emergencyRemaining");
+				const emergencyProgress = document.getElementById("emergencyProgress");
+
+				const goalTarget = document.getElementById("goalTarget");
+				const goalCurrent = document.getElementById("goalCurrent");
+				const goalMonthly = document.getElementById("goalMonthly");
+				const goalProgress = document.getElementById("goalProgress");
+				const goalStatus = document.getElementById("goalStatus");
+
+				const interestRate = document.getElementById("interestRate");
+				const projectionYears = document.getElementById("projectionYears");
+				const projectionYearsLabel = document.getElementById("projectionYearsLabel");
+				const futureValue = document.getElementById("futureValue");
+				const interestEarned = document.getElementById("interestEarned");
+
+				function usd(value) {
+					return new Intl.NumberFormat("en-US", {
+						style: "currency",
+						currency: "USD",
+						maximumFractionDigits: 0,
+					}).format(value);
+				}
+
+				function animateMoney(node, target) {
+					const start = Number(node.dataset.value || 0);
+					const end = Number(target);
+					const duration = 420;
+					const startTime = performance.now();
+
+					function frame(now) {
+						const t = Math.min((now - startTime) / duration, 1);
+						const eased = 1 - Math.pow(1 - t, 3);
+						const current = start + (end - start) * eased;
+						node.textContent = usd(current);
+						if (t < 1) {
+							requestAnimationFrame(frame);
+						} else {
+							node.dataset.value = String(end);
+						}
+					}
+
+					requestAnimationFrame(frame);
+				}
+
+				function clampPercent(value) {
+					return Math.max(0, Math.min(100, value));
+				}
+
+				function updateSafetyNet() {
+					const essentials = Math.max(0, Number(monthlyEssentials.value) || 0);
+					const months = Math.max(1, Number(coverageMonths.value) || 1);
+					const saved = Math.max(0, Number(emergencySaved.value) || 0);
+
+					coverageMonthsLabel.textContent = months + (months === 1 ? " month" : " months");
+					const target = essentials * months;
+					const remaining = Math.max(0, target - saved);
+					const emergencyPct = target > 0 ? (saved / target) * 100 : 0;
+
+					animateMoney(emergencyTarget, target);
+					animateMoney(emergencyRemaining, remaining);
+					emergencyProgress.style.width = clampPercent(emergencyPct).toFixed(1) + "%";
+
+					const gTarget = Math.max(0, Number(goalTarget.value) || 0);
+					const gCurrent = Math.max(0, Number(goalCurrent.value) || 0);
+					const gMonthly = Math.max(0, Number(goalMonthly.value) || 0);
+					const goalPct = gTarget > 0 ? (gCurrent / gTarget) * 100 : 0;
+					goalProgress.style.width = clampPercent(goalPct).toFixed(1) + "%";
+
+					const needed = Math.max(0, gTarget - gCurrent);
+					let monthsToGoal = 0;
+					if (needed > 0 && gMonthly > 0) {
+						monthsToGoal = Math.ceil(needed / gMonthly);
+					}
+
+					if (needed === 0 && gTarget > 0) {
+						goalStatus.textContent = "Great work. You already hit your goal. Time to set a new milestone.";
+					} else if (gTarget === 0) {
+						goalStatus.textContent = "Add a goal target to start your tracker.";
+					} else if (gMonthly === 0) {
+						goalStatus.textContent = "Add a monthly contribution to estimate your timeline.";
+					} else {
+						goalStatus.textContent = "You are " + Math.round(clampPercent(goalPct)) + "% done and about " + monthsToGoal + " months from your goal.";
+					}
+
+					const annualRate = Math.max(0, Number(interestRate.value) || 0) / 100;
+					const years = Math.max(1, Number(projectionYears.value) || 1);
+					projectionYearsLabel.textContent = years + (years === 1 ? " year" : " years");
+
+					const periodsPerYear = 12;
+					const totalPeriods = years * periodsPerYear;
+					const monthlyRate = annualRate / periodsPerYear;
+
+					let fv = 0;
+					if (monthlyRate === 0) {
+						fv = gCurrent + gMonthly * totalPeriods;
+					} else {
+						const growthFactor = Math.pow(1 + monthlyRate, totalPeriods);
+						fv = gCurrent * growthFactor + gMonthly * ((growthFactor - 1) / monthlyRate);
+					}
+
+					const contributionTotal = gCurrent + gMonthly * totalPeriods;
+					const interestOnly = Math.max(0, fv - contributionTotal);
+
+					animateMoney(futureValue, fv);
+					animateMoney(interestEarned, interestOnly);
+				}
+
+				[
+					monthlyEssentials,
+					coverageMonths,
+					emergencySaved,
+					goalTarget,
+					goalCurrent,
+					goalMonthly,
+					interestRate,
+					projectionYears,
+				].forEach(function (input) {
+					input.addEventListener("input", updateSafetyNet);
+				});
+
+				updateSafetyNet();
+			})();
+		</script>
 	</body>
 </html>

@@ -29,6 +29,229 @@
 			.steps { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.7rem; }
 			.steps li { background:rgba(168,230,207,.42); border:1.5px dashed rgba(0,105,92,.35); border-radius:14px; padding:.85rem; }
 			.step-title { font-weight:800; }
+
+			.traditional {
+				margin-top: 1rem;
+				background: rgba(250,250,247,.97);
+				border: 2px solid rgba(0,105,92,.18);
+				border-radius: 20px;
+				padding: .95rem;
+				box-shadow: 0 12px 28px rgba(0,105,92,.08);
+			}
+
+			.traditional h2 {
+				font-size: clamp(1.35rem, 3vw, 2rem);
+			}
+
+			.traditional p {
+				margin: .45rem 0 0;
+			}
+
+			.building-grid {
+				margin-top: .8rem;
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: .65rem;
+			}
+
+			.building-card {
+				background: rgba(255,255,255,.63);
+				border: 1.5px solid rgba(0,105,92,.18);
+				border-radius: 14px;
+				padding: .7rem;
+			}
+
+			.building-card h3 {
+				font-size: 1.08rem;
+			}
+
+			.visual {
+				margin-top: .45rem;
+				height: 130px;
+				border-radius: 10px;
+				border: 1px dashed rgba(0,105,92,.28);
+				background: rgba(255,249,196,.35);
+				padding: .35rem;
+			}
+
+			.visual svg {
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+
+			.basket {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: .3rem;
+				padding: .3rem;
+			}
+
+			.token {
+				display: grid;
+				place-items: center;
+				height: 26px;
+				border-radius: 8px;
+				font-size: .7rem;
+				font-weight: 800;
+				border: 1px solid rgba(0,105,92,.2);
+			}
+
+			.token.stock { background: #ffd3b6; }
+			.token.bond { background: #a8e6cf; }
+
+			.interactive-grid {
+				margin-top: .9rem;
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: .65rem;
+			}
+
+			.tool {
+				background: rgba(255,255,255,.63);
+				border: 1.5px solid rgba(0,105,92,.18);
+				border-radius: 14px;
+				padding: .7rem;
+			}
+
+			.tool h3 {
+				font-size: 1.08rem;
+			}
+
+			label {
+				display: block;
+				font-size: .86rem;
+				font-weight: 700;
+				margin-bottom: .2rem;
+			}
+
+			input[type="range"],
+			select {
+				width: 100%;
+			}
+
+			select {
+				padding: .48rem .52rem;
+				border-radius: 10px;
+				border: 1.5px solid rgba(0,105,92,.24);
+				background: rgba(250,250,247,.95);
+				font: inherit;
+				color: var(--deep-teal);
+			}
+
+			input[type="range"] {
+				accent-color: var(--deep-teal);
+			}
+
+			.range-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-size: .86rem;
+				font-weight: 700;
+				margin: .45rem 0 .2rem;
+			}
+
+			.growth-bars {
+				margin-top: .5rem;
+				display: grid;
+				gap: .4rem;
+			}
+
+			.growth-row {
+				display: grid;
+				grid-template-columns: 42px 1fr 78px;
+				gap: .35rem;
+				align-items: center;
+				font-size: .78rem;
+				font-weight: 700;
+			}
+
+			.growth-track {
+				height: 12px;
+				border-radius: 999px;
+				background: rgba(0,105,92,.12);
+				overflow: hidden;
+			}
+
+			.growth-fill {
+				height: 100%;
+				width: 0%;
+				border-radius: inherit;
+				transition: width 340ms ease;
+			}
+
+			.growth-fill.low { background: #a8e6cf; }
+			.growth-fill.mid { background: #ffd3b6; }
+			.growth-fill.high { background: #fff9c4; }
+
+			.helper {
+				margin-top: .5rem;
+				font-size: .83rem;
+				font-weight: 700;
+				background: rgba(255,249,196,.45);
+				border: 1.5px dashed rgba(0,105,92,.3);
+				border-radius: 10px;
+				padding: .42rem .5rem;
+			}
+
+			.mix-pill {
+				margin-top: .5rem;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				border-radius: 999px;
+				overflow: hidden;
+				border: 1px solid rgba(0,105,92,.2);
+			}
+
+			.mix-pill .stock,
+			.mix-pill .bond {
+				padding: .3rem .45rem;
+				font-size: .78rem;
+				font-weight: 800;
+				text-align: center;
+			}
+
+			.mix-pill .stock { background: #ffd3b6; }
+			.mix-pill .bond { background: #a8e6cf; }
+
+			.mini-chart {
+				margin-top: .45rem;
+				height: 120px;
+				border-radius: 10px;
+				background: rgba(250,250,247,.95);
+				border: 1px solid rgba(0,105,92,.2);
+				padding: .25rem;
+			}
+
+			.mini-chart svg {
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+
+			.behavior {
+				margin-top: .45rem;
+				height: 150px;
+				border-radius: 10px;
+				background: rgba(250,250,247,.95);
+				border: 1px solid rgba(0,105,92,.2);
+				padding: .25rem;
+			}
+
+			.behavior svg {
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+
+			.principal-tag {
+				margin-top: .35rem;
+				font-size: .78rem;
+				font-weight: 800;
+				text-align: right;
+				color: #00695c;
+			}
 			footer { margin-top:1.2rem; text-align:center; }
 
 			@media (max-width: 680px) {
@@ -38,6 +261,9 @@
 				.hero { border-radius:20px; padding:1rem; }
 				.cards { grid-template-columns:1fr; gap:.75rem; }
 				.card, .steps li { padding:.8rem; }
+				.building-grid,
+				.interactive-grid { grid-template-columns: 1fr; }
+				.growth-row { grid-template-columns: 38px 1fr 72px; }
 			}
 
 			@media (max-width: 420px) {
@@ -83,7 +309,228 @@
 				<li><span class="step-title">Step 2:</span> Choose a simple diversified strategy.</li>
 				<li><span class="step-title">Step 3:</span> Invest regularly and avoid panic decisions.</li>
 			</ol>
+
+			<section class="traditional" aria-label="Grow your money the traditional way">
+				<span class="chip">Grow Your Money the Traditional Way</span>
+				<h2>Stocks, Bonds, and Funds in simple terms</h2>
+				<p>These are the classic building blocks most beginner education starts with: ownership (stocks), loans (bonds), and diversified bundles (funds).</p>
+
+				<div class="building-grid">
+					<article class="building-card">
+						<h3>1. Stocks</h3>
+						<p>Stocks are partial ownership in a company. Daily prices can move a lot, but long-term trends have historically grown over decades.</p>
+						<div class="visual">
+							<svg viewBox="0 0 220 120" aria-label="Stocks movement visual">
+								<polyline points="0,95 20,83 40,88 60,75 80,82 100,67 120,73 140,55 160,63 180,47 200,44 220,34" fill="none" stroke="#ff9f8a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+							</svg>
+						</div>
+					</article>
+
+					<article class="building-card">
+						<h3>2. Bonds</h3>
+						<p>Bonds are loans to a company or government. They usually pay steadier interest and return principal at maturity.</p>
+						<div class="visual">
+							<svg viewBox="0 0 220 120" aria-label="Bonds stability visual">
+								<line x1="0" y1="78" x2="220" y2="52" stroke="#58b792" stroke-width="4" />
+								<circle cx="35" cy="73" r="5" fill="#ffd3b6" />
+								<circle cx="75" cy="68" r="5" fill="#ffd3b6" />
+								<circle cx="115" cy="63" r="5" fill="#ffd3b6" />
+								<circle cx="155" cy="58" r="5" fill="#ffd3b6" />
+								<rect x="178" y="40" width="34" height="18" rx="6" fill="#fff9c4" stroke="#00695c" />
+								<text x="184" y="53" font-size="8" font-weight="700" fill="#00695c">PRINCIPAL</text>
+							</svg>
+						</div>
+					</article>
+
+					<article class="building-card">
+						<h3>3. Mutual Funds and ETFs</h3>
+						<p>Funds bundle many stocks and bonds at once, which helps diversify risk and is why beginners often start here.</p>
+						<div class="visual basket" aria-label="Fund basket visual">
+							<div class="token stock">STK</div><div class="token bond">BND</div><div class="token stock">STK</div><div class="token bond">BND</div>
+							<div class="token bond">BND</div><div class="token stock">STK</div><div class="token bond">BND</div><div class="token stock">STK</div>
+							<div class="token stock">STK</div><div class="token bond">BND</div><div class="token stock">STK</div><div class="token bond">BND</div>
+						</div>
+					</article>
+				</div>
+
+				<div class="interactive-grid">
+					<article class="tool">
+						<h3>If You Invested $100...</h3>
+						<label for="investChoice">Choose investment type</label>
+						<select id="investChoice">
+							<option value="stocks">Stocks</option>
+							<option value="bonds">Bonds</option>
+							<option value="mix" selected>Balanced Mix</option>
+						</select>
+						<div class="range-head"><span>Years</span><strong id="investYearsLabel">20 years</strong></div>
+						<input id="investYears" type="range" min="1" max="40" step="1" value="20" />
+
+						<div class="growth-bars" aria-live="polite">
+							<div class="growth-row"><span>Low</span><div class="growth-track"><div id="growthLow" class="growth-fill low"></div></div><span id="growthLowVal">$0</span></div>
+							<div class="growth-row"><span>Mid</span><div class="growth-track"><div id="growthMid" class="growth-fill mid"></div></div><span id="growthMidVal">$0</span></div>
+							<div class="growth-row"><span>High</span><div class="growth-track"><div id="growthHigh" class="growth-fill high"></div></div><span id="growthHighVal">$0</span></div>
+						</div>
+						<div class="helper">Illustrative historical-style ranges only, not a prediction.</div>
+					</article>
+
+					<article class="tool">
+						<h3>Risk Slider</h3>
+						<div class="range-head"><span>Low Risk to High Risk</span><strong id="riskLabel">50</strong></div>
+						<input id="riskSlider" type="range" min="0" max="100" step="1" value="50" />
+						<div class="mix-pill">
+							<div class="stock" id="stockMix">Stocks 50%</div>
+							<div class="bond" id="bondMix">Bonds 50%</div>
+						</div>
+						<div class="mini-chart">
+							<svg viewBox="0 0 220 110" aria-label="Portfolio behavior graph">
+								<polyline id="riskPath" points="0,85 20,80 40,78 60,70 80,68 100,63 120,60 140,58 160,53 180,49 200,45 220,40" fill="none" stroke="#ff9f8a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+							</svg>
+						</div>
+						<div class="helper" id="riskBehavior">Balanced profile: moderate growth with moderate ups and downs.</div>
+					</article>
+
+					<article class="tool">
+						<h3>Stock vs Bond Behavior</h3>
+						<div class="behavior">
+							<svg viewBox="0 0 220 130" aria-label="Stock vs bond behavior animation">
+								<polyline id="stockBehaviorPath" points="0,90 20,84 40,87 60,76 80,80 100,72 120,75 140,64 160,67 180,58 200,55 220,52" fill="none" stroke="#ff8f7a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+								<polyline id="bondBehaviorPath" points="0,96 20,95 40,94 60,92 80,91 100,90 120,88 140,87 160,86 180,84 200,83 220,80" fill="none" stroke="#58b792" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+							</svg>
+						</div>
+						<div class="principal-tag">Bonds: steady interest + principal returned at maturity.</div>
+						<div class="helper">Stocks bounce daily; bonds move more steadily.</div>
+					</article>
+				</div>
+			</section>
 			<footer>Simple, consistent investing habits usually win over time.</footer>
 		</main>
+		<script>
+			(function () {
+				const investChoice = document.getElementById("investChoice");
+				const investYears = document.getElementById("investYears");
+				const investYearsLabel = document.getElementById("investYearsLabel");
+				const growthLow = document.getElementById("growthLow");
+				const growthMid = document.getElementById("growthMid");
+				const growthHigh = document.getElementById("growthHigh");
+				const growthLowVal = document.getElementById("growthLowVal");
+				const growthMidVal = document.getElementById("growthMidVal");
+				const growthHighVal = document.getElementById("growthHighVal");
+
+				const riskSlider = document.getElementById("riskSlider");
+				const riskLabel = document.getElementById("riskLabel");
+				const stockMix = document.getElementById("stockMix");
+				const bondMix = document.getElementById("bondMix");
+				const riskPath = document.getElementById("riskPath");
+				const riskBehavior = document.getElementById("riskBehavior");
+
+				const stockBehaviorPath = document.getElementById("stockBehaviorPath");
+				const bondBehaviorPath = document.getElementById("bondBehaviorPath");
+
+				function usd(value) {
+					return new Intl.NumberFormat("en-US", {
+						style: "currency",
+						currency: "USD",
+						maximumFractionDigits: 0,
+					}).format(value);
+				}
+
+				function compound(amount, rate, years) {
+					return amount * Math.pow(1 + rate, years);
+				}
+
+				function getRanges(choice) {
+					if (choice === "stocks") return { low: 0.06, mid: 0.10, high: 0.12 };
+					if (choice === "bonds") return { low: 0.02, mid: 0.04, high: 0.06 };
+					return { low: 0.04, mid: 0.07, high: 0.09 };
+				}
+
+				function updateInvestSimulator() {
+					const years = Number(investYears.value);
+					const choice = investChoice.value;
+					const r = getRanges(choice);
+					const low = compound(100, r.low, years);
+					const mid = compound(100, r.mid, years);
+					const high = compound(100, r.high, years);
+					const max = Math.max(low, mid, high, 1);
+
+					investYearsLabel.textContent = years + (years === 1 ? " year" : " years");
+					growthLow.style.width = ((low / max) * 100).toFixed(1) + "%";
+					growthMid.style.width = ((mid / max) * 100).toFixed(1) + "%";
+					growthHigh.style.width = ((high / max) * 100).toFixed(1) + "%";
+					growthLowVal.textContent = usd(low);
+					growthMidVal.textContent = usd(mid);
+					growthHighVal.textContent = usd(high);
+				}
+
+				function buildPath(points) {
+					return points
+						.map(function (p, idx) {
+							return (idx * 20) + "," + p.toFixed(1);
+						})
+						.join(" ");
+				}
+
+				function updateRiskView() {
+					const risk = Number(riskSlider.value);
+					const stockPct = risk;
+					const bondPct = 100 - risk;
+					const volatility = 4 + (risk / 100) * 14;
+					const slope = 0.45 + (risk / 100) * 0.75;
+
+					riskLabel.textContent = String(risk);
+					stockMix.textContent = "Stocks " + stockPct + "%";
+					bondMix.textContent = "Bonds " + bondPct + "%";
+
+					const points = [];
+					let y = 88;
+					for (let i = 0; i <= 11; i += 1) {
+						const wiggle = (Math.sin(i * 1.2) * volatility) / 2;
+						y = y - slope + wiggle * 0.15;
+						y = Math.max(24, Math.min(98, y));
+						points.push(y);
+					}
+
+					riskPath.setAttribute("points", buildPath(points));
+
+					if (risk < 34) {
+						riskBehavior.textContent = "Low-risk profile: steadier movement, lower expected growth.";
+					} else if (risk < 67) {
+						riskBehavior.textContent = "Balanced profile: moderate growth with moderate ups and downs.";
+					} else {
+						riskBehavior.textContent = "High-risk profile: bigger short-term swings with higher long-term growth potential.";
+					}
+				}
+
+				function updateBehaviorAnimation() {
+					const stockPoints = [];
+					const bondPoints = [];
+					let stockY = 88;
+					let bondY = 97;
+
+					for (let i = 0; i <= 11; i += 1) {
+						const bounce = (Math.random() - 0.46) * 18;
+						stockY = stockY - 2 + bounce;
+						stockY = Math.max(20, Math.min(106, stockY));
+						stockPoints.push(stockY);
+
+						const drip = i % 3 === 0 ? -2.8 : -1.2;
+						bondY = Math.max(52, bondY + drip);
+						bondPoints.push(bondY);
+					}
+
+					stockBehaviorPath.setAttribute("points", buildPath(stockPoints));
+					bondBehaviorPath.setAttribute("points", buildPath(bondPoints));
+				}
+
+				investChoice.addEventListener("change", updateInvestSimulator);
+				investYears.addEventListener("input", updateInvestSimulator);
+				riskSlider.addEventListener("input", updateRiskView);
+
+				updateInvestSimulator();
+				updateRiskView();
+				updateBehaviorAnimation();
+				setInterval(updateBehaviorAnimation, 1100);
+			})();
+		</script>
 	</body>
 </html>
