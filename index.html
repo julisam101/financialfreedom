@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Financial Freedom | Beginner Guidebook</title>
+		<meta
+			name="description"
+			content="A playful beginner-friendly financial guide to budgeting, saving, debt payoff, and investing basics."
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--mint-green: #a8e6cf;
+				--soft-peach: #ffd3b6;
+				--lemon-yellow: #fff9c4;
+				--deep-teal: #00695c;
+				--off-white: #fafaf7;
+
+				--card-shadow: 0 18px 40px rgba(0, 105, 92, 0.16);
+				--radius: 20px;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			html {
+				-webkit-text-size-adjust: 100%;
+			}
+
+			body {
+				margin: 0;
+				font-family: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+				background: radial-gradient(circle at 15% 15%, rgba(255, 211, 182, 0.6), transparent 38%),
+					radial-gradient(circle at 90% 12%, rgba(255, 249, 196, 0.85), transparent 34%),
+					linear-gradient(145deg, #f7fff9, var(--off-white));
+				color: var(--deep-teal);
+				line-height: 1.55;
+			}
+
+			.page {
+				width: min(1080px, 92vw);
+				margin: 0 auto;
+				padding: 1.2rem 0 3rem;
+			}
+
+			.hero {
+				margin-top: 1rem;
+				background: linear-gradient(145deg, rgba(168, 230, 207, 0.95), rgba(255, 211, 182, 0.92));
+				border-radius: calc(var(--radius) + 10px);
+				box-shadow: var(--card-shadow);
+				padding: clamp(1.5rem, 4vw, 3rem);
+				position: relative;
+				overflow: hidden;
+			}
+
+			.hero::after {
+				content: "";
+				position: absolute;
+				width: 300px;
+				height: 300px;
+				border-radius: 50%;
+				background: rgba(255, 249, 196, 0.85);
+				right: -120px;
+				top: -120px;
+			}
+
+			h1,
+			h2,
+			h3 {
+				font-family: "Baloo 2", "Trebuchet MS", sans-serif;
+				letter-spacing: 0.3px;
+				margin: 0;
+			}
+
+			h1 {
+				font-size: clamp(2rem, 5vw, 3.5rem);
+				line-height: 1.1;
+				max-width: 14ch;
+				position: relative;
+				z-index: 1;
+			}
+
+			.hero p {
+				max-width: 56ch;
+				font-size: 1.06rem;
+				margin: 1rem 0 1.2rem;
+				position: relative;
+				z-index: 1;
+			}
+
+			.hero-cta {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.8rem;
+				position: relative;
+				z-index: 1;
+			}
+
+			.btn {
+				display: inline-block;
+				text-decoration: none;
+				font-weight: 700;
+				border-radius: 999px;
+				padding: 0.68rem 1.1rem;
+				transition: transform 220ms ease, box-shadow 220ms ease;
+			}
+
+			.btn-primary {
+				background: var(--deep-teal);
+				color: var(--off-white);
+				box-shadow: 0 12px 24px rgba(0, 105, 92, 0.2);
+			}
+
+			.btn-secondary {
+				background: rgba(250, 250, 247, 0.82);
+				color: var(--deep-teal);
+				border: 2px solid rgba(0, 105, 92, 0.2);
+			}
+
+			.btn:hover {
+				transform: translateY(-2px) scale(1.02);
+			}
+
+			.palette-strip {
+				margin: 1.25rem 0 0;
+				display: grid;
+				grid-template-columns: repeat(5, 1fr);
+				border-radius: 16px;
+				overflow: hidden;
+				border: 2px solid rgba(0, 105, 92, 0.16);
+			}
+
+			.swatch {
+				min-height: 64px;
+				display: grid;
+				place-items: center;
+				text-align: center;
+				font-size: 0.78rem;
+				font-weight: 700;
+			}
+
+			.swatch:nth-child(1) {
+				background: var(--mint-green);
+			}
+			.swatch:nth-child(2) {
+				background: var(--soft-peach);
+			}
+			.swatch:nth-child(3) {
+				background: var(--lemon-yellow);
+			}
+			.swatch:nth-child(4) {
+				background: var(--deep-teal);
+				color: var(--off-white);
+			}
+			.swatch:nth-child(5) {
+				background: var(--off-white);
+			}
+
+			.section {
+				margin-top: 1.4rem;
+			}
+
+			.section h2 {
+				font-size: clamp(1.6rem, 3vw, 2.2rem);
+			}
+
+			.cards {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+				gap: 1rem;
+				margin-top: 0.9rem;
+			}
+
+			.card {
+				background: rgba(250, 250, 247, 0.96);
+				border: 2px solid rgba(0, 105, 92, 0.18);
+				border-radius: var(--radius);
+				padding: 1rem;
+				box-shadow: 0 10px 22px rgba(0, 105, 92, 0.08);
+				animation: riseIn 650ms ease both;
+			}
+
+			.card:nth-child(2) {
+				animation-delay: 120ms;
+			}
+
+			.card:nth-child(3) {
+				animation-delay: 240ms;
+			}
+
+			.card:nth-child(4) {
+				animation-delay: 360ms;
+			}
+
+			.chip {
+				display: inline-block;
+				margin-bottom: 0.55rem;
+				border-radius: 999px;
+				background: var(--lemon-yellow);
+				padding: 0.26rem 0.7rem;
+				font-weight: 700;
+				font-size: 0.82rem;
+			}
+
+			.steps {
+				margin: 0.9rem 0 0;
+				padding: 0;
+				list-style: none;
+				display: grid;
+				gap: 0.8rem;
+			}
+
+			.steps li {
+				background: rgba(168, 230, 207, 0.4);
+				border-radius: 14px;
+				border: 1.5px dashed rgba(0, 105, 92, 0.35);
+				padding: 0.85rem;
+			}
+
+			.step-title {
+				display: inline-block;
+				font-weight: 800;
+				margin-right: 0.35rem;
+			}
+
+			footer {
+				margin-top: 1.4rem;
+				text-align: center;
+				padding: 1.2rem 0 0.4rem;
+				font-size: 0.96rem;
+				opacity: 0.9;
+			}
+
+			@keyframes riseIn {
+				from {
+					transform: translateY(16px);
+					opacity: 0;
+				}
+				to {
+					transform: translateY(0);
+					opacity: 1;
+				}
+			}
+
+			@media (max-width: 680px) {
+				.page {
+					width: min(1080px, 96vw);
+					padding: 0.9rem 0 2rem;
+				}
+
+				.hero {
+					border-radius: 22px;
+				}
+
+				.hero-cta {
+					flex-direction: column;
+					align-items: stretch;
+				}
+
+				.btn {
+					text-align: center;
+				}
+
+				.palette-strip {
+					grid-template-columns: 1fr;
+				}
+
+				.swatch {
+					min-height: 50px;
+				}
+
+				.cards {
+					grid-template-columns: 1fr;
+				}
+			}
+
+			@media (max-width: 420px) {
+				h1 {
+					font-size: clamp(1.8rem, 8.5vw, 2.35rem);
+				}
+
+				.hero p,
+				footer {
+					font-size: 0.95rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main class="page">
+			<section class="hero" aria-label="Hero section">
+				<h1>Money basics made clear, calm, and actually doable.</h1>
+				<p>
+					Financial Freedom is your beginner guidebook to budgeting, debt, saving, and investing without scary
+					jargon. You do not need to know everything. You only need one simple next step.
+				</p>
+				<div class="hero-cta">
+					<a class="btn btn-primary" href="#start">Start Your Journey</a>
+					<a class="btn btn-secondary" href="#topics">Browse Topics</a>
+				</div>
+				<div class="palette-strip" aria-label="Brand color palette">
+					<div class="swatch">Mint Green<br />#A8E6CF</div>
+					<div class="swatch">Soft Peach<br />#FFD3B6</div>
+					<div class="swatch">Lemon Yellow<br />#FFF9C4</div>
+					<div class="swatch">Deep Teal<br />#00695C</div>
+					<div class="swatch">Off-white<br />#FAFAF7</div>
+				</div>
+			</section>
+
+			<section class="section" id="topics" aria-label="Main topics">
+				<h2>Beginner-friendly topics</h2>
+				<div class="cards">
+					<article class="card">
+						<span class="chip">Budgeting</span>
+						<h3>Know where your money goes</h3>
+						<p>See your monthly spending by category and build a realistic budget you can stick to.</p>
+					</article>
+
+					<article class="card">
+						<span class="chip">Debt</span>
+						<h3>Pay off balances with a plan</h3>
+						<p>Learn simple payoff methods and choose the one that matches your life and motivation style.</p>
+					</article>
+
+					<article class="card">
+						<span class="chip">Saving</span>
+						<h3>Build an emergency cushion</h3>
+						<p>Start small, stay consistent, and protect yourself from surprise expenses and stress.</p>
+					</article>
+
+					<article class="card">
+						<span class="chip">Investing</span>
+						<h3>Understand the basics first</h3>
+						<p>Explore beginner concepts like risk, time horizon, and long-term growth in plain language.</p>
+					</article>
+				</div>
+			</section>
+
+			<section class="section" id="start" aria-label="Getting started steps">
+				<h2>Your first 3 steps</h2>
+				<ol class="steps">
+					<li>
+						<span class="step-title">Step 1:</span>
+						Write down last month income and expenses. No judgment, just facts.
+					</li>
+					<li>
+						<span class="step-title">Step 2:</span>
+						Pick one goal for this month, such as saving $50 or paying one extra card payment.
+					</li>
+					<li>
+						<span class="step-title">Step 3:</span>
+						Check in weekly for 10 minutes and adjust your plan based on real life.
+					</li>
+				</ol>
+			</section>
+
+			<footer>
+				Built for beginners who want confidence, clarity, and financial freedom.
+			</footer>
+		</main>
+	</body>
+</html>
