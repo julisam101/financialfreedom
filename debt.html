@@ -8,61 +8,16 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
 			rel="stylesheet"
 		/>
+		<link rel="stylesheet" href="shared.css" />
 		<style>
-			:root { --mint-green:#a8e6cf; --soft-peach:#ffd3b6; --lemon-yellow:#fff9c4; --deep-teal:#00695c; --off-white:#fafaf7; }
-			html { -webkit-text-size-adjust: 100%; }
-			* { box-sizing: border-box; }
-			body { margin:0; font-family:"Nunito","Segoe UI",sans-serif; color:var(--deep-teal); background:radial-gradient(circle at 15% 15%, rgba(255,211,182,.58), transparent 35%),radial-gradient(circle at 86% 12%, rgba(255,249,196,.86), transparent 32%),linear-gradient(140deg,#f6fff8,var(--off-white)); }
-			.page { width:min(1000px,92vw); margin:0 auto; padding:1.2rem 0 2.5rem; }
-			.topnav { display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:.9rem; }
-			.topnav a { text-decoration:none; color:var(--deep-teal); font-weight:700; background:rgba(250,250,247,.9); border:1.8px solid rgba(0,105,92,.2); border-radius:999px; padding:.45rem .8rem; }
-			.hero { background:linear-gradient(145deg, rgba(168,230,207,.95), rgba(255,211,182,.9)); border-radius:26px; padding:clamp(1.3rem,3vw,2rem); box-shadow:0 16px 36px rgba(0,105,92,.14); }
-			h1,h2,h3 { font-family:"Baloo 2","Trebuchet MS",sans-serif; margin:0; }
-			h1 { font-size:clamp(2rem,4vw,3rem); line-height:1.1; }
-			.hero p { max-width:60ch; margin:.8rem 0 0; }
-			.cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem; margin-top:1rem; }
-			.card { background:rgba(250,250,247,.95); border-radius:18px; border:2px solid rgba(0,105,92,.16); padding:.9rem; box-shadow:0 10px 22px rgba(0,105,92,.08); }
-			.chip { display:inline-block; background:var(--lemon-yellow); font-weight:700; border-radius:999px; padding:.2rem .7rem; }
-			.steps { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.7rem; }
-			.steps li { background:rgba(168,230,207,.42); border:1.5px dashed rgba(0,105,92,.35); border-radius:14px; padding:.85rem; }
-			.step-title { font-weight:800; }
-
-			.unstuck {
-				margin-top: 1rem;
-				background: rgba(250,250,247,.97);
-				border-radius: 20px;
-				border: 2px solid rgba(0,105,92,.18);
-				padding: .95rem;
-				box-shadow: 0 12px 28px rgba(0,105,92,.08);
-			}
-
-			.unstuck h2 {
-				font-size: clamp(1.35rem, 3vw, 2rem);
-			}
-
-			.unstuck p {
-				margin: .4rem 0 0;
-			}
-
 			.unstuck-grid {
 				margin-top: .85rem;
 				display: grid;
 				grid-template-columns: 1.2fr .8fr;
 				gap: .8rem;
-			}
-
-			.panel {
-				background: rgba(255,255,255,.63);
-				border-radius: 14px;
-				border: 1.5px solid rgba(0,105,92,.18);
-				padding: .75rem;
-			}
-
-			.panel h3 {
-				font-size: 1.1rem;
 			}
 
 			.debt-table {
@@ -76,31 +31,21 @@
 				grid-template-columns: 1fr .95fr .9fr .95fr;
 				gap: .35rem;
 				align-items: center;
-				background: rgba(168,230,207,.14);
-				border-radius: 10px;
+				background: var(--teal-light);
+				border-radius: 8px;
 				padding: .35rem .4rem;
 			}
 
 			.debt-row.head {
-				background: rgba(255,249,196,.5);
+				background: var(--bg);
 				font-size: .8rem;
-				font-weight: 800;
+				font-weight: 700;
+				color: var(--text-muted);
 			}
 
 			.debt-name {
 				font-size: .88rem;
-				font-weight: 700;
-			}
-
-			input[type="number"],
-			select {
-				width: 100%;
-				padding: .46rem .52rem;
-				border-radius: 10px;
-				border: 1.5px solid rgba(0,105,92,.24);
-				background: rgba(250,250,247,.95);
-				font: inherit;
-				color: var(--deep-teal);
+				font-weight: 600;
 			}
 
 			.control-strip {
@@ -118,42 +63,42 @@
 			}
 
 			.result-box {
-				border-radius: 11px;
-				padding: .5rem .62rem;
-				background: rgba(255, 211, 182, .35);
-				border: 1px solid rgba(0,105,92,.2);
+				border-radius: 8px;
+				padding: .6rem .75rem;
+				background: var(--bg);
+				border: 1px solid var(--border);
 			}
 
 			.result-box strong {
 				display: block;
 				font-size: 1.07rem;
 				margin-top: .1rem;
+				color: var(--navy);
 			}
 
 			.result-box.best {
-				background: rgba(168,230,207,.35);
+				background: var(--teal-light);
+				border-color: var(--teal);
 			}
 
 			.helper {
 				margin-top: .55rem;
 				font-size: .88rem;
-				font-weight: 700;
-				background: rgba(255,249,196,.45);
-				border-radius: 11px;
-				border: 1.5px dashed rgba(0,105,92,.3);
+				font-weight: 600;
+				background: var(--teal-light);
+				border-radius: 8px;
+				border: 1px solid var(--border);
 				padding: .5rem .6rem;
+				color: var(--teal);
 			}
 
-			.mountain-wrap {
-				display: grid;
-				gap: .6rem;
-			}
+			.mountain-wrap { display: grid; gap: .6rem; }
 
 			.mountain-shell {
 				position: relative;
 				width: 100%;
 				height: 300px;
-				background: rgba(0,105,92,.12);
+				background: var(--border);
 				clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
 				overflow: hidden;
 				border-radius: 6px;
@@ -161,82 +106,62 @@
 
 			.mountain-fill {
 				position: absolute;
-				left: 0;
-				right: 0;
-				bottom: 0;
+				left: 0; right: 0; bottom: 0;
 				height: 100%;
-				background: linear-gradient(180deg, #ffb4a1 0%, #ff8f7a 100%);
+				background: linear-gradient(180deg, #f59e6b 0%, #e8744a 100%);
 				transition: height 450ms ease;
 			}
 
 			.mountain-snow {
 				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
+				top: 0; left: 0; right: 0;
 				height: 22%;
 				background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.55));
 			}
 
-			.mountain-label {
-				font-size: .88rem;
-				font-weight: 700;
-				text-align: center;
-			}
+			.mountain-label { font-size: .88rem; font-weight: 600; text-align: center; color: var(--text-muted); }
 
-			.mountain-stats {
-				display: grid;
-				gap: .4rem;
-			}
+			.mountain-stats { display: grid; gap: .4rem; }
 
 			.stat-row {
 				display: flex;
 				justify-content: space-between;
 				gap: .5rem;
 				padding: .45rem .55rem;
-				border-radius: 10px;
-				background: rgba(255, 211, 182, .35);
-				border: 1px solid rgba(0,105,92,.2);
+				border-radius: 8px;
+				background: var(--bg);
+				border: 1px solid var(--border);
 				font-size: .86rem;
-				font-weight: 700;
+				font-weight: 600;
 			}
-			footer { margin-top:1.2rem; text-align:center; }
 
 			@media (max-width: 680px) {
-				.page { width:min(1000px,96vw); padding:0.9rem 0 2rem; }
-				.topnav { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:.45rem; }
-				.topnav a { text-align:center; padding:.55rem .5rem; font-size:.92rem; }
-				.hero { border-radius:20px; padding:1rem; }
-				.cards { grid-template-columns:1fr; gap:.75rem; }
-				.card, .steps li { padding:.8rem; }
 				.unstuck-grid { grid-template-columns: 1fr; }
 				.debt-row { grid-template-columns: 1fr 1fr; }
 				.debt-row.head { display: none; }
-				.control-strip,
-				.result-grid { grid-template-columns: 1fr; }
+				.control-strip, .result-grid { grid-template-columns: 1fr; }
 				.mountain-shell { height: 240px; }
-			}
-
-			@media (max-width: 420px) {
-				h1 { font-size:clamp(1.7rem,8.4vw,2.15rem); }
-				.topnav { grid-template-columns:1fr; }
-				.hero p, footer { font-size:.95rem; }
 			}
 		</style>
 	</head>
 	<body>
+		<nav class="top-nav" aria-label="Site navigation">
+			<div class="top-nav-inner">
+				<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
+				<a class="nav-btn" href="index.html">Home</a>
+				<a class="nav-btn" href="budgeting.html">Budgeting</a>
+				<a class="nav-btn active" href="debt.html">Debt</a>
+				<a class="nav-btn" href="saving.html">Saving</a>
+				<a class="nav-btn" href="spending.html">Spending</a>
+				<a class="nav-btn" href="investment.html">Investing</a>
+				<a class="nav-btn" href="retirement.html">Retirement</a>
+			</div>
+		</nav>
 		<main class="page">
-			<nav class="topnav" aria-label="Site links">
-				<a href="index.html">Home</a>
-				<a href="budgeting.html">Budgeting</a>
-				<a href="spending.html">Spending</a>
-				<a href="saving.html">Saving</a>
-				<a href="investment.html">Investing</a>
-				<a href="retirement.html">Retirement</a>
-			</nav>
 			<section class="hero">
+				<p class="hero-eyebrow">Debt</p>
 				<h1>Debt Payoff Basics</h1>
-				<p>Debt can feel overwhelming, but a clear plan lowers stress. Focus on progress, not perfection.</p>
+				<p>Debt can feel overwhelming, but a clear plan reduces stress. Focus on progress, not perfection.</p>
 			</section>
 			<section class="cards" aria-label="Debt essentials">
 				<article class="card">
@@ -344,7 +269,7 @@
 					</div>
 				</div>
 			</section>
-			<footer>Consistency beats intensity when paying off debt.</footer>
+			<footer>&copy; 2026 Financial Freedom &mdash; Consistency beats intensity when paying off debt.</footer>
 		</main>
 		<script>
 			(function () {

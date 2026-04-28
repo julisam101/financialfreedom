@@ -8,44 +8,22 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
 			rel="stylesheet"
 		/>
+		<link rel="stylesheet" href="shared.css" />
 		<style>
-			:root { --mint-green:#a8e6cf; --soft-peach:#ffd3b6; --lemon-yellow:#fff9c4; --deep-teal:#00695c; --off-white:#fafaf7; }
-			html { -webkit-text-size-adjust: 100%; }
-			* { box-sizing: border-box; }
-			body { margin:0; font-family:"Nunito","Segoe UI",sans-serif; color:var(--deep-teal); background:radial-gradient(circle at 15% 15%, rgba(255,211,182,.58), transparent 35%),radial-gradient(circle at 86% 12%, rgba(255,249,196,.86), transparent 32%),linear-gradient(140deg,#f6fff8,var(--off-white)); }
-			.page { width:min(1000px,92vw); margin:0 auto; padding:1.2rem 0 2.5rem; }
-			.topnav { display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:.9rem; }
-			.topnav a { text-decoration:none; color:var(--deep-teal); font-weight:700; background:rgba(250,250,247,.9); border:1.8px solid rgba(0,105,92,.2); border-radius:999px; padding:.45rem .8rem; }
-			.hero { background:linear-gradient(145deg, rgba(168,230,207,.95), rgba(255,211,182,.9)); border-radius:26px; padding:clamp(1.3rem,3vw,2rem); box-shadow:0 16px 36px rgba(0,105,92,.14); }
-			h1,h2,h3 { font-family:"Baloo 2","Trebuchet MS",sans-serif; margin:0; }
-			h1 { font-size:clamp(2rem,4vw,3rem); line-height:1.1; }
-			.hero p { max-width:60ch; margin:.8rem 0 0; }
-			.cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem; margin-top:1rem; }
-			.card { background:rgba(250,250,247,.95); border-radius:18px; border:2px solid rgba(0,105,92,.16); padding:.9rem; box-shadow:0 10px 22px rgba(0,105,92,.08); }
-			.chip { display:inline-block; background:var(--lemon-yellow); font-weight:700; border-radius:999px; padding:.2rem .7rem; }
-			.steps { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.7rem; }
-			.steps li { background:rgba(168,230,207,.42); border:1.5px dashed rgba(0,105,92,.35); border-radius:14px; padding:.85rem; }
-			.step-title { font-weight:800; }
-
 			.traditional {
-				margin-top: 1rem;
-				background: rgba(250,250,247,.97);
-				border: 2px solid rgba(0,105,92,.18);
-				border-radius: 20px;
-				padding: .95rem;
-				box-shadow: 0 12px 28px rgba(0,105,92,.08);
+				margin-top: 2rem;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 1.6rem;
+				box-shadow: var(--shadow-sm);
 			}
 
-			.traditional h2 {
-				font-size: clamp(1.35rem, 3vw, 2rem);
-			}
-
-			.traditional p {
-				margin: .45rem 0 0;
-			}
+			.traditional h2 { font-size: clamp(1.35rem, 3vw, 1.85rem); color: var(--navy); }
+			.traditional p { margin: .45rem 0 0; }
 
 			.building-grid {
 				margin-top: .8rem;
@@ -55,30 +33,24 @@
 			}
 
 			.building-card {
-				background: rgba(255,255,255,.63);
-				border: 1.5px solid rgba(0,105,92,.18);
-				border-radius: 14px;
+				background: var(--bg);
+				border: 1px solid var(--border);
+				border-radius: 10px;
 				padding: .7rem;
 			}
 
-			.building-card h3 {
-				font-size: 1.08rem;
-			}
+			.building-card h3 { font-size: 1rem; color: var(--navy); }
 
 			.visual {
 				margin-top: .45rem;
-				height: 130px;
-				border-radius: 10px;
-				border: 1px dashed rgba(0,105,92,.28);
-				background: rgba(255,249,196,.35);
+				height: 120px;
+				border-radius: 8px;
+				border: 1px solid var(--border);
+				background: var(--teal-light);
 				padding: .35rem;
 			}
 
-			.visual svg {
-				width: 100%;
-				height: 100%;
-				display: block;
-			}
+			.visual svg { width: 100%; height: 100%; display: block; }
 
 			.basket {
 				display: grid;
@@ -91,14 +63,14 @@
 				display: grid;
 				place-items: center;
 				height: 26px;
-				border-radius: 8px;
+				border-radius: 6px;
 				font-size: .7rem;
-				font-weight: 800;
-				border: 1px solid rgba(0,105,92,.2);
+				font-weight: 700;
+				border: 1px solid var(--border);
 			}
 
-			.token.stock { background: #ffd3b6; }
-			.token.bond { background: #a8e6cf; }
+			.token.stock { background: #fde8e0; }
+			.token.bond { background: var(--teal-light); }
 
 			.interactive-grid {
 				margin-top: .9rem;
@@ -108,55 +80,24 @@
 			}
 
 			.tool {
-				background: rgba(255,255,255,.63);
-				border: 1.5px solid rgba(0,105,92,.18);
-				border-radius: 14px;
+				background: var(--bg);
+				border: 1px solid var(--border);
+				border-radius: 10px;
 				padding: .7rem;
 			}
 
-			.tool h3 {
-				font-size: 1.08rem;
-			}
-
-			label {
-				display: block;
-				font-size: .86rem;
-				font-weight: 700;
-				margin-bottom: .2rem;
-			}
-
-			input[type="range"],
-			select {
-				width: 100%;
-			}
-
-			select {
-				padding: .48rem .52rem;
-				border-radius: 10px;
-				border: 1.5px solid rgba(0,105,92,.24);
-				background: rgba(250,250,247,.95);
-				font: inherit;
-				color: var(--deep-teal);
-			}
-
-			input[type="range"] {
-				accent-color: var(--deep-teal);
-			}
+			.tool h3 { font-size: 1rem; color: var(--navy); }
 
 			.range-head {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
 				font-size: .86rem;
-				font-weight: 700;
+				font-weight: 600;
 				margin: .45rem 0 .2rem;
 			}
 
-			.growth-bars {
-				margin-top: .5rem;
-				display: grid;
-				gap: .4rem;
-			}
+			.growth-bars { margin-top: .5rem; display: grid; gap: .4rem; }
 
 			.growth-row {
 				display: grid;
@@ -164,35 +105,24 @@
 				gap: .35rem;
 				align-items: center;
 				font-size: .78rem;
-				font-weight: 700;
+				font-weight: 600;
 			}
 
-			.growth-track {
-				height: 12px;
-				border-radius: 999px;
-				background: rgba(0,105,92,.12);
-				overflow: hidden;
-			}
-
-			.growth-fill {
-				height: 100%;
-				width: 0%;
-				border-radius: inherit;
-				transition: width 340ms ease;
-			}
-
-			.growth-fill.low { background: #a8e6cf; }
-			.growth-fill.mid { background: #ffd3b6; }
-			.growth-fill.high { background: #fff9c4; }
+			.growth-track { height: 12px; border-radius: 999px; background: var(--border); overflow: hidden; }
+			.growth-fill { height: 100%; width: 0%; border-radius: inherit; transition: width 340ms ease; }
+			.growth-fill.low { background: var(--teal-light); }
+			.growth-fill.mid { background: #f59e6b; }
+			.growth-fill.high { background: var(--accent); }
 
 			.helper {
 				margin-top: .5rem;
 				font-size: .83rem;
-				font-weight: 700;
-				background: rgba(255,249,196,.45);
-				border: 1.5px dashed rgba(0,105,92,.3);
-				border-radius: 10px;
+				font-weight: 600;
+				background: var(--teal-light);
+				border: 1px solid var(--border);
+				border-radius: 8px;
 				padding: .42rem .5rem;
+				color: var(--teal);
 			}
 
 			.mix-pill {
@@ -201,89 +131,59 @@
 				grid-template-columns: 1fr 1fr;
 				border-radius: 999px;
 				overflow: hidden;
-				border: 1px solid rgba(0,105,92,.2);
+				border: 1px solid var(--border);
 			}
 
-			.mix-pill .stock,
-			.mix-pill .bond {
-				padding: .3rem .45rem;
-				font-size: .78rem;
-				font-weight: 800;
-				text-align: center;
-			}
-
-			.mix-pill .stock { background: #ffd3b6; }
-			.mix-pill .bond { background: #a8e6cf; }
+			.mix-pill .stock, .mix-pill .bond { padding: .3rem .45rem; font-size: .78rem; font-weight: 700; text-align: center; }
+			.mix-pill .stock { background: #fde8e0; }
+			.mix-pill .bond { background: var(--teal-light); }
 
 			.mini-chart {
 				margin-top: .45rem;
 				height: 120px;
-				border-radius: 10px;
-				background: rgba(250,250,247,.95);
-				border: 1px solid rgba(0,105,92,.2);
+				border-radius: 8px;
+				background: var(--bg);
+				border: 1px solid var(--border);
 				padding: .25rem;
 			}
 
-			.mini-chart svg {
-				width: 100%;
-				height: 100%;
-				display: block;
-			}
+			.mini-chart svg { width: 100%; height: 100%; display: block; }
 
 			.behavior {
 				margin-top: .45rem;
 				height: 150px;
-				border-radius: 10px;
-				background: rgba(250,250,247,.95);
-				border: 1px solid rgba(0,105,92,.2);
+				border-radius: 8px;
+				background: var(--bg);
+				border: 1px solid var(--border);
 				padding: .25rem;
 			}
 
-			.behavior svg {
-				width: 100%;
-				height: 100%;
-				display: block;
-			}
+			.behavior svg { width: 100%; height: 100%; display: block; }
 
-			.principal-tag {
-				margin-top: .35rem;
-				font-size: .78rem;
-				font-weight: 800;
-				text-align: right;
-				color: #00695c;
-			}
-			footer { margin-top:1.2rem; text-align:center; }
+			.principal-tag { margin-top: .35rem; font-size: .78rem; font-weight: 700; text-align: right; color: var(--teal); }
 
 			@media (max-width: 680px) {
-				.page { width:min(1000px,96vw); padding:0.9rem 0 2rem; }
-				.topnav { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:.45rem; }
-				.topnav a { text-align:center; padding:.55rem .5rem; font-size:.92rem; }
-				.hero { border-radius:20px; padding:1rem; }
-				.cards { grid-template-columns:1fr; gap:.75rem; }
-				.card, .steps li { padding:.8rem; }
-				.building-grid,
-				.interactive-grid { grid-template-columns: 1fr; }
+				.building-grid, .interactive-grid { grid-template-columns: 1fr; }
 				.growth-row { grid-template-columns: 38px 1fr 72px; }
-			}
-
-			@media (max-width: 420px) {
-				h1 { font-size:clamp(1.7rem,8.4vw,2.15rem); }
-				.topnav { grid-template-columns:1fr; }
-				.hero p, footer { font-size:.95rem; }
 			}
 		</style>
 	</head>
 	<body>
+		<nav class="top-nav" aria-label="Site navigation">
+			<div class="top-nav-inner">
+				<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
+				<a class="nav-btn" href="index.html">Home</a>
+				<a class="nav-btn" href="budgeting.html">Budgeting</a>
+				<a class="nav-btn" href="debt.html">Debt</a>
+				<a class="nav-btn" href="saving.html">Saving</a>
+				<a class="nav-btn" href="spending.html">Spending</a>
+				<a class="nav-btn active" href="investment.html">Investing</a>
+				<a class="nav-btn" href="retirement.html">Retirement</a>
+			</div>
+		</nav>
 		<main class="page">
-			<nav class="topnav" aria-label="Site links">
-				<a href="index.html">Home</a>
-				<a href="budgeting.html">Budgeting</a>
-				<a href="spending.html">Spending</a>
-				<a href="saving.html">Saving</a>
-				<a href="debt.html">Debt</a>
-				<a href="retirement.html">Retirement</a>
-			</nav>
 			<section class="hero">
+				<p class="hero-eyebrow">Investing</p>
 				<h1>Investing Basics</h1>
 				<p>Investing helps your money grow over time. Start with simple ideas and a long-term mindset.</p>
 			</section>
@@ -403,6 +303,7 @@
 				</div>
 			</section>
 			<footer>Simple, consistent investing habits usually win over time.</footer>
+					<footer>&copy; 2026 Financial Freedom &mdash; Simple, consistent investing habits usually win over time.</footer>
 		</main>
 		<script>
 			(function () {
