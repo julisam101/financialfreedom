@@ -128,41 +128,6 @@
 				transform: translateY(-2px) scale(1.02);
 			}
 
-			.palette-strip {
-				margin: 1.25rem 0 0;
-				display: grid;
-				grid-template-columns: repeat(5, 1fr);
-				border-radius: 16px;
-				overflow: hidden;
-				border: 2px solid rgba(0, 105, 92, 0.16);
-			}
-
-			.swatch {
-				min-height: 64px;
-				display: grid;
-				place-items: center;
-				text-align: center;
-				font-size: 0.78rem;
-				font-weight: 700;
-			}
-
-			.swatch:nth-child(1) {
-				background: var(--mint-green);
-			}
-			.swatch:nth-child(2) {
-				background: var(--soft-peach);
-			}
-			.swatch:nth-child(3) {
-				background: var(--lemon-yellow);
-			}
-			.swatch:nth-child(4) {
-				background: var(--deep-teal);
-				color: var(--off-white);
-			}
-			.swatch:nth-child(5) {
-				background: var(--off-white);
-			}
-
 			.section {
 				margin-top: 1.4rem;
 			}
@@ -268,14 +233,6 @@
 					text-align: center;
 				}
 
-				.palette-strip {
-					grid-template-columns: 1fr;
-				}
-
-				.swatch {
-					min-height: 50px;
-				}
-
 				.cards {
 					grid-template-columns: 1fr;
 				}
@@ -304,13 +261,6 @@
 				<div class="hero-cta">
 					<a class="btn btn-primary" href="#start">Start Your Journey</a>
 					<a class="btn btn-secondary" href="#topics">Browse Topics</a>
-				</div>
-				<div class="palette-strip" aria-label="Brand color palette">
-					<div class="swatch">Mint Green<br />#A8E6CF</div>
-					<div class="swatch">Soft Peach<br />#FFD3B6</div>
-					<div class="swatch">Lemon Yellow<br />#FFF9C4</div>
-					<div class="swatch">Deep Teal<br />#00695C</div>
-					<div class="swatch">Off-white<br />#FAFAF7</div>
 				</div>
 			</section>
 
