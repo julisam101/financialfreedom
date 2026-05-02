@@ -268,6 +268,91 @@
 			.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
 			.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
 
+			/* ── Live Market Snapshot ── */
+			.market-snap {
+				margin-top: 1rem;
+				display: inline-flex;
+				align-items: center;
+				gap: .5rem;
+				flex-wrap: wrap;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: 8px;
+				padding: .3rem .6rem;
+				box-shadow: var(--shadow-sm);
+				font-size: .72rem;
+			}
+
+			.market-snap-head { display: none; }
+			.market-snap-subtitle { display: none; }
+			.market-note {
+				font-size: .65rem;
+				color: var(--text-muted);
+				white-space: nowrap;
+				border-left: 1px solid var(--border);
+				padding-left: .5rem;
+				margin-left: .1rem;
+			}
+
+			.market-tiles {
+				display: flex;
+				gap: .5rem;
+				align-items: center;
+				flex-wrap: wrap;
+			}
+
+			.market-tile {
+				display: flex;
+				align-items: baseline;
+				gap: .25rem;
+				padding: 0;
+				border: none;
+				background: none;
+				border-radius: 0;
+				border-right: 1px solid var(--border);
+				padding-right: .5rem;
+			}
+			.market-tile:last-child { border-right: none; padding-right: 0; }
+
+			.tile-sym {
+				font-size: .65rem;
+				font-weight: 800;
+				color: var(--text-muted);
+				letter-spacing: .04em;
+			}
+
+			.tile-label { display: none; }
+
+			.tile-price {
+				font-size: .75rem;
+				font-weight: 700;
+				color: var(--navy);
+				line-height: 1;
+			}
+
+			.tile-change {
+				font-size: .68rem;
+				font-weight: 700;
+				margin-top: 0;
+			}
+
+			.tile-change.up   { color: #0d7a5f; }
+			.tile-change.down { color: #e8744a; }
+
+			.market-tile-loading {
+				width: 80px;
+				height: 14px;
+				border-radius: 4px;
+				background: linear-gradient(90deg, var(--bg) 0%, var(--border) 50%, var(--bg) 100%);
+				background-size: 200% 100%;
+				animation: ms-shimmer 1.3s ease-in-out infinite;
+			}
+
+			@keyframes ms-shimmer {
+				0%   { background-position: 200% 0; }
+				100% { background-position: -200% 0; }
+			}
+
 			@media (max-width: 680px) {
 				.building-grid,
 				.interactive-grid {
@@ -305,7 +390,22 @@
 				<p>Investing helps your money grow over time. Start with simple ideas and a long-term mindset.</p>
 			</section>
 
-			<section class="cards" aria-label="Investing essentials">
+			<!-- Live Market Snapshot ─────────────────────────────────────── -->
+			<section class="market-snap" aria-label="Live market snapshot" id="marketSnap">
+				<div class="market-snap-head">
+					<div>
+						<span class="chip">Live Market</span>
+						<p class="market-snap-subtitle">S&amp;P 500, Dow Jones &amp; Nasdaq-100 &mdash; latest closing prices. Prices delayed; for educational illustration only.</p>
+					</div>
+					<span class="market-note" id="marketNote">Loading&hellip;</span>
+				</div>
+				<div class="market-tiles" id="marketTiles">
+					<div class="market-tile market-tile-loading" aria-hidden="true"></div>
+					<div class="market-tile market-tile-loading" aria-hidden="true"></div>
+					<div class="market-tile market-tile-loading" aria-hidden="true"></div>
+				</div>
+			</section>
+			<!-- ──────────────────────────────────────────────────────────── -->
 				<article class="card">
 					<span class="chip">Big Idea</span>
 					<h3>Time in market matters</h3>
@@ -328,6 +428,24 @@
 				<li><span class="step-title">Step 2:</span> Choose a simple diversified strategy.</li>
 				<li><span class="step-title">Step 3:</span> Invest regularly and avoid panic decisions.</li>
 			</ol>
+
+			<section class="cards" aria-label="Investing essentials">
+				<article class="card">
+					<span class="chip">Big Idea</span>
+					<h3>Time in market matters</h3>
+					<p>Starting early often matters more than investing huge amounts later.</p>
+				</article>
+				<article class="card">
+					<span class="chip">Risk Basics</span>
+					<h3>Diversify your money</h3>
+					<p>Spread investments to reduce the impact of one bad performer.</p>
+				</article>
+				<article class="card">
+					<span class="chip">Beginner Move</span>
+					<h3>Automate monthly investing</h3>
+					<p>Set a steady amount each month to build discipline and consistency.</p>
+				</article>
+			</section>
 
 			<section class="order-ops" aria-label="Investing order of operations">
 				<span class="chip">Start Here</span>
@@ -471,8 +589,6 @@
 						<label for="wbMonthly">Monthly investment amount ($)</label>
 						<input id="wbMonthly" type="number" min="0" step="25" value="250" />
 					</div>
-					<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
-					<p class="wb-hint">Chart compares Low / Mid / High growth scenarios over your chosen time horizon. Download an editable Excel file with year-by-year projections.</p>
 					<button class="wb-btn" onclick="exportInvestExcel()">&#128229; Download as Excel</button>
 				</div>
 			</section>
@@ -779,6 +895,119 @@
 
 				initWorkbookChart();
 				refreshWorkbookChart();
+			})();
+		</script>
+
+		<script>
+			/* ── Marketstack Live Market Snapshot ──────────────────────────
+			   Free plan is HTTP-only. Fetch is skipped if page is on HTTPS.
+			   sessionStorage caching (4-hour TTL) keeps API usage low.
+			   Tickers: SPY = S&P 500 · DIA = Dow Jones · QQQ = Nasdaq-100
+			   ─────────────────────────────────────────────────────────── */
+			(function () {
+				var API_KEY   = 'a3e44ac43e6674239c8f9aced75c15a9';
+				var CACHE_KEY = 'ffMarketSnap';
+				var CACHE_TTL = 4 * 60 * 60 * 1000; /* 4 hours */
+
+				var SYMBOLS = [
+					{ sym: 'SPY', label: 'S&P 500' },
+					{ sym: 'DIA', label: 'Dow Jones' },
+					{ sym: 'QQQ', label: 'Nasdaq-100' }
+				];
+
+				var tilesEl = document.getElementById('marketTiles');
+				var noteEl  = document.getElementById('marketNote');
+
+				function fmt(n) {
+					return '$' + Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+				}
+
+				function render(snap) {
+					tilesEl.innerHTML = '';
+					SYMBOLS.forEach(function (s) {
+						var d = snap[s.sym];
+						if (!d) return;
+						var change = d.close - d.prev;
+						var pct    = d.prev > 0 ? (change / d.prev) * 100 : 0;
+						var up     = change >= 0;
+						var tile   = document.createElement('div');
+						tile.className = 'market-tile';
+						tile.innerHTML =
+							'<div class="tile-sym">' + s.sym + '</div>' +
+							'<div class="tile-label">' + s.label + '</div>' +
+							'<div class="tile-price">' + fmt(d.close) + '</div>' +
+							'<div class="tile-change ' + (up ? 'up' : 'down') + '">' +
+								(up ? '&#9650;&nbsp;+' : '&#9660;&nbsp;') +
+								fmt(Math.abs(change)) + '&ensp;(' + (up ? '+' : '') + pct.toFixed(2) + '%)' +
+							'</div>';
+						tilesEl.appendChild(tile);
+					});
+					noteEl.textContent = 'Last close \u00b7 ' + snap._date;
+				}
+
+				function showError(msg) {
+					tilesEl.innerHTML =
+						'<p style="grid-column:1/-1;text-align:center;font-size:.88rem;' +
+						'color:var(--text-muted);margin:0;padding:.6rem 0">' +
+						(msg || 'Market data unavailable.') + '</p>';
+					noteEl.textContent = 'Unavailable';
+				}
+
+				/* Try sessionStorage cache first */
+				try {
+					var cached = JSON.parse(sessionStorage.getItem(CACHE_KEY));
+					if (cached && (Date.now() - (cached._ts || 0)) < CACHE_TTL) {
+						render(cached);
+						return;
+					}
+				} catch (e) { /* ignore */ }
+
+				/* Marketstack free tier is HTTP-only; skip if page is on HTTPS */
+				if (window.location.protocol === 'https:') {
+					showError('Live prices require the page to be opened over HTTP. Data unavailable in hosted/HTTPS mode.');
+					return;
+				}
+
+				/* Fetch last 2 EOD records per symbol to calculate day change */
+				var url = 'http://api.marketstack.com/v1/eod' +
+				          '?access_key=' + API_KEY +
+				          '&symbols=SPY,DIA,QQQ&limit=10&sort=DESC';
+
+				fetch(url)
+					.then(function (res) {
+						if (!res.ok) { throw new Error('HTTP ' + res.status); }
+						return res.json();
+					})
+					.then(function (json) {
+						if (!json.data || json.data.length === 0) { throw new Error('empty'); }
+
+						var snap = {};
+						json.data.forEach(function (item) {
+							var sym = item.symbol;
+							if (!snap[sym]) {
+								snap[sym] = { close: item.close, prev: null };
+								snap._date = new Date(item.date).toLocaleDateString('en-US', {
+									month: 'short', day: 'numeric', year: 'numeric'
+								});
+							} else if (snap[sym].prev === null) {
+								snap[sym].prev = item.close;
+							}
+						});
+
+						/* Fallback: if only one record exists, treat prev = close (0 change) */
+						SYMBOLS.forEach(function (s) {
+							if (snap[s.sym] && snap[s.sym].prev === null) {
+								snap[s.sym].prev = snap[s.sym].close;
+							}
+						});
+
+						snap._ts = Date.now();
+						try { sessionStorage.setItem(CACHE_KEY, JSON.stringify(snap)); } catch (e) { /* ignore */ }
+						render(snap);
+					})
+					.catch(function () {
+						showError('Market data unavailable right now. Try again later.');
+					});
 			})();
 		</script>
 

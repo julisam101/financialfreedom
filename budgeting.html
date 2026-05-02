@@ -163,7 +163,7 @@
 			.bar-fill.savings { background: var(--savings-color); }
 
 			.pie {
-				width: min(240px, 100%);
+				width: min(130px, 100%);
 				aspect-ratio: 1 / 1;
 				margin-inline: auto;
 				border-radius: 50%;
@@ -525,8 +525,6 @@
 <section class="section" id="workbook" aria-label="Your budget snapshot">
 <div class="section-header"><h2>Your Budget Snapshot</h2><span class="section-tag">Export Ready</span></div>
 <div class="wb-card">
-<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
-<p class="wb-hint">Chart updates live as you adjust your numbers above. Download an editable Excel file with your full budget breakdown.</p>
 <button class="wb-btn" onclick="exportBudgetExcel()">&#128229; Download as Excel</button>
 </div>
 </section>

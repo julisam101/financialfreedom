@@ -339,35 +339,6 @@ to   { transform: translateY(0);    opacity: 1; }
 </div>
 </div>
 
-<section class="goal-card" aria-labelledby="goalTitle">
-<h2 id="goalTitle">Set your monthly goal</h2>
-<p>Choose one of your selected topics, set a monthly target, and get instant feedback before you build your plan.</p>
-<form class="goal-form" id="goalForm" novalidate>
-<div class="field">
-<label for="goalTopic">Goal topic</label>
-<select id="goalTopic" name="goalTopic">
-<option value="">Select a topic first</option>
-</select>
-<div class="field-error" id="goalTopicError" aria-live="polite"></div>
-</div>
-<div class="field">
-<label for="goalAmount">Monthly target amount</label>
-<input id="goalAmount" name="goalAmount" type="number" min="25" max="10000" step="25" placeholder="Example: 300" />
-<div class="field-error" id="goalAmountError" aria-live="polite"></div>
-</div>
-<div class="field">
-<label for="goalMonth">Target month</label>
-<input id="goalMonth" name="goalMonth" type="month" />
-<div class="field-error" id="goalMonthError" aria-live="polite"></div>
-</div>
-<div class="goal-actions">
-<p class="goal-hint" id="goalHint">Pick at least one topic to unlock this form.</p>
-<button class="btn btn-secondary" type="submit">Save monthly goal</button>
-</div>
-<div class="goal-feedback" id="goalFeedback" aria-live="polite"></div>
-</form>
-</section>
-
 <div class="action-bar">
 <a href="index.html" class="btn btn-ghost">&larr; Back to home</a>
 <p class="selection-count"><span id="countNum">0</span> topic(s) selected</p>
