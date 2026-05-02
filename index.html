@@ -241,6 +241,74 @@
 				gap: 1rem;
 			}
 
+			.topic-toolbar {
+				display: flex;
+				align-items: end;
+				justify-content: space-between;
+				gap: 0.9rem;
+				flex-wrap: wrap;
+				margin-bottom: 1rem;
+				padding: 0.95rem 1rem;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				box-shadow: var(--shadow-sm);
+			}
+
+			.toolbar-group {
+				display: grid;
+				gap: 0.32rem;
+				min-width: 220px;
+				flex: 1;
+			}
+
+			.toolbar-group label {
+				font-size: 0.77rem;
+				font-weight: 700;
+				letter-spacing: 0.9px;
+				text-transform: uppercase;
+				color: var(--text-muted);
+			}
+
+			.toolbar-group select {
+				width: 100%;
+				padding: 0.72rem 0.85rem;
+				font: inherit;
+				color: var(--text);
+				background: #fff;
+				border: 1.5px solid var(--border);
+				border-radius: 10px;
+				transition: border-color 180ms ease, box-shadow 180ms ease;
+			}
+
+			.toolbar-group select:focus {
+				outline: none;
+				border-color: var(--teal);
+				box-shadow: 0 0 0 3px rgba(13, 122, 95, 0.12);
+			}
+
+			.topic-summary {
+				margin: 0;
+				font-size: 0.88rem;
+				font-weight: 600;
+				color: var(--text-muted);
+			}
+
+			.empty-state {
+				display: none;
+				margin-top: 1rem;
+				padding: 1rem 1.1rem;
+				background: var(--surface);
+				border: 1px dashed var(--border);
+				border-radius: var(--radius);
+				color: var(--text-muted);
+				font-size: 0.92rem;
+			}
+
+			.empty-state.visible {
+				display: block;
+			}
+
 			.card {
 				background: var(--surface);
 				border: 1px solid var(--border);
@@ -370,6 +438,7 @@
 				.hero-cta { flex-direction: column; align-items: stretch; }
 				.btn { text-align: center; }
 				.cards { grid-template-columns: 1fr; }
+				.topic-toolbar { padding: 0.9rem; }
 			}
 
 			@media (max-width: 600px) {
@@ -415,49 +484,70 @@
 					<h2>Core Topics</h2>
 					<span class="section-tag">Beginner-Friendly</span>
 				</div>
-				<div class="cards">
-					<a class="card" href="budgeting.html">
+				<div class="topic-toolbar" aria-label="Topic filters and sorting">
+					<div class="toolbar-group">
+						<label for="topicFilter">Filter topics</label>
+						<select id="topicFilter">
+							<option value="all">Show all topics</option>
+							<option value="start">Best to start with</option>
+							<option value="stability">Build stability</option>
+							<option value="future">Plan ahead</option>
+						</select>
+					</div>
+					<div class="toolbar-group">
+						<label for="topicSort">Sort topics</label>
+						<select id="topicSort">
+							<option value="recommended">Recommended order</option>
+							<option value="az">A to Z</option>
+							<option value="goal">Fastest practical win</option>
+						</select>
+					</div>
+					<p class="topic-summary" id="topicSummary">Showing all 6 topics.</p>
+				</div>
+				<div class="cards" id="topicCards">
+					<a class="card" href="budgeting.html" data-focus="start stability" data-recommended="1" data-goal="2" data-title="Budgeting">
 						<span class="chip">Budgeting</span>
 						<h3>Know where your money goes</h3>
 						<p>Track monthly spending by category and build a realistic budget you can stick to.</p>
 						<span class="card-arrow">Learn more &rarr;</span>
 					</a>
 
-					<a class="card" href="debt.html">
+					<a class="card" href="debt.html" data-focus="stability" data-recommended="3" data-goal="1" data-title="Debt">
 						<span class="chip">Debt</span>
 						<h3>Pay off balances with a plan</h3>
 						<p>Learn simple payoff strategies and choose the method that fits your situation.</p>
 						<span class="card-arrow">Learn more &rarr;</span>
 					</a>
 
-					<a class="card" href="saving.html">
+					<a class="card" href="saving.html" data-focus="start stability" data-recommended="2" data-goal="3" data-title="Saving">
 						<span class="chip">Saving</span>
 						<h3>Build an emergency cushion</h3>
 						<p>Start small, stay consistent, and protect yourself from unexpected expenses.</p>
 						<span class="card-arrow">Learn more &rarr;</span>
 					</a>
 
-					<a class="card" href="investment.html">
+					<a class="card" href="investment.html" data-focus="future" data-recommended="5" data-goal="5" data-title="Investing">
 						<span class="chip">Investing</span>
 						<h3>Understand the fundamentals</h3>
 						<p>Explore concepts like risk, time horizon, and long-term growth in plain language.</p>
 						<span class="card-arrow">Learn more &rarr;</span>
 					</a>
 
-					<a class="card" href="spending.html">
+					<a class="card" href="spending.html" data-focus="start stability" data-recommended="4" data-goal="4" data-title="Spending">
 						<span class="chip">Spending</span>
 						<h3>Spend with intention</h3>
 						<p>Identify spending habits, cut what doesn't serve you, and put your money where it matters.</p>
 						<span class="card-arrow">Learn more &rarr;</span>
 					</a>
 
-					<a class="card" href="retirement.html">
+					<a class="card" href="retirement.html" data-focus="future" data-recommended="6" data-goal="6" data-title="Retirement">
 						<span class="chip">Retirement</span>
 						<h3>Plan for your future self</h3>
 						<p>Learn the basics of retirement accounts and why starting early makes a big difference.</p>
 						<span class="card-arrow">Learn more &rarr;</span>
 					</a>
 				</div>
+				<div class="empty-state" id="topicEmptyState">No topics match this filter yet. Try a different view.</div>
 			</section>
 
 			<section class="section" id="start" aria-label="Getting started steps">
@@ -494,5 +584,69 @@
 				&copy; 2026 Financial Freedom &mdash; Built for anyone who wants clarity and confidence with money.
 			</footer>
 		</main>
+		<script>
+			(function () {
+				const STORAGE_KEY = "ffSitePrefs";
+				let prefs;
+				try {
+					prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+				} catch (error) {
+					prefs = {};
+				}
+				prefs.lastVisitedPage = "index.html";
+				prefs.lastVisitedAt = new Date().toISOString();
+
+				const filterSelect = document.getElementById("topicFilter");
+				const sortSelect = document.getElementById("topicSort");
+				const cardsContainer = document.getElementById("topicCards");
+				const cards = Array.from(cardsContainer.querySelectorAll(".card"));
+				const summary = document.getElementById("topicSummary");
+				const emptyState = document.getElementById("topicEmptyState");
+
+				const savedView = prefs.topicGridView || {};
+				if (savedView.filter) filterSelect.value = savedView.filter;
+				if (savedView.sort) sortSelect.value = savedView.sort;
+
+				function applyTopicView() {
+					const filterValue = filterSelect.value;
+					const sortValue = sortSelect.value;
+					const visibleCards = cards.filter(function (card) {
+						if (filterValue === "all") return true;
+						return (card.dataset.focus || "").split(" ").indexOf(filterValue) !== -1;
+					});
+
+					cards.forEach(function (card) {
+						card.style.display = visibleCards.indexOf(card) === -1 ? "none" : "block";
+					});
+
+					visibleCards.sort(function (a, b) {
+						if (sortValue === "az") {
+							return a.dataset.title.localeCompare(b.dataset.title);
+						}
+						if (sortValue === "goal") {
+							return Number(a.dataset.goal) - Number(b.dataset.goal);
+						}
+						return Number(a.dataset.recommended) - Number(b.dataset.recommended);
+					});
+
+					visibleCards.forEach(function (card) {
+						cardsContainer.appendChild(card);
+					});
+
+					emptyState.classList.toggle("visible", visibleCards.length === 0);
+					summary.textContent = visibleCards.length === cards.length && filterValue === "all"
+						? "Showing all 6 topics."
+						: "Showing " + visibleCards.length + " topic" + (visibleCards.length === 1 ? "" : "s") + ".";
+
+					prefs.topicGridView = { filter: filterValue, sort: sortValue };
+					localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+				}
+
+				filterSelect.addEventListener("change", applyTopicView);
+				sortSelect.addEventListener("change", applyTopicView);
+				applyTopicView();
+				localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+			})();
+		</script>
 	</body>
 </html>

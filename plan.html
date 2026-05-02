@@ -183,13 +183,27 @@ investing:  { label: "Investing",       href: "investment.html" },
 retirement: { label: "Retirement",      href: "retirement.html" }
 };
 
+const STORAGE_KEY = 'ffSitePrefs';
 const root = document.getElementById('planRoot');
 const params = new URLSearchParams(window.location.search);
 const raw = params.get('topics') || '';
-const keys = raw
+const savedPrefs = (function () {
+try {
+return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+} catch (error) {
+return {};
+}
+})();
+const sourceTopics = raw || ((savedPrefs.selectedTopics || []).join(','));
+const keys = sourceTopics
 .split(',')
 .map(function (k) { return k.trim(); })
 .filter(function (k) { return !!TOPICS[k]; });
+
+savedPrefs.selectedTopics = keys;
+savedPrefs.lastVisitedPage = 'plan.html';
+savedPrefs.lastVisitedAt = new Date().toISOString();
+localStorage.setItem(STORAGE_KEY, JSON.stringify(savedPrefs));
 
 if (keys.length === 0) {
 root.innerHTML =

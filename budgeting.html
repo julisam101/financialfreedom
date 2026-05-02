@@ -576,6 +576,23 @@ XLSX.writeFile(wb,'my-budget.xlsx');
 })();
 </script>
 
+<script>
+(function () {
+var STORAGE_KEY = 'ffSitePrefs';
+var prefs;
+try {
+prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+} catch (error) {
+prefs = {};
+}
+prefs.lastVisitedPage = 'budgeting.html';
+prefs.lastVisitedAt = new Date().toISOString();
+prefs.selectedTopics = Array.from(new Set((prefs.selectedTopics || []).concat(['budgeting'])));
+prefs.viewedTopics = Array.from(new Set((prefs.viewedTopics || []).concat(['budgeting'])));
+localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+})();
+</script>
+
 	</body>
 </html>
 

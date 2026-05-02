@@ -42,6 +42,102 @@ grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 gap: 0.85rem;
 margin-bottom: 1.8rem;
 }
+.goal-card {
+background: linear-gradient(180deg, #fbfcfd 0%, #f4f8fa 100%);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 1.2rem 1.25rem;
+box-shadow: var(--shadow-sm);
+margin-bottom: 1.5rem;
+}
+.goal-card h2 {
+margin: 0 0 0.3rem;
+font-size: 1.1rem;
+color: var(--navy);
+}
+.goal-card > p {
+margin: 0 0 1rem;
+font-size: 0.92rem;
+color: var(--text-muted);
+line-height: 1.6;
+}
+.goal-form {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 0.85rem;
+align-items: start;
+}
+.field {
+display: grid;
+gap: 0.35rem;
+}
+.field label {
+font-size: 0.82rem;
+font-weight: 700;
+color: var(--navy);
+}
+.field input,
+.field select {
+width: 100%;
+border: 1.5px solid var(--border);
+border-radius: 10px;
+padding: 0.78rem 0.9rem;
+font: inherit;
+background: var(--surface);
+color: var(--text);
+transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+.field input:focus,
+.field select:focus {
+outline: none;
+border-color: var(--teal);
+box-shadow: 0 0 0 3px rgba(13,122,95,0.12);
+}
+.field-error {
+min-height: 1.1rem;
+font-size: 0.78rem;
+font-weight: 600;
+color: #b2473e;
+}
+.field input.invalid,
+.field select.invalid {
+border-color: #d16b61;
+box-shadow: 0 0 0 3px rgba(209,107,97,0.12);
+}
+.goal-actions {
+grid-column: 1 / -1;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 0.75rem;
+flex-wrap: wrap;
+padding-top: 0.15rem;
+}
+.goal-hint {
+margin: 0;
+font-size: 0.82rem;
+color: var(--text-muted);
+}
+.goal-feedback {
+grid-column: 1 / -1;
+border-radius: 10px;
+padding: 0.85rem 0.95rem;
+font-size: 0.88rem;
+font-weight: 600;
+display: none;
+}
+.goal-feedback.error {
+display: block;
+background: #fff3f1;
+border: 1px solid #f0c5bf;
+color: #8c3b31;
+}
+.goal-feedback.success {
+display: block;
+background: #eef9f5;
+border: 1px solid #bfe4d8;
+color: #0b6b52;
+}
 .topic-tile {
 position: relative;
 background: var(--surface);
@@ -169,6 +265,7 @@ to   { transform: translateY(0);    opacity: 1; }
 }
 @media (max-width: 540px) {
 .topic-grid { grid-template-columns: 1fr; }
+.goal-form { grid-template-columns: 1fr; }
 .action-bar { flex-direction: column; align-items: stretch; }
 .action-bar .btn { text-align: center; }
 }
@@ -237,6 +334,35 @@ to   { transform: translateY(0);    opacity: 1; }
 </div>
 </div>
 
+<section class="goal-card" aria-labelledby="goalTitle">
+<h2 id="goalTitle">Set your monthly goal</h2>
+<p>Choose one of your selected topics, set a monthly target, and get instant feedback before you build your plan.</p>
+<form class="goal-form" id="goalForm" novalidate>
+<div class="field">
+<label for="goalTopic">Goal topic</label>
+<select id="goalTopic" name="goalTopic">
+<option value="">Select a topic first</option>
+</select>
+<div class="field-error" id="goalTopicError" aria-live="polite"></div>
+</div>
+<div class="field">
+<label for="goalAmount">Monthly target amount</label>
+<input id="goalAmount" name="goalAmount" type="number" min="25" max="10000" step="25" placeholder="Example: 300" />
+<div class="field-error" id="goalAmountError" aria-live="polite"></div>
+</div>
+<div class="field">
+<label for="goalMonth">Target month</label>
+<input id="goalMonth" name="goalMonth" type="month" />
+<div class="field-error" id="goalMonthError" aria-live="polite"></div>
+</div>
+<div class="goal-actions">
+<p class="goal-hint" id="goalHint">Pick at least one topic to unlock this form.</p>
+<button class="btn btn-secondary" type="submit">Save monthly goal</button>
+</div>
+<div class="goal-feedback" id="goalFeedback" aria-live="polite"></div>
+</form>
+</section>
+
 <div class="action-bar">
 <a href="index.html" class="btn btn-ghost">&larr; Back to home</a>
 <p class="selection-count"><span id="countNum">0</span> topic(s) selected</p>
@@ -271,7 +397,148 @@ investing:  { label: "Investing",        icon: "📈", desc: "Risk, time horizon
 retirement: { label: "Retirement",       icon: "🌅", desc: "Learn the basics of retirement accounts and why starting early matters.", href: "retirement.html" },
 };
 
+const STORAGE_KEY = 'ffSitePrefs';
 let selected = new Set();
+const goalForm = document.getElementById('goalForm');
+const goalTopic = document.getElementById('goalTopic');
+const goalAmount = document.getElementById('goalAmount');
+const goalMonth = document.getElementById('goalMonth');
+const goalHint = document.getElementById('goalHint');
+const goalFeedback = document.getElementById('goalFeedback');
+
+function readPrefs() {
+try {
+return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+} catch (error) {
+return {};
+}
+}
+
+function writePrefs(nextPrefs) {
+localStorage.setItem(STORAGE_KEY, JSON.stringify(nextPrefs));
+}
+
+function saveSelectedTopics() {
+const prefs = readPrefs();
+prefs.selectedTopics = Array.from(selected);
+prefs.lastVisitedPage = 'customize.html';
+prefs.lastVisitedAt = new Date().toISOString();
+writePrefs(prefs);
+}
+
+function restoreSelectedTopics() {
+const prefs = readPrefs();
+const savedTopics = Array.isArray(prefs.selectedTopics) ? prefs.selectedTopics : [];
+savedTopics.forEach(function (key) {
+const tile = document.querySelector('.topic-tile[data-key="' + key + '"]');
+if (!tile || selected.has(key)) return;
+selected.add(key);
+tile.classList.add('selected');
+});
+document.getElementById('countNum').textContent = selected.size;
+document.getElementById('buildBtn').disabled = selected.size === 0;
+}
+
+function restoreGoal() {
+try {
+const saved = JSON.parse(localStorage.getItem('ffMonthlyGoal') || 'null');
+if (!saved) return;
+if (saved.topic && TOPICS[saved.topic]) goalTopic.value = saved.topic;
+if (saved.amount) goalAmount.value = saved.amount;
+if (saved.month) goalMonth.value = saved.month;
+} catch (error) {
+/* ignore invalid saved data */
+}
+}
+
+function updateGoalTopicOptions() {
+const keys = Array.from(selected);
+const currentValue = goalTopic.value;
+goalTopic.innerHTML = '<option value="">Select a topic</option>';
+keys.forEach(function (key) {
+const option = document.createElement('option');
+option.value = key;
+option.textContent = TOPICS[key].label;
+goalTopic.appendChild(option);
+});
+if (keys.indexOf(currentValue) !== -1) {
+goalTopic.value = currentValue;
+}
+goalHint.textContent = keys.length === 0
+? 'Pick at least one topic to unlock this form.'
+: 'Set one clear monthly goal so your plan starts with a measurable target.';
+}
+
+function setFieldError(input, errorId, message) {
+document.getElementById(errorId).textContent = message;
+input.classList.toggle('invalid', Boolean(message));
+}
+
+function clearGoalFeedback() {
+goalFeedback.className = 'goal-feedback';
+goalFeedback.textContent = '';
+}
+
+function validateGoalForm(showFeedback) {
+let valid = true;
+const amount = Number(goalAmount.value);
+const currentMonth = new Date();
+const minMonth = currentMonth.getFullYear() + '-' + String(currentMonth.getMonth() + 1).padStart(2, '0');
+
+if (selected.size === 0) {
+setFieldError(goalTopic, 'goalTopicError', 'Choose at least one topic before saving a goal.');
+valid = false;
+} else if (!goalTopic.value) {
+setFieldError(goalTopic, 'goalTopicError', 'Choose which selected topic this goal belongs to.');
+valid = false;
+} else {
+setFieldError(goalTopic, 'goalTopicError', '');
+}
+
+if (!goalAmount.value) {
+setFieldError(goalAmount, 'goalAmountError', 'Enter a monthly dollar amount.');
+valid = false;
+} else if (!Number.isFinite(amount) || amount < 25 || amount > 10000) {
+setFieldError(goalAmount, 'goalAmountError', 'Use an amount between $25 and $10,000.');
+valid = false;
+} else {
+setFieldError(goalAmount, 'goalAmountError', '');
+}
+
+if (!goalMonth.value) {
+setFieldError(goalMonth, 'goalMonthError', 'Choose the month you want to hit this goal.');
+valid = false;
+} else if (goalMonth.value < minMonth) {
+setFieldError(goalMonth, 'goalMonthError', 'Choose this month or a future month.');
+valid = false;
+} else {
+setFieldError(goalMonth, 'goalMonthError', '');
+}
+
+if (!valid && showFeedback) {
+goalFeedback.className = 'goal-feedback error';
+goalFeedback.textContent = 'Fix the highlighted fields to save your monthly goal.';
+} else if (valid && showFeedback) {
+clearGoalFeedback();
+}
+
+return valid;
+}
+
+function saveGoal() {
+const record = {
+topic: goalTopic.value,
+label: TOPICS[goalTopic.value].label,
+amount: Number(goalAmount.value),
+month: goalMonth.value
+};
+localStorage.setItem('ffMonthlyGoal', JSON.stringify(record));
+const prefs = readPrefs();
+prefs.monthlyGoal = record;
+writePrefs(prefs);
+goalFeedback.className = 'goal-feedback success';
+goalFeedback.textContent = 'Goal saved: ' + record.label + ' at $' + record.amount.toLocaleString() + ' per month by ' + record.month + '.';
+}
 
 function toggleTile(tile) {
 const key = tile.dataset.key;
@@ -285,11 +552,15 @@ tile.classList.add('selected');
 const count = selected.size;
 document.getElementById('countNum').textContent = count;
 document.getElementById('buildBtn').disabled = count === 0;
+updateGoalTopicOptions();
+validateGoalForm(false);
+saveSelectedTopics();
 }
 
 function buildPlan() {
 if (selected.size === 0) return;
 const keys = Array.from(selected);
+saveSelectedTopics();
 window.location.href = 'plan.html?topics=' + encodeURIComponent(keys.join(','));
 }
 
@@ -298,10 +569,47 @@ selected.clear();
 document.querySelectorAll('.topic-tile').forEach(function(t) { t.classList.remove('selected'); });
 document.getElementById('countNum').textContent = '0';
 document.getElementById('buildBtn').disabled = true;
+goalForm.reset();
+updateGoalTopicOptions();
+['goalTopicError', 'goalAmountError', 'goalMonthError'].forEach(function (id) {
+document.getElementById(id).textContent = '';
+});
+[goalTopic, goalAmount, goalMonth].forEach(function (input) {
+input.classList.remove('invalid');
+});
+clearGoalFeedback();
 document.getElementById('resultsStep').classList.add('hidden');
 document.getElementById('selectStep').classList.remove('hidden');
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+[goalTopic, goalAmount, goalMonth].forEach(function (input) {
+input.addEventListener('input', function () {
+validateGoalForm(false);
+if (goalFeedback.classList.contains('success')) {
+clearGoalFeedback();
+}
+});
+input.addEventListener('change', function () {
+validateGoalForm(false);
+if (goalFeedback.classList.contains('success')) {
+clearGoalFeedback();
+}
+});
+});
+
+goalForm.addEventListener('submit', function (event) {
+event.preventDefault();
+if (!validateGoalForm(true)) {
+return;
+}
+saveGoal();
+});
+
+restoreSelectedTopics();
+updateGoalTopicOptions();
+restoreGoal();
+saveSelectedTopics();
 </script>
 </body>
 </html>

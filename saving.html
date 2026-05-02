@@ -451,6 +451,23 @@ XLSX.writeFile(wb,'my-savings-plan.xlsx');
 })();
 </script>
 
+<script>
+(function () {
+var STORAGE_KEY = 'ffSitePrefs';
+var prefs;
+try {
+prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+} catch (error) {
+prefs = {};
+}
+prefs.lastVisitedPage = 'saving.html';
+prefs.lastVisitedAt = new Date().toISOString();
+prefs.selectedTopics = Array.from(new Set((prefs.selectedTopics || []).concat(['saving'])));
+prefs.viewedTopics = Array.from(new Set((prefs.viewedTopics || []).concat(['saving'])));
+localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+})();
+</script>
+
 	</body>
 </html>
 
