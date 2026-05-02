@@ -538,10 +538,31 @@
 					<article class="building-card">
 						<h3>3. Mutual Funds and ETFs</h3>
 						<p>Funds bundle many stocks and bonds at once, which helps diversify risk and is why beginners often start here.</p>
-						<div class="visual basket" aria-label="Fund basket visual">
-							<div class="token stock">STK</div><div class="token bond">BND</div><div class="token stock">STK</div><div class="token bond">BND</div>
-							<div class="token bond">BND</div><div class="token stock">STK</div><div class="token bond">BND</div><div class="token stock">STK</div>
-							<div class="token stock">STK</div><div class="token bond">BND</div><div class="token stock">STK</div><div class="token bond">BND</div>
+						<div class="visual" style="display:flex;align-items:center;justify-content:center;gap:.8rem;" aria-label="Fund basket visual">
+							<svg viewBox="0 0 100 100" width="82" height="82">
+								<defs>
+									<linearGradient id="mfStockGrad" x1="0" y1="0" x2="1" y2="1">
+										<stop offset="0%" stop-color="#e8744a"/>
+										<stop offset="100%" stop-color="#f5a97a"/>
+									</linearGradient>
+									<linearGradient id="mfBondGrad" x1="0" y1="0" x2="1" y2="1">
+										<stop offset="0%" stop-color="#0d7a5f"/>
+										<stop offset="100%" stop-color="#4dd9b0"/>
+									</linearGradient>
+								</defs>
+								<!-- Stocks: 60% — circumference 226.2, 60%=135.7, 40%=90.5 -->
+								<circle cx="50" cy="50" r="36" fill="none" stroke="url(#mfStockGrad)" stroke-width="14" stroke-dasharray="135.7 90.5" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+								<!-- Bonds: 40% -->
+								<circle cx="50" cy="50" r="36" fill="none" stroke="url(#mfBondGrad)" stroke-width="14" stroke-dasharray="90.5 135.7" stroke-dashoffset="-135.7" transform="rotate(-90 50 50)"/>
+								<!-- Center label -->
+								<text x="50" y="46" font-size="10.5" font-weight="800" text-anchor="middle" fill="#0f2d3d">Fund</text>
+								<text x="50" y="58" font-size="8" text-anchor="middle" fill="#6b7280">basket</text>
+							</svg>
+							<div style="font-size:.72rem;line-height:1.85;font-weight:600;">
+								<div style="display:flex;align-items:center;gap:.4rem;"><span style="width:10px;height:10px;border-radius:3px;background:#e8744a;flex-shrink:0;display:inline-block;"></span>60% Stocks</div>
+								<div style="display:flex;align-items:center;gap:.4rem;"><span style="width:10px;height:10px;border-radius:3px;background:#0d7a5f;flex-shrink:0;display:inline-block;"></span>40% Bonds</div>
+								<div style="margin-top:.3rem;font-size:.68rem;color:var(--text-muted);font-weight:500;">Auto-diversified</div>
+							</div>
 						</div>
 					</article>
 				</div>
