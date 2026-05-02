@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Financial Glossary | Financial Freedom</title>
+		<meta name="description" content="Plain-English definitions of the most common personal finance terms — APR, compound interest, index fund, Roth IRA, and more." />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="shared.css" />
+		<style>
+			.glossary-search-wrap {
+				margin: 1.5rem 0 0;
+				position: relative;
+				max-width: 480px;
+			}
+
+			.glossary-search {
+				width: 100%;
+				padding: .68rem 1rem .68rem 2.6rem;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				font: inherit;
+				font-size: .95rem;
+				background: var(--surface);
+				color: var(--text);
+				box-shadow: var(--shadow-sm);
+			}
+
+			.glossary-search:focus {
+				outline: 2px solid var(--teal);
+				outline-offset: 1px;
+			}
+
+			.glossary-search-icon {
+				position: absolute;
+				left: .8rem;
+				top: 50%;
+				transform: translateY(-50%);
+				font-size: 1rem;
+				pointer-events: none;
+			}
+
+			.glossary-alpha {
+				display: flex;
+				flex-wrap: wrap;
+				gap: .3rem;
+				margin: 1rem 0 1.5rem;
+			}
+
+			.alpha-btn {
+				border: 1px solid var(--border);
+				background: var(--surface);
+				border-radius: 6px;
+				padding: .22rem .55rem;
+				font: inherit;
+				font-size: .82rem;
+				font-weight: 700;
+				color: var(--text-muted);
+				cursor: pointer;
+				transition: background 150ms, color 150ms;
+			}
+
+			.alpha-btn:hover,
+			.alpha-btn.active {
+				background: var(--teal);
+				color: #fff;
+				border-color: var(--teal);
+			}
+
+			.glossary-list {
+				display: grid;
+				gap: .65rem;
+				margin-top: .5rem;
+			}
+
+			.glossary-item {
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 1.1rem 1.3rem;
+				box-shadow: var(--shadow-sm);
+				transition: box-shadow 160ms;
+			}
+
+			.glossary-item:hover {
+				box-shadow: var(--shadow-md);
+			}
+
+			.glossary-term {
+				display: flex;
+				align-items: center;
+				gap: .6rem;
+				margin-bottom: .35rem;
+			}
+
+			.glossary-term h2 {
+				font-size: 1.05rem;
+				color: var(--navy);
+				margin: 0;
+			}
+
+			.glossary-letter-badge {
+				background: var(--teal-light);
+				color: var(--teal);
+				border-radius: 6px;
+				padding: .15rem .45rem;
+				font-size: .75rem;
+				font-weight: 800;
+				flex-shrink: 0;
+			}
+
+			.glossary-def {
+				font-size: .92rem;
+				line-height: 1.6;
+				color: var(--text);
+				margin: 0;
+			}
+
+			.glossary-tip {
+				margin-top: .45rem;
+				font-size: .85rem;
+				color: var(--text-muted);
+				font-style: italic;
+			}
+
+			.glossary-empty {
+				text-align: center;
+				padding: 2.5rem 1rem;
+				color: var(--text-muted);
+				font-size: .95rem;
+			}
+
+			.no-results { display: none; }
+
+			.next-steps-bar {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: .75rem;
+				flex-wrap: wrap;
+				margin-top: 2.5rem;
+				padding: 1.2rem 1.4rem;
+				background: var(--teal-light);
+				border: 1px solid var(--teal);
+				border-radius: var(--radius);
+			}
+
+			.next-steps-bar p {
+				margin: 0;
+				font-weight: 600;
+				font-size: .95rem;
+				color: var(--navy);
+			}
+
+			.next-steps-bar a {
+				display: inline-flex;
+				align-items: center;
+				gap: .35rem;
+				background: var(--teal);
+				color: #fff;
+				text-decoration: none;
+				border-radius: 8px;
+				padding: .5rem 1.1rem;
+				font-weight: 700;
+				font-size: .9rem;
+				transition: background 160ms, transform 160ms;
+			}
+
+			.next-steps-bar a:hover {
+				background: #0b6b52;
+				transform: translateY(-1px);
+			}
+
+			@media (max-width: 520px) {
+				.glossary-alpha { gap: .2rem; }
+				.alpha-btn { padding: .18rem .42rem; font-size: .78rem; }
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="top-nav" aria-label="Site navigation">
+			<div class="top-nav-inner">
+				<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
+				<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+					<span class="nav-toggle-bar" aria-hidden="true"></span>
+				</button>
+				<div class="nav-links" id="site-nav-links">
+					<a class="nav-btn" href="index.html">Home</a>
+					<a class="nav-btn" href="budgeting.html">Budgeting</a>
+					<a class="nav-btn" href="debt.html">Debt</a>
+					<a class="nav-btn" href="saving.html">Saving</a>
+					<a class="nav-btn" href="spending.html">Spending</a>
+					<a class="nav-btn" href="investment.html">Investing</a>
+					<a class="nav-btn" href="retirement.html">Retirement</a>
+					<a class="nav-btn active" href="glossary.html">Glossary</a>
+				</div>
+			</div>
+		</nav>
+		<main class="page">
+			<section class="hero">
+				<p class="hero-eyebrow">Reference</p>
+				<h1>Financial Glossary</h1>
+				<p>Plain-English definitions of the terms you will encounter across this site — no jargon, no fluff.</p>
+				<div class="glossary-search-wrap">
+					<span class="glossary-search-icon" aria-hidden="true">🔍</span>
+					<input
+						id="glossarySearch"
+						class="glossary-search"
+						type="search"
+						placeholder="Search terms, e.g. APR, Roth, index fund…"
+						aria-label="Search glossary terms"
+					/>
+				</div>
+			</section>
+
+			<div class="glossary-alpha" role="group" aria-label="Filter by letter" id="alphaBar"></div>
+
+			<div class="glossary-list" id="glossaryList"></div>
+			<p class="glossary-empty no-results" id="noResults">No terms match your search. Try a shorter keyword.</p>
+
+			<div class="next-steps-bar">
+				<p>Ready to put these terms to work?</p>
+				<a href="budgeting.html">Start with Budgeting →</a>
+			</div>
+
+			<footer>&copy; 2026 Financial Freedom &mdash; Understanding the words is the first step to owning your finances.</footer>
+		</main>
+
+		<script>
+		(function () {
+			var TERMS = [
+				{
+					term: "APR",
+					def: "Annual Percentage Rate. The yearly cost of borrowing money, including interest and fees, expressed as a percentage. A credit card with 24% APR costs you 2% per month if you carry a balance.",
+					tip: "Lower APR = less money you pay to borrow. Always compare APRs before taking any loan."
+				},
+				{
+					term: "Asset Allocation",
+					def: "How you divide your investments among different types — like stocks, bonds, and cash. Your allocation should reflect your age, risk tolerance, and timeline.",
+					tip: "A common starting rule: subtract your age from 110 to get your stock percentage (e.g., age 30 → 80% stocks)."
+				},
+				{
+					term: "Avalanche Method",
+					def: "A debt payoff strategy where you put extra money toward the debt with the highest interest rate first. This saves the most money in interest overall.",
+					tip: "Compare with the Snowball Method. Avalanche wins mathematically; Snowball wins motivationally."
+				},
+				{
+					term: "Bond",
+					def: "A loan you give to a company or government. They pay you regular interest and return your money at the end of the term. Bonds are generally less risky than stocks but also grow more slowly.",
+					tip: "Think of bonds as the 'steady and boring' part of a portfolio."
+				},
+				{
+					term: "Budget",
+					def: "A plan for how you will spend and save your money each month. It is not about restricting yourself — it is about deciding where your money goes before it arrives.",
+					tip: "The 50/30/20 rule is a simple starting point: 50% needs, 30% wants, 20% savings/debt."
+				},
+				{
+					term: "Compound Interest",
+					def: "Earning interest on your interest. Over time, your money grows faster and faster because gains are reinvested. Einstein reportedly called it the eighth wonder of the world.",
+					tip: "Starting early is far more powerful than investing larger amounts later. Even $50/month at age 22 beats $200/month at age 40."
+				},
+				{
+					term: "Credit Score",
+					def: "A number (usually 300–850) that lenders use to judge how likely you are to repay debt. Higher is better. It is based on payment history, credit utilization, length of history, and more.",
+					tip: "Pay on time and keep your credit card balance below 30% of your limit to build your score."
+				},
+				{
+					term: "Debt-to-Income Ratio (DTI)",
+					def: "Your total monthly debt payments divided by your gross monthly income. Lenders use this to decide if you can afford more debt. A DTI under 36% is generally considered healthy.",
+					tip: "DTI = (all monthly debt payments) ÷ (gross monthly income) × 100."
+				},
+				{
+					term: "Diversification",
+					def: "Spreading your investments across many different assets so that one bad investment does not ruin your whole portfolio. 'Don't put all your eggs in one basket.'",
+					tip: "Index funds and ETFs make diversification automatic and cheap."
+				},
+				{
+					term: "Emergency Fund",
+					def: "A cash reserve set aside specifically for unexpected expenses — job loss, car repairs, medical bills. Most experts recommend 3–6 months of living expenses.",
+					tip: "Keep it in a High-Yield Savings Account (HYSA) so it earns interest while staying accessible."
+				},
+				{
+					term: "ETF (Exchange-Traded Fund)",
+					def: "A basket of investments (like hundreds of stocks) that trades on a stock exchange like a single stock. ETFs give you instant diversification and usually have very low fees.",
+					tip: "Index ETFs like VTI or SPY are a beginner-friendly, low-cost way to invest in the whole market."
+				},
+				{
+					term: "Expense Ratio",
+					def: "The annual fee a fund charges to manage your money, expressed as a percentage. A 0.03% expense ratio means you pay $3 per year for every $10,000 invested.",
+					tip: "Look for expense ratios below 0.20%. High fees compound against you just as much as returns compound for you."
+				},
+				{
+					term: "401(k)",
+					def: "A retirement savings account offered by employers. You contribute pre-tax dollars, lowering your taxable income today. The money grows tax-deferred until retirement. Many employers match contributions — that is free money.",
+					tip: "Always contribute at least enough to get your full employer match before investing anywhere else."
+				},
+				{
+					term: "Gross Income",
+					def: "Your total income before any taxes or deductions are taken out. This is the number on your offer letter or contract.",
+					tip: "Net income (take-home pay) is what you actually budget with — it is always less than gross."
+				},
+				{
+					term: "HYSA (High-Yield Savings Account)",
+					def: "A savings account that pays significantly more interest than a traditional bank account — often 4–5% APY vs. 0.01% at big banks. Usually offered by online banks.",
+					tip: "Keep your emergency fund and short-term savings goals in a HYSA. Check NerdWallet or Bankrate for current rates."
+				},
+				{
+					term: "Index Fund",
+					def: "A fund that tracks a market index like the S&P 500. Instead of trying to beat the market, it matches it. Low fees and broad diversification make index funds ideal for most beginners.",
+					tip: "Studies consistently show that most actively managed funds underperform index funds over the long run."
+				},
+				{
+					term: "Inflation",
+					def: "The gradual rise in prices over time. $100 today will not buy as much in 10 years. Inflation is why keeping all your money in a 0% savings account is actually losing real value.",
+					tip: "Historically, US inflation averages about 3%/year. Investing in stocks historically outpaces inflation."
+				},
+				{
+					term: "Interest Rate",
+					def: "The percentage a lender charges on borrowed money, or a bank pays on deposited money, over a given period. Not the same as APR — APR includes fees too.",
+					tip: "On debt, lower is always better. On savings, higher is always better."
+				},
+				{
+					term: "Minimum Payment",
+					def: "The smallest amount you must pay on a debt each month to avoid penalties. Paying only the minimum is very expensive — most of it covers interest, not your actual balance.",
+					tip: "Always pay more than the minimum if you can. Even $20 extra each month makes a real difference."
+				},
+				{
+					term: "Net Worth",
+					def: "What you own (assets) minus what you owe (liabilities). A positive net worth means your assets exceed your debts. Building net worth over time is the core goal of personal finance.",
+					tip: "Assets - Liabilities = Net Worth. Track it annually to see your progress."
+				},
+				{
+					term: "Roth IRA",
+					def: "A retirement account where you contribute after-tax dollars. Your money grows tax-free, and qualified withdrawals in retirement are also tax-free. The 2025 contribution limit is $7,000 (or $8,000 if age 50+).",
+					tip: "A Roth IRA is often ideal for younger people who are currently in a lower tax bracket."
+				},
+				{
+					term: "Snowball Method",
+					def: "A debt payoff strategy where you pay off your smallest balance first, regardless of interest rate. It builds momentum and motivation by giving you early wins.",
+					tip: "If you need motivation to stick with debt payoff, start with Snowball. If you want to save the most money, use Avalanche."
+				},
+				{
+					term: "Stock",
+					def: "A small ownership share in a company. If the company grows, your stock is worth more. If it struggles, it may lose value. Stocks have higher potential returns than bonds but also more short-term ups and downs.",
+					tip: "Individual stocks are riskier than index funds. Most beginners should start with broad index funds."
+				},
+				{
+					term: "Tax-Deferred",
+					def: "Money that is not taxed right now but will be taxed later when you withdraw it (usually in retirement). Traditional 401(k) and IRA accounts are tax-deferred.",
+					tip: "Tax-deferred is great if you expect to be in a lower tax bracket in retirement. Compare with Roth accounts."
+				},
+				{
+					term: "Term (Loan)",
+					def: "The length of time you have to repay a loan. A 30-year mortgage has a term of 30 years. Longer terms mean lower monthly payments but more total interest paid.",
+					tip: "Shorter terms save money in total interest but require higher monthly payments."
+				},
+				{
+					term: "Time Horizon",
+					def: "How long you plan to keep your money invested before you need it. A longer time horizon means you can take on more risk because you have time to recover from market downturns.",
+					tip: "Money you need within 5 years should not be in stocks. Long-term retirement savings can handle more volatility."
+				},
+				{
+					term: "Traditional IRA",
+					def: "An individual retirement account where contributions may be tax-deductible. Like a 401(k), your money grows tax-deferred but you pay ordinary income tax when you withdraw in retirement.",
+					tip: "Good if you expect lower income (and thus lower taxes) in retirement than you have now."
+				},
+				{
+					term: "Utilization Rate",
+					def: "Also called credit utilization. The percentage of your available credit that you are currently using. Using $3,000 of a $10,000 limit = 30% utilization.",
+					tip: "Keep utilization below 30% — ideally below 10% — to protect your credit score."
+				},
+				{
+					term: "Vesting",
+					def: "The process by which you earn ownership of your employer's retirement contributions over time. Some employers require you to stay for 2–4 years before their match is fully yours.",
+					tip: "Check your vesting schedule before leaving a job — you may be leaving free money on the table."
+				},
+				{
+					term: "Yield",
+					def: "The earnings generated on an investment, usually expressed as a percentage per year. A bond yielding 4% pays $40/year per $1,000 invested.",
+					tip: "Higher yield often means higher risk. A suspiciously high yield is a warning sign."
+				}
+			];
+
+			// Sort alphabetically
+			TERMS.sort(function (a, b) { return a.term.localeCompare(b.term); });
+
+			var list = document.getElementById('glossaryList');
+			var search = document.getElementById('glossarySearch');
+			var noResults = document.getElementById('noResults');
+			var alphaBar = document.getElementById('alphaBar');
+			var activeFilter = '';
+
+			// Build alpha bar
+			var letters = Array.from(new Set(TERMS.map(function (t) { return t.term[0].toUpperCase(); }))).sort();
+			letters.forEach(function (letter) {
+				var btn = document.createElement('button');
+				btn.className = 'alpha-btn';
+				btn.textContent = letter;
+				btn.setAttribute('aria-label', 'Filter by ' + letter);
+				btn.addEventListener('click', function () {
+					if (activeFilter === letter) {
+						activeFilter = '';
+						btn.classList.remove('active');
+					} else {
+						activeFilter = letter;
+						document.querySelectorAll('.alpha-btn').forEach(function (b) { b.classList.remove('active'); });
+						btn.classList.add('active');
+					}
+					search.value = '';
+					render('');
+				});
+				alphaBar.appendChild(btn);
+			});
+
+			function render(query) {
+				query = query.toLowerCase().trim();
+				list.innerHTML = '';
+				var count = 0;
+
+				TERMS.forEach(function (t) {
+					var matchesSearch = !query || t.term.toLowerCase().includes(query) || t.def.toLowerCase().includes(query);
+					var matchesAlpha = !activeFilter || t.term[0].toUpperCase() === activeFilter;
+					if (!matchesSearch || !matchesAlpha) return;
+					count++;
+
+					var item = document.createElement('div');
+					item.className = 'glossary-item';
+					item.innerHTML =
+						'<div class="glossary-term">' +
+						'<span class="glossary-letter-badge">' + t.term[0].toUpperCase() + '</span>' +
+						'<h2>' + t.term + '</h2>' +
+						'</div>' +
+						'<p class="glossary-def">' + t.def + '</p>' +
+						(t.tip ? '<p class="glossary-tip">💡 ' + t.tip + '</p>' : '');
+					list.appendChild(item);
+				});
+
+				noResults.style.display = count === 0 ? 'block' : 'none';
+			}
+
+			search.addEventListener('input', function () {
+				activeFilter = '';
+				document.querySelectorAll('.alpha-btn').forEach(function (b) { b.classList.remove('active'); });
+				render(search.value);
+			});
+
+			render('');
+
+			// Nav toggle
+			(function () {
+				var topNav = document.querySelector('.top-nav');
+				var navToggle = document.querySelector('.nav-toggle');
+				if (navToggle && topNav) {
+					navToggle.addEventListener('click', function () {
+						var isOpen = topNav.getAttribute('data-open') === 'true';
+						topNav.setAttribute('data-open', isOpen ? 'false' : 'true');
+						navToggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+					});
+				}
+			})();
+
+			// localStorage tracking
+			(function () {
+				var prefs;
+				try { prefs = JSON.parse(localStorage.getItem('ffSitePrefs') || '{}'); } catch (e) { prefs = {}; }
+				prefs.lastVisitedPage = 'glossary.html';
+				prefs.lastVisitedAt = new Date().toISOString();
+				prefs.viewedTopics = Array.from(new Set((prefs.viewedTopics || []).concat(['glossary'])));
+				localStorage.setItem('ffSitePrefs', JSON.stringify(prefs));
+			})();
+		})();
+		</script>
+	</body>
+</html>
