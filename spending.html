@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -367,49 +367,49 @@
 
 						<div class="spending-rows" id="spendingRows">
 							<div class="spend-row" data-key="housing" data-color="#0d7a5f">
-								<div class="spend-name">🏠 Rent / Housing</div>
+								<div class="spend-name">ðŸ  Rent / Housing</div>
 								<input class="spend-slider" type="range" min="0" max="3000" step="10" value="1200" />
 								<input class="spend-input" type="number" min="0" step="10" value="1200" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="groceries" data-color="#4dd9b0">
-								<div class="spend-name">🥗 Groceries</div>
+								<div class="spend-name">ðŸ¥— Groceries</div>
 								<input class="spend-slider" type="range" min="0" max="1500" step="10" value="350" />
 								<input class="spend-input" type="number" min="0" step="10" value="350" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="eatingOut" data-color="#f59e6b">
-								<div class="spend-name">🍔 Eating Out</div>
+								<div class="spend-name">ðŸ” Eating Out</div>
 								<input class="spend-slider" type="range" min="0" max="1000" step="10" value="250" />
 								<input class="spend-input" type="number" min="0" step="10" value="250" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="shopping" data-color="#fde8e0">
-								<div class="spend-name">🛍️ Shopping</div>
+								<div class="spend-name">ðŸ›ï¸ Shopping</div>
 								<input class="spend-slider" type="range" min="0" max="1000" step="10" value="180" />
 								<input class="spend-input" type="number" min="0" step="10" value="180" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="subscriptions" data-color="#e6f4f1">
-								<div class="spend-name">🎧 Subscriptions</div>
+								<div class="spend-name">ðŸŽ§ Subscriptions</div>
 								<input class="spend-slider" type="range" min="0" max="600" step="5" value="90" />
 								<input class="spend-input" type="number" min="0" step="5" value="90" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="transportation" data-color="#7ec8e3">
-								<div class="spend-name">🚗 Transportation</div>
+								<div class="spend-name">ðŸš— Transportation</div>
 								<input class="spend-slider" type="range" min="0" max="1200" step="10" value="260" />
 								<input class="spend-input" type="number" min="0" step="10" value="260" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="entertainment" data-color="#0f2d3d">
-								<div class="spend-name">🎬 Entertainment</div>
+								<div class="spend-name">ðŸŽ¬ Entertainment</div>
 								<input class="spend-slider" type="range" min="0" max="1000" step="10" value="150" />
 								<input class="spend-input" type="number" min="0" step="10" value="150" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="other" data-color="#dde3e8">
-								<div class="spend-name">📦 Other</div>
+								<div class="spend-name">ðŸ“¦ Other</div>
 								<input class="spend-slider" type="range" min="0" max="1200" step="10" value="140" />
 								<input class="spend-input" type="number" min="0" step="10" value="140" />
 								<div class="spend-share">0%</div>
@@ -456,6 +456,23 @@
 					</div>
 				</div>
 			</section>
+<style>
+.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
+.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
+.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
+.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
+.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
+</style>
+
+<section class="section" id="workbook" aria-label="Your spending snapshot">
+<div class="section-header"><h2>Your Spending Snapshot</h2><span class="section-tag">Export Ready</span></div>
+<div class="wb-card">
+<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
+<p class="wb-hint">Chart shows your spending by category. Download an editable Excel file with all your spending amounts and percentages.</p>
+<button class="wb-btn" onclick="exportSpendingExcel()">&#128229; Download as Excel</button>
+</div>
+</section>
+
 			<footer>&copy; 2026 Financial Freedom &mdash; Intentional spending gives your money and goals more direction.</footer>
 		</main>
 		<script>
@@ -728,5 +745,67 @@
 				updateSnapshot();
 			})();
 		</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>
+(function () {
+var COLORS = ['#4dd9b0','#f59e6b','#7ec8e3','#a78bfa','#f472b6','#34d399','#fb923c','#60a5fa','#e879f9','#facc15'];
+var ctx = document.getElementById('wbChart').getContext('2d');
+var wbChart = new Chart(ctx, {
+type: 'doughnut',
+data: { labels:[], datasets:[{ data:[], backgroundColor:COLORS, borderWidth:2, borderColor:'#fff' }] },
+options: { responsive:true, plugins:{ legend:{ position:'bottom', labels:{ font:{ family:'Plus Jakarta Sans', size:12 }, padding:12 } }, tooltip:{ callbacks:{ label:function(c){ return c.label+': 
++Number(c.raw).toLocaleString(); } } } } }
+});
+function getSpendingData() {
+var rows = document.querySelectorAll('#spendingRows .spending-row');
+var labels=[], values=[];
+rows.forEach(function(row){
+var label = row.querySelector('.spend-label');
+var slider = row.querySelector('.spend-slider');
+if(label && slider) {
+labels.push(label.textContent.trim());
+values.push(parseFloat(slider.value)||0);
+}
+});
+return { labels:labels, values:values };
+}
+function refreshChart() {
+var d = getSpendingData();
+wbChart.data.labels = d.labels;
+wbChart.data.datasets[0].data = d.values;
+wbChart.update();
+}
+document.querySelectorAll('#spendingRows .spend-slider').forEach(function(el){ el.addEventListener('input', refreshChart); });
+document.getElementById('snapshotIncome').addEventListener('input', refreshChart);
+refreshChart();
+window.exportSpendingExcel = function() {
+var income = parseFloat(document.getElementById('snapshotIncome').value)||0;
+var d = getSpendingData();
+var total = d.values.reduce(function(a,b){ return a+b; },0);
+var rows=[
+['Financial Freedom — My Spending Snapshot'],
+['Generated', new Date().toLocaleDateString()],
+['Monthly Income ($)', income],
+[],
+['Category','Monthly Amount ($)','% of Income']
+];
+d.labels.forEach(function(lbl,i){
+var pct = income>0 ? +(d.values[i]/income*100).toFixed(1) : 0;
+rows.push([lbl, d.values[i], pct]);
+});
+rows.push([]);
+rows.push(['Total Spending', total, income>0 ? +(total/income*100).toFixed(1) : 0]);
+rows.push(['Remaining', income-total, income>0 ? +((income-total)/income*100).toFixed(1) : 0]);
+var wb=XLSX.utils.book_new();
+var ws=XLSX.utils.aoa_to_sheet(rows);
+ws['!cols']=[{wch:26},{wch:22},{wch:16}];
+XLSX.utils.book_append_sheet(wb,ws,'My Spending');
+XLSX.writeFile(wb,'my-spending.xlsx');
+};
+})();
+</script>
+
 	</body>
 </html>
+

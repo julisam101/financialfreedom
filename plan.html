@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My One-Page Plan | Financial Freedom</title>
+<meta name="description" content="Your selected financial topics combined into one page." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="shared.css" />
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<style>
+body {
+background: linear-gradient(180deg, #f4f7f9 0%, #eef3f6 100%);
+}
+
+.plan-wrap {
+width: min(1600px, 99vw);
+margin: 1.2rem auto 3rem;
+}
+.plan-hero {
+background: linear-gradient(135deg, #103145 0%, #1b607a 100%);
+border-radius: 14px;
+padding: clamp(1.2rem, 3.2vw, 2rem) clamp(1.1rem, 3vw, 2rem);
+color: #fff;
+margin-bottom: 0.9rem;
+box-shadow: 0 14px 28px rgba(16,49,69,0.2);
+}
+.plan-hero p {
+margin: 0;
+font-size: 0.9rem;
+line-height: 1.6;
+color: rgba(255,255,255,0.88);
+}
+.plan-hero h1 {
+margin: 0.15rem 0 0.45rem;
+font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+line-height: 1.2;
+}
+.plan-list {
+display: flex;
+flex-wrap: wrap;
+gap: 0.6rem;
+margin: 0.65rem 0 0;
+padding: 0;
+list-style: none;
+}
+.plan-list li {
+background: rgba(255,255,255,0.12);
+border: 1px solid rgba(255,255,255,0.2);
+border-radius: 999px;
+padding: 0.3rem 0.7rem;
+font-size: 0.82rem;
+font-weight: 600;
+}
+.hero-actions {
+margin-top: 0.9rem;
+display: flex;
+align-items: center;
+gap: 0.7rem;
+flex-wrap: wrap;
+}
+.export-btn {
+border: 0;
+border-radius: 9px;
+padding: 0.68rem 1.08rem;
+font-family: inherit;
+font-size: 0.9rem;
+font-weight: 800;
+background: #4dd9b0;
+color: #0f2d3d;
+cursor: pointer;
+box-shadow: 0 6px 18px rgba(77,217,176,0.4);
+transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+.export-btn:hover {
+transform: translateY(-1px);
+background: #43d3ab;
+box-shadow: 0 9px 20px rgba(77,217,176,0.45);
+}
+.hero-note {
+margin: 0;
+font-size: 0.83rem;
+color: rgba(255,255,255,0.84);
+}
+.topic-stack {
+display: block;
+border: 1px solid #e2eaef;
+border-radius: 18px;
+overflow: hidden;
+background: rgba(255,255,255,0.82);
+backdrop-filter: blur(10px);
+box-shadow: 0 18px 38px rgba(15,45,61,0.08);
+}
+.topic-card {
+background: transparent;
+border-top: 1px solid #edf2f5;
+overflow: hidden;
+}
+.topic-card:first-child {
+border-top: 0;
+}
+.topic-head {
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 0.75rem;
+padding: 0.85rem 1.2rem;
+border-bottom: 1px solid rgba(232,239,243,0.85);
+background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(249,251,252,0.95) 100%);
+}
+.topic-head h2 {
+margin: 0;
+font-size: 0.82rem;
+letter-spacing: 1.3px;
+text-transform: uppercase;
+color: var(--navy);
+}
+.topic-link {
+text-decoration: none;
+font-size: 0.78rem;
+font-weight: 700;
+color: #537685;
+}
+.topic-frame {
+width: 100%;
+height: 200px;
+border: 0;
+display: block;
+background: transparent;
+overflow: hidden;
+}
+.empty {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+box-shadow: var(--shadow-sm);
+padding: 1.3rem;
+}
+.empty h2 {
+margin: 0 0 0.5rem;
+font-size: 1.1rem;
+color: var(--navy);
+}
+.empty p {
+margin: 0;
+font-size: 0.94rem;
+line-height: 1.6;
+color: var(--text-muted);
+}
+@media (max-width: 900px) {
+.plan-wrap {
+width: 100%;
+margin-top: 0.9rem;
+}
+
+.topic-head {
+padding: 0.75rem 0.9rem;
+}
+}
+</style>
+</head>
+<body>
+<nav class="top-nav" aria-label="Site navigation">
+<div class="top-nav-inner">
+<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
+<a class="nav-btn" href="customize.html">Customize</a>
+<a class="nav-btn" href="index.html">Home</a>
+</div>
+</nav>
+
+<main class="plan-wrap" id="planRoot"></main>
+
+<script>
+(function () {
+const TOPICS = {
+budgeting:  { label: "Budgeting",       href: "budgeting.html"  },
+debt:       { label: "Paying Off Debt", href: "debt.html"       },
+saving:     { label: "Saving Money",    href: "saving.html"     },
+spending:   { label: "Spending Habits", href: "spending.html"   },
+investing:  { label: "Investing",       href: "investment.html" },
+retirement: { label: "Retirement",      href: "retirement.html" }
+};
+
+const root = document.getElementById('planRoot');
+const params = new URLSearchParams(window.location.search);
+const raw = params.get('topics') || '';
+const keys = raw
+.split(',')
+.map(function (k) { return k.trim(); })
+.filter(function (k) { return !!TOPICS[k]; });
+
+if (keys.length === 0) {
+root.innerHTML =
+'<section class="empty">' +
+'<h2>No topics selected yet</h2>' +
+'<p>Go back to Customize, choose your topics, and we will build your one-page plan automatically.</p>' +
+'<p style="margin-top:0.75rem;"><a class="btn btn-primary" href="customize.html">Back to Customize</a></p>' +
+'</section>';
+return;
+}
+
+const listItems = keys.map(function (key) {
+return '<li>' + TOPICS[key].label + '</li>';
+}).join('');
+
+let html =
+'<section class="plan-hero">' +
+'<p>Your One-Page Plan</p>' +
+'<h1>Your selected topics</h1>' +
+'<ul class="plan-list">' + listItems + '</ul>' +
+'<div class="hero-actions">' +
+'<button class="export-btn" id="downloadPlanExcel">Download plan as Excel</button>' +
+'<p class="hero-note">One export button for your full combined plan.</p>' +
+'</div>' +
+'</section>' +
+'<section class="topic-stack">';
+
+keys.forEach(function (key) {
+const t = TOPICS[key];
+html +=
+'<article class="topic-card">' +
+'<header class="topic-head">' +
+'<h2>' + t.label + '</h2>' +
+'<a class="topic-link" href="' + t.href + '">Open full page</a>' +
+'</header>' +
+'<iframe class="topic-frame" src="' + t.href + '" title="' + t.label + '" loading="lazy"></iframe>' +
+'</article>';
+});
+
+html += '</section>';
+root.innerHTML = html;
+
+const EMBEDDED_THEME = [
+'html, body { background: transparent !important; }',
+'body { color: var(--text); }',
+'main { width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; }',
+'.hero, .page-hero, header.hero { margin-bottom: 0.25rem !important; border-radius: 0 !important; box-shadow: none !important; }',
+'.section { padding-left: 1.2rem !important; padding-right: 1.2rem !important; }',
+'.section:first-of-type { padding-top: 1rem !important; }',
+'.section:last-of-type { padding-bottom: 1.2rem !important; }',
+'.section-header { margin-bottom: 0.8rem !important; }',
+'.card, .result-card, .control-card, .result-box, .wb-card { box-shadow: none !important; }',
+'.card, .result-card, .control-card, .result-box, .wb-card { border-color: #e5edf1 !important; }',
+'.chart-wrap, .unstuck-grid, .results { gap: 0.75rem !important; }'
+].join(' ');
+
+function applyEmbeddedTheme(doc) {
+if (!doc || doc.getElementById('planInlineTheme')) return;
+const style = doc.createElement('style');
+style.id = 'planInlineTheme';
+style.textContent = EMBEDDED_THEME;
+doc.head.appendChild(style);
+}
+
+function resizeFrame(frame) {
+try {
+const doc = frame.contentDocument;
+if (!doc) return;
+applyEmbeddedTheme(doc);
+doc.querySelectorAll('nav.top-nav, footer').forEach(function (el) {
+el.style.display = 'none';
+});
+doc.querySelectorAll('.wb-btn, button[onclick*="export"], button[onclick*="Excel"]').forEach(function (el) {
+el.style.display = 'none';
+});
+doc.body.style.margin = '0';
+doc.body.style.padding = '0';
+const h = Math.max(
+doc.body.scrollHeight,
+doc.documentElement.scrollHeight,
+doc.body.offsetHeight,
+doc.documentElement.offsetHeight
+);
+frame.style.height = h + 'px';
+} catch (err) {
+/* same-origin guard */
+}
+}
+
+document.querySelectorAll('.topic-frame').forEach(function (frame) {
+frame.addEventListener('load', function () {
+resizeFrame(frame);
+setTimeout(function () { resizeFrame(frame); }, 300);
+setTimeout(function () { resizeFrame(frame); }, 1000);
+setTimeout(function () { resizeFrame(frame); }, 2000);
+});
+});
+
+function getFieldName(el, idx) {
+if (el.id) {
+const label = el.ownerDocument.querySelector('label[for="' + el.id + '"]');
+if (label && label.textContent.trim()) return label.textContent.trim();
+}
+return el.getAttribute('aria-label') || el.name || el.id || ('Field ' + idx);
+}
+
+function getFieldValue(el) {
+if (el.tagName === 'SELECT') {
+return el.options[el.selectedIndex] ? el.options[el.selectedIndex].text : '';
+}
+const type = (el.type || '').toLowerCase();
+if (type === 'checkbox' || type === 'radio') {
+return el.checked ? 'Checked' : 'Not checked';
+}
+return el.value || '';
+}
+
+function collectTopicInputs(frame, topicLabel) {
+const rows = [[topicLabel], ['Field', 'Value']];
+try {
+const doc = frame.contentDocument;
+if (!doc) {
+rows.push(['Status', 'Could not read this section']);
+return rows;
+}
+const fields = Array.from(doc.querySelectorAll('input, select, textarea')).filter(function (el) {
+const type = (el.type || '').toLowerCase();
+return type !== 'hidden' && type !== 'button' && type !== 'submit';
+});
+if (fields.length === 0) {
+rows.push(['Status', 'No editable fields found']);
+return rows;
+}
+fields.forEach(function (el, i) {
+rows.push([getFieldName(el, i + 1), getFieldValue(el)]);
+});
+return rows;
+} catch (e) {
+rows.push(['Status', 'Could not read this section']);
+return rows;
+}
+}
+
+function exportCombinedPlan() {
+const out = [
+['Financial Freedom - My Combined Plan'],
+['Generated', new Date().toLocaleString()],
+[]
+];
+const frames = Array.from(document.querySelectorAll('.topic-frame'));
+frames.forEach(function (frame, i) {
+const key = keys[i];
+const label = TOPICS[key] ? TOPICS[key].label : ('Topic ' + (i + 1));
+const rows = collectTopicInputs(frame, label);
+rows.forEach(function (r) { out.push(r); });
+out.push([]);
+});
+const wb = XLSX.utils.book_new();
+const ws = XLSX.utils.aoa_to_sheet(out);
+ws['!cols'] = [{ wch: 42 }, { wch: 34 }];
+XLSX.utils.book_append_sheet(wb, ws, 'Combined Plan');
+XLSX.writeFile(wb, 'my-combined-plan.xlsx');
+}
+
+const exportBtn = document.getElementById('downloadPlanExcel');
+if (exportBtn) {
+exportBtn.addEventListener('click', exportCombinedPlan);
+}
+})();
+</script>
+</body>
+</html>

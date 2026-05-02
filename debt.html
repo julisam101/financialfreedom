@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -269,6 +269,23 @@
 					</div>
 				</div>
 			</section>
+<style>
+.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
+.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
+.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
+.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
+.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
+</style>
+
+<section class="section" id="workbook" aria-label="Your debt snapshot">
+<div class="section-header"><h2>Your Debt Snapshot</h2><span class="section-tag">Export Ready</span></div>
+<div class="wb-card">
+<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
+<p class="wb-hint">Chart shows your debt balances. Download an editable Excel file with your debts, payoff timelines, and interest totals.</p>
+<button class="wb-btn" onclick="exportDebtExcel()">&#128229; Download as Excel</button>
+</div>
+</section>
+
 			<footer>&copy; 2026 Financial Freedom &mdash; Consistency beats intensity when paying off debt.</footer>
 		</main>
 		<script>
@@ -454,5 +471,61 @@
 				updateDebtTool();
 			})();
 		</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>
+(function () {
+function usd(v){ return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(v); }
+function getDebts() {
+return Array.from(document.querySelectorAll('#debtTable .debt-row:not(.head)')).map(function(r){
+return { name: r.dataset.name||'Debt', balance: parseFloat(r.querySelector('.debt-balance').value)||0, apr: parseFloat(r.querySelector('.debt-apr').value)||0, min: parseFloat(r.querySelector('.debt-min').value)||0 };
+});
+}
+var ctx = document.getElementById('wbChart').getContext('2d');
+var wbChart = new Chart(ctx, {
+type: 'bar',
+data: { labels:[], datasets:[{ label:'Balance ($)', data:[], backgroundColor:'#4dd9b0', borderRadius:6 }] },
+options: { indexAxis:'y', responsive:true, plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:function(c){ return ' 
++Number(c.raw).toLocaleString(); } } } }, scales:{ x:{ ticks:{ callback:function(v){ return '
++v.toLocaleString(); } } } } }
+});
+function refreshChart() {
+var debts = getDebts();
+wbChart.data.labels = debts.map(function(d){ return d.name; });
+wbChart.data.datasets[0].data = debts.map(function(d){ return d.balance; });
+wbChart.update();
+}
+document.querySelectorAll('#debtTable input').forEach(function(el){ el.addEventListener('input', refreshChart); });
+refreshChart();
+window.exportDebtExcel = function() {
+var debts = getDebts();
+var extra = parseFloat(document.getElementById('extraPayment').value)||0;
+var sbText = document.getElementById('snowballMonths').textContent;
+var avText = document.getElementById('avalancheMonths').textContent;
+var sbInt  = document.getElementById('snowballInterest').textContent;
+var avInt  = document.getElementById('avalancheInterest').textContent;
+var rows = [
+['Financial Freedom — My Debt Payoff Plan'],
+['Generated', new Date().toLocaleDateString()],
+[],
+['Debt Name','Balance ($)','APR (%)','Min Payment ($/mo)'],
+];
+debts.forEach(function(d){ rows.push([d.name, d.balance, d.apr, d.min]); });
+rows.push([]);
+rows.push(['Extra Monthly Payment', extra]);
+rows.push([]);
+rows.push(['Strategy','Payoff Timeline','Total Interest']);
+rows.push(['Snowball', sbText, sbInt.replace('Interest: ','')]);
+rows.push(['Avalanche', avText, avInt.replace('Interest: ','')]);
+var wb=XLSX.utils.book_new();
+var ws=XLSX.utils.aoa_to_sheet(rows);
+ws['!cols']=[{wch:24},{wch:16},{wch:12},{wch:22}];
+XLSX.utils.book_append_sheet(wb,ws,'My Debt Plan');
+XLSX.writeFile(wb,'my-debt-plan.xlsx');
+};
+})();
+</script>
+
 	</body>
 </html>
+

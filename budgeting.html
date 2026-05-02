@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -351,6 +351,23 @@
 				<li><span class="step-title">Step 2:</span> List fixed bills first, then variable spending.</li>
 				<li><span class="step-title">Step 3:</span> Move money to savings right after payday.</li>
 			</ol>
+<style>
+.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
+.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
+.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
+.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
+.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
+</style>
+
+<section class="section" id="workbook" aria-label="Your budget snapshot">
+<div class="section-header"><h2>Your Budget Snapshot</h2><span class="section-tag">Export Ready</span></div>
+<div class="wb-card">
+<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
+<p class="wb-hint">Chart updates live as you adjust your numbers above. Download an editable Excel file with your full budget breakdown.</p>
+<button class="wb-btn" onclick="exportBudgetExcel()">&#128229; Download as Excel</button>
+</div>
+</section>
+
 
 			<footer>&copy; 2026 Financial Freedom &mdash; Small budgeting wins build long-term financial confidence.</footer>
 		</main>
@@ -511,5 +528,54 @@
 				updateTool();
 			})();
 		</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>
+(function () {
+function parseMoney(str) { return parseFloat((str||'0').replace(/[$,]/g,''))||0; }
+var ctx = document.getElementById('wbChart').getContext('2d');
+var wbChart = new Chart(ctx, {
+type: 'doughnut',
+data: { labels: ['Needs','Wants','Savings'], datasets: [{ data:[0,0,0], backgroundColor:['#4dd9b0','#f59e6b','#7ec8e3'], borderWidth:2, borderColor:'#fff' }] },
+options: { responsive:true, plugins: { legend:{ position:'bottom', labels:{ font:{ family:'Plus Jakarta Sans', size:13 }, padding:16 } }, tooltip:{ callbacks:{ label: function(c){ return c.label+': 
++Number(c.raw).toLocaleString(); } } } } }
+});
+function refreshChart() {
+var n=parseMoney(document.getElementById('needsAmount').textContent);
+var w=parseMoney(document.getElementById('wantsAmount').textContent);
+var s=parseMoney(document.getElementById('savingsAmount').textContent);
+wbChart.data.datasets[0].data=[n,w,s]; wbChart.update();
+}
+['needsAmount','wantsAmount','savingsAmount'].forEach(function(id){
+var el=document.getElementById(id);
+if(el) new MutationObserver(refreshChart).observe(el,{childList:true,subtree:true,characterData:true});
+});
+refreshChart();
+window.exportBudgetExcel = function() {
+var n=parseMoney(document.getElementById('needsAmount').textContent);
+var w=parseMoney(document.getElementById('wantsAmount').textContent);
+var s=parseMoney(document.getElementById('savingsAmount').textContent);
+var t=n+w+s;
+var pct=function(v){ return t?+(v/t*100).toFixed(1):0; };
+var data=[
+['Financial Freedom — My Budget'],
+['Generated',new Date().toLocaleDateString()],
+[],
+['Category','Monthly Amount ($)','% of Budget'],
+['Needs',n,pct(n)],
+['Wants',w,pct(w)],
+['Savings / Investments',s,pct(s)],
+['Total Income',t,100]
+];
+var wb=XLSX.utils.book_new();
+var ws=XLSX.utils.aoa_to_sheet(data);
+ws['!cols']=[{wch:26},{wch:22},{wch:16}];
+XLSX.utils.book_append_sheet(wb,ws,'My Budget');
+XLSX.writeFile(wb,'my-budget.xlsx');
+};
+})();
+</script>
+
 	</body>
 </html>
+

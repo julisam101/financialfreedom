@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -294,6 +294,23 @@
 					</div>
 				</div>
 			</section>
+<style>
+.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
+.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
+.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
+.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
+.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
+</style>
+
+<section class="section" id="workbook" aria-label="Your retirement snapshot">
+<div class="section-header"><h2>Your Retirement Snapshot</h2><span class="section-tag">Export Ready</span></div>
+<div class="wb-card">
+<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
+<p class="wb-hint">Chart shows your projected retirement nest egg growing year over year. Download an editable Excel file with all your retirement numbers.</p>
+<button class="wb-btn" onclick="exportRetirementExcel()">&#128229; Download as Excel</button>
+</div>
+</section>
+
 					<footer>&copy; 2026 Financial Freedom &mdash; Your future lifestyle is built by today's small choices.</footer>
 		</main>
 		<script>
@@ -441,5 +458,101 @@
 				updateRetirement();
 			})();
 		</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>
+(function () {
+function futureValue(pv, annualPmt, years, rate) {
+if(rate===0) return pv + annualPmt*years;
+return pv*Math.pow(1+rate,years) + annualPmt*(Math.pow(1+rate,years)-1)/rate;
+}
+var ctx = document.getElementById('wbChart').getContext('2d');
+var wbChart = new Chart(ctx, {
+type: 'line',
+data: { labels:[], datasets:[{ label:'Projected Nest Egg', data:[], borderColor:'#4dd9b0', backgroundColor:'rgba(77,217,176,0.12)', fill:true, tension:0.4, pointRadius:2 }] },
+options: { responsive:true, plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:function(c){ return '
++Number(c.raw).toLocaleString(); } } } }, scales:{ y:{ ticks:{ callback:function(v){ return '
++v.toLocaleString(); } } } } }
+});
+function getInputs() {
+return {
+ageNow:    parseInt(document.getElementById('currentAge').value)||25,
+salary:    parseFloat(document.getElementById('salary').value)||0,
+balance:   parseFloat(document.getElementById('currentBalance').value)||0,
+rate:      (parseFloat(document.getElementById('returnRate').value)||7)/100,
+k401pct:   (parseFloat(document.getElementById('contrib401k').value)||0)/100,
+iraMonthly:parseFloat(document.getElementById('iraMonthly').value)||0,
+matchPct:  (parseFloat(document.getElementById('matchPercent').value)||0)/100,
+matchCap:  (parseFloat(document.getElementById('matchLimit').value)||0)/100,
+retireAge: parseInt(document.getElementById('retireAge').value)||65
+};
+}
+function refreshChart() {
+var inp = getInputs();
+var yearsLeft = Math.max(1, inp.retireAge - inp.ageNow);
+var emp401k   = inp.salary * inp.k401pct;
+var matchBase = inp.salary * Math.min(inp.k401pct, inp.matchCap);
+var match     = matchBase>0 ? matchBase*(inp.matchPct/Math.max(inp.matchCap,0.0001)) : 0;
+var annualContrib = emp401k + match + inp.iraMonthly*12;
+var labels=[], values=[];
+for(var y=0;y<=yearsLeft;y++){
+labels.push('Age '+(inp.ageNow+y));
+values.push(Math.round(futureValue(inp.balance, annualContrib, y, inp.rate)));
+}
+wbChart.data.labels=labels;
+wbChart.data.datasets[0].data=values;
+wbChart.update();
+}
+['currentAge','salary','currentBalance','returnRate','contrib401k','iraMonthly','matchPercent','matchLimit'].forEach(function(id){
+var el=document.getElementById(id);
+if(el) el.addEventListener('input',refreshChart);
+});
+document.getElementById('retireAge').addEventListener('input',refreshChart);
+refreshChart();
+window.exportRetirementExcel = function() {
+var inp = getInputs();
+var yearsLeft = Math.max(1, inp.retireAge - inp.ageNow);
+var emp401k   = inp.salary * inp.k401pct;
+var matchBase = inp.salary * Math.min(inp.k401pct, inp.matchCap);
+var match     = matchBase>0 ? matchBase*(inp.matchPct/Math.max(inp.matchCap,0.0001)) : 0;
+var annualContrib = emp401k + match + inp.iraMonthly*12;
+var nestEgg   = Math.round(futureValue(inp.balance, annualContrib, yearsLeft, inp.rate));
+var monthly   = Math.round((nestEgg*0.04)/12);
+var rows=[
+['Financial Freedom — My Retirement Plan'],
+['Generated', new Date().toLocaleDateString()],
+[],
+['MY INPUTS'],
+['Current Age', inp.ageNow],
+['Target Retirement Age', inp.retireAge],
+['Years to Retirement', yearsLeft],
+['Annual Salary ($)', inp.salary],
+['Current Retirement Balance ($)', inp.balance],
+['Expected Annual Return (%)', (inp.rate*100).toFixed(1)],
+['401(k) Contribution (%)', (inp.k401pct*100).toFixed(1)],
+['Monthly IRA Contribution ($)', inp.iraMonthly],
+['Employer Match (%)', (inp.matchPct*100).toFixed(1)],
+['Employer Match Cap (%)', (inp.matchCap*100).toFixed(1)],
+[],
+['PROJECTED RESULTS'],
+['Projected Nest Egg ($)', nestEgg],
+['Estimated Monthly Retirement Income ($)', monthly],
+['Annual 401(k) Contribution ($)', Math.round(emp401k+match)],
+['Annual IRA Contribution ($)', Math.round(inp.iraMonthly*12)],
+[],
+['YEAR-BY-YEAR GROWTH'],
+['Age','Year','Projected Balance ($)','Annual Contribution ($)']
+];
+for(var y=0;y<=yearsLeft;y++){ rows.push([inp.ageNow+y, new Date().getFullYear()+y, Math.round(futureValue(inp.balance,annualContrib,y,inp.rate)), Math.round(annualContrib)]); }
+var wb=XLSX.utils.book_new();
+var ws=XLSX.utils.aoa_to_sheet(rows);
+ws['!cols']=[{wch:30},{wch:10},{wch:24},{wch:24}];
+XLSX.utils.book_append_sheet(wb,ws,'My Retirement Plan');
+XLSX.writeFile(wb,'my-retirement-plan.xlsx');
+};
+})();
+</script>
+
 	</body>
 </html>
+

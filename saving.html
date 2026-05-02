@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -212,6 +212,23 @@
 					</article>
 				</div>
 			</section>
+<style>
+.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
+.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
+.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
+.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
+.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
+</style>
+
+<section class="section" id="workbook" aria-label="Your savings snapshot">
+<div class="section-header"><h2>Your Savings Snapshot</h2><span class="section-tag">Export Ready</span></div>
+<div class="wb-card">
+<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
+<p class="wb-hint">Chart shows your projected savings growth over time. Download an editable Excel file with your emergency fund and goal tracker data.</p>
+<button class="wb-btn" onclick="exportSavingExcel()">&#128229; Download as Excel</button>
+</div>
+</section>
+
 			<footer>&copy; 2026 Financial Freedom &mdash; Saving is not about being perfect. It is about being prepared.</footer>
 		</main>
 		<script>
@@ -344,5 +361,96 @@
 				updateSafetyNet();
 			})();
 		</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>
+(function () {
+var ctx = document.getElementById('wbChart').getContext('2d');
+var wbChart = new Chart(ctx, {
+type: 'line',
+data: { labels:[], datasets:[
+{ label:'Projected Balance', data:[], borderColor:'#4dd9b0', backgroundColor:'rgba(77,217,176,0.12)', fill:true, tension:0.4, pointRadius:3 },
+{ label:'Goal Target', data:[], borderColor:'#f59e6b', borderDash:[6,4], borderWidth:2, pointRadius:0, fill:false }
+]},
+options: { responsive:true, plugins:{ legend:{ position:'bottom', labels:{ font:{ family:'Plus Jakarta Sans', size:13 } } }, tooltip:{ callbacks:{ label:function(c){ return c.dataset.label+': 
++Number(c.raw).toLocaleString(); } } } }, scales:{ y:{ ticks:{ callback:function(v){ return '
++v.toLocaleString(); } } } } }
+});
+function fv(pv, pmt, rate, n) {
+if(rate===0) return pv + pmt*n;
+var r = rate/12;
+return pv*Math.pow(1+r,n) + pmt*(Math.pow(1+r,n)-1)/r;
+}
+function refreshChart() {
+var current = parseFloat(document.getElementById('goalCurrent').value)||0;
+var monthly = parseFloat(document.getElementById('goalMonthly').value)||0;
+var rate    = (parseFloat(document.getElementById('interestRate').value)||0)/100;
+var years   = parseInt(document.getElementById('projectionYears').value)||5;
+var target  = parseFloat(document.getElementById('goalTarget').value)||0;
+var labels=[], proj=[], goal=[];
+for(var y=0;y<=years;y++){
+labels.push('Yr '+y);
+proj.push(Math.round(fv(current,monthly,rate,y*12)));
+goal.push(target);
+}
+wbChart.data.labels=labels;
+wbChart.data.datasets[0].data=proj;
+wbChart.data.datasets[1].data=goal;
+wbChart.update();
+}
+['goalCurrent','goalMonthly','interestRate','goalTarget'].forEach(function(id){
+var el=document.getElementById(id);
+if(el) el.addEventListener('input',refreshChart);
+});
+document.getElementById('projectionYears').addEventListener('input',refreshChart);
+refreshChart();
+window.exportSavingExcel = function() {
+var essentials = parseFloat(document.getElementById('monthlyEssentials').value)||0;
+var coverage   = parseInt(document.getElementById('coverageMonths').value)||3;
+var saved      = parseFloat(document.getElementById('emergencySaved').value)||0;
+var target_ef  = essentials * coverage;
+var remaining  = Math.max(0, target_ef - saved);
+var goalTgt    = parseFloat(document.getElementById('goalTarget').value)||0;
+var goalCur    = parseFloat(document.getElementById('goalCurrent').value)||0;
+var goalMo     = parseFloat(document.getElementById('goalMonthly').value)||0;
+var rate       = (parseFloat(document.getElementById('interestRate').value)||0)/100;
+var years      = parseInt(document.getElementById('projectionYears').value)||5;
+function fvCalc(pv,pmt,r,n){ if(r===0) return pv+pmt*n; var rm=r/12; return pv*Math.pow(1+rm,n)+pmt*(Math.pow(1+rm,n)-1)/rm; }
+var projFinal  = Math.round(fvCalc(goalCur,goalMo,rate,years*12));
+var intEarned  = Math.round(projFinal - goalCur - goalMo*years*12);
+var rows=[
+['Financial Freedom — My Savings Plan'],
+['Generated', new Date().toLocaleDateString()],
+[],
+['EMERGENCY FUND'],
+['Monthly Essentials ($)', essentials],
+['Coverage Months', coverage],
+['Emergency Fund Target ($)', target_ef],
+['Already Saved ($)', saved],
+['Still Needed ($)', remaining],
+[],
+['SAVINGS GOAL'],
+['Goal Target ($)', goalTgt],
+['Already Saved ($)', goalCur],
+['Monthly Contribution ($)', goalMo],
+['Interest Rate (%)', (rate*100).toFixed(1)],
+['Projection Years', years],
+['Projected Value ($)', projFinal],
+['Estimated Interest Earned ($)', intEarned>0?intEarned:0],
+[],
+['YEAR-BY-YEAR PROJECTION'],
+['Year','Projected Balance ($)','Goal Target ($)']
+];
+for(var y=0;y<=years;y++){ rows.push([y, Math.round(fvCalc(goalCur,goalMo,rate,y*12)), goalTgt]); }
+var wb=XLSX.utils.book_new();
+var ws=XLSX.utils.aoa_to_sheet(rows);
+ws['!cols']=[{wch:30},{wch:22},{wch:18}];
+XLSX.utils.book_append_sheet(wb,ws,'My Savings Plan');
+XLSX.writeFile(wb,'my-savings-plan.xlsx');
+};
+})();
+</script>
+
 	</body>
 </html>
+

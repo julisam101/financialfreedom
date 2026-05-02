@@ -1,0 +1,307 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Customize Your Plan | Financial Freedom</title>
+<meta name="description" content="Pick the topics you want to work on and open one combined page with only your selected topics." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="shared.css" />
+<style>
+.quiz-wrap {
+width: min(720px, 92vw);
+margin: 3rem auto 5rem;
+}
+.intro { margin-bottom: 1.8rem; }
+.intro-eyebrow {
+font-size: 0.75rem;
+font-weight: 700;
+letter-spacing: 1.4px;
+text-transform: uppercase;
+color: var(--teal);
+margin-bottom: 0.5rem;
+}
+.intro h1 {
+font-size: clamp(1.6rem, 4vw, 2.2rem);
+color: var(--navy);
+margin: 0 0 0.5rem;
+letter-spacing: -0.4px;
+}
+.intro p {
+margin: 0;
+font-size: 0.97rem;
+color: var(--text-muted);
+max-width: 56ch;
+line-height: 1.65;
+}
+.topic-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+gap: 0.85rem;
+margin-bottom: 1.8rem;
+}
+.topic-tile {
+position: relative;
+background: var(--surface);
+border: 2px solid var(--border);
+border-radius: var(--radius);
+padding: 1.2rem 1.3rem;
+cursor: pointer;
+transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+user-select: none;
+box-shadow: var(--shadow-sm);
+}
+.topic-tile:hover {
+border-color: var(--teal);
+box-shadow: var(--shadow-md);
+transform: translateY(-2px);
+}
+.topic-tile.selected {
+border-color: var(--teal);
+background: var(--teal-light);
+box-shadow: 0 0 0 3px rgba(13,122,95,0.15);
+}
+.tile-check {
+position: absolute;
+top: 0.85rem;
+right: 0.85rem;
+width: 22px;
+height: 22px;
+border-radius: 50%;
+border: 2px solid var(--border);
+background: var(--bg);
+display: flex;
+align-items: center;
+justify-content: center;
+transition: background 180ms, border-color 180ms;
+}
+.topic-tile.selected .tile-check {
+background: var(--teal);
+border-color: var(--teal);
+}
+.topic-tile.selected .tile-check::after {
+content: "";
+display: block;
+width: 7px;
+height: 5px;
+border-left: 2px solid #fff;
+border-bottom: 2px solid #fff;
+transform: rotate(-45deg) translateY(-1px);
+}
+.tile-icon { font-size: 1.75rem; line-height: 1; margin-bottom: 0.6rem; display: block; }
+.tile-label { font-size: 1rem; font-weight: 700; color: var(--navy); display: block; margin-bottom: 0.25rem; padding-right: 1.8rem; }
+.tile-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
+.action-bar {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 1rem;
+flex-wrap: wrap;
+}
+.selection-count { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+.selection-count span { color: var(--teal); font-weight: 800; }
+.btn {
+display: inline-block;
+text-decoration: none;
+font-family: inherit;
+font-weight: 700;
+font-size: 0.92rem;
+border-radius: 8px;
+padding: 0.72rem 1.5rem;
+border: none;
+cursor: pointer;
+transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease, opacity 200ms;
+letter-spacing: 0.1px;
+}
+.btn-primary { background: #4dd9b0; color: var(--navy); box-shadow: 0 4px 14px rgba(77,217,176,0.35); }
+.btn-primary:hover:not(:disabled) { background: #3ecfa6; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(77,217,176,0.4); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-ghost { background: transparent; color: var(--text-muted); font-weight: 600; padding: 0.72rem 0.5rem; }
+.btn-ghost:hover { color: var(--navy); }
+.btn-secondary { background: var(--surface); color: var(--navy); border: 1.5px solid var(--border); box-shadow: var(--shadow-sm); }
+.btn-secondary:hover { border-color: var(--teal); transform: translateY(-1px); }
+.result-hero {
+background: linear-gradient(135deg, var(--navy) 0%, #174f68 100%);
+border-radius: var(--radius);
+padding: clamp(1.8rem, 5vw, 2.8rem);
+color: #fff;
+margin-bottom: 1.6rem;
+animation: riseIn 400ms ease both;
+}
+.result-hero .eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; color: #4dd9b0; margin-bottom: 0.55rem; }
+.result-hero h2 { font-size: clamp(1.4rem, 3.5vw, 2rem); color: #fff; margin: 0 0 0.65rem; letter-spacing: -0.3px; }
+.result-hero p { margin: 0; font-size: 0.96rem; color: rgba(255,255,255,0.82); max-width: 52ch; line-height: 1.65; }
+.plan-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); margin: 0 0 0.9rem; }
+.plan-cards { display: grid; gap: 0.85rem; }
+.plan-card {
+display: flex;
+align-items: center;
+gap: 1.1rem;
+background: var(--surface);
+border: 1px solid var(--border);
+border-left: 4px solid var(--teal);
+border-radius: var(--radius);
+padding: 1.15rem 1.2rem;
+box-shadow: var(--shadow-sm);
+text-decoration: none;
+color: inherit;
+transition: box-shadow 220ms ease, transform 220ms ease;
+animation: riseIn 450ms ease both;
+}
+.plan-card:nth-child(2) { animation-delay: 60ms; }
+.plan-card:nth-child(3) { animation-delay: 120ms; }
+.plan-card:nth-child(4) { animation-delay: 180ms; }
+.plan-card:nth-child(5) { animation-delay: 240ms; }
+.plan-card:nth-child(6) { animation-delay: 300ms; }
+.plan-card:hover { box-shadow: var(--shadow-md); transform: translateX(4px); }
+.plan-icon { font-size: 1.9rem; flex-shrink: 0; line-height: 1; }
+.plan-body { flex: 1; }
+.plan-body strong { display: block; font-size: 1rem; color: var(--navy); margin-bottom: 0.2rem; }
+.plan-body span { font-size: 0.875rem; color: var(--text-muted); }
+.plan-arrow { font-size: 1.1rem; color: var(--teal); font-weight: 700; flex-shrink: 0; }
+.result-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.8rem; }
+.hidden { display: none !important; }
+@keyframes riseIn {
+from { transform: translateY(14px); opacity: 0; }
+to   { transform: translateY(0);    opacity: 1; }
+}
+@media (max-width: 540px) {
+.topic-grid { grid-template-columns: 1fr; }
+.action-bar { flex-direction: column; align-items: stretch; }
+.action-bar .btn { text-align: center; }
+}
+</style>
+</head>
+<body>
+<nav class="top-nav" aria-label="Site navigation">
+<div class="top-nav-inner">
+<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
+<a class="nav-btn" href="index.html">Home</a>
+<a class="nav-btn" href="budgeting.html">Budgeting</a>
+<a class="nav-btn" href="debt.html">Debt</a>
+<a class="nav-btn" href="saving.html">Saving</a>
+<a class="nav-btn" href="spending.html">Spending</a>
+<a class="nav-btn" href="investment.html">Investing</a>
+<a class="nav-btn" href="retirement.html">Retirement</a>
+</div>
+</nav>
+
+<main class="quiz-wrap">
+
+<!-- Selection step -->
+<div id="selectStep">
+<div class="intro">
+<p class="intro-eyebrow">Build Your Plan</p>
+<h1>What do you want to work on?</h1>
+<p>Select everything that applies — we'll build a plan around exactly what you choose.</p>
+</div>
+
+<div class="topic-grid" id="topicGrid">
+<div class="topic-tile" data-key="budgeting" onclick="toggleTile(this)">
+<span class="tile-check"></span>
+<span class="tile-icon">📊</span>
+<span class="tile-label">Budgeting</span>
+<p class="tile-desc">Build a realistic monthly budget and track where every dollar goes.</p>
+</div>
+<div class="topic-tile" data-key="debt" onclick="toggleTile(this)">
+<span class="tile-check"></span>
+<span class="tile-icon">💳</span>
+<span class="tile-label">Paying Off Debt</span>
+<p class="tile-desc">Choose a payoff strategy and make a real dent in what you owe.</p>
+</div>
+<div class="topic-tile" data-key="saving" onclick="toggleTile(this)">
+<span class="tile-check"></span>
+<span class="tile-icon">🏦</span>
+<span class="tile-label">Saving Money</span>
+<p class="tile-desc">Start an emergency fund and build the saving habit step by step.</p>
+</div>
+<div class="topic-tile" data-key="spending" onclick="toggleTile(this)">
+<span class="tile-check"></span>
+<span class="tile-icon">🧾</span>
+<span class="tile-label">Spending Habits</span>
+<p class="tile-desc">Identify where money leaks and spend with more intention.</p>
+</div>
+<div class="topic-tile" data-key="investing" onclick="toggleTile(this)">
+<span class="tile-check"></span>
+<span class="tile-icon">📈</span>
+<span class="tile-label">Investing</span>
+<p class="tile-desc">Learn the basics of risk, time horizon, and growing your money.</p>
+</div>
+<div class="topic-tile" data-key="retirement" onclick="toggleTile(this)">
+<span class="tile-check"></span>
+<span class="tile-icon">🌅</span>
+<span class="tile-label">Retirement</span>
+<p class="tile-desc">Understand retirement accounts and why starting early matters.</p>
+</div>
+</div>
+
+<div class="action-bar">
+<a href="index.html" class="btn btn-ghost">&larr; Back to home</a>
+<p class="selection-count"><span id="countNum">0</span> topic(s) selected</p>
+<button class="btn btn-primary" id="buildBtn" disabled onclick="buildPlan()">Build my one-page plan &rarr;</button>
+</div>
+</div>
+
+<!-- Results step -->
+<div id="resultsStep" class="hidden">
+<div class="result-hero">
+<p class="eyebrow">Your Personalized Plan</p>
+<h2 id="planHeadline"></h2>
+<p id="planMessage"></p>
+</div>
+<p class="plan-label" id="planLabel"></p>
+<div class="plan-cards" id="planCards"></div>
+<div class="result-actions">
+<button class="btn btn-secondary" onclick="restart()">&#8635; Change my picks</button>
+<a class="btn btn-primary" href="index.html">See all topics &rarr;</a>
+</div>
+</div>
+
+</main>
+
+<script>
+const TOPICS = {
+budgeting:  { label: "Budgeting",       icon: "📊", desc: "Build a realistic budget and track where every dollar goes.",             href: "budgeting.html"  },
+debt:       { label: "Paying Off Debt",  icon: "💳", desc: "Simple payoff strategies to get out from under debt for good.",           href: "debt.html"       },
+saving:     { label: "Saving Money",     icon: "🏦", desc: "Start an emergency fund and build the saving habit step by step.",        href: "saving.html"     },
+spending:   { label: "Spending Habits",  icon: "🧾", desc: "Identify where money leaks and spend with more intention.",               href: "spending.html"   },
+investing:  { label: "Investing",        icon: "📈", desc: "Risk, time horizon, and long-term growth explained in plain English.",    href: "investment.html" },
+retirement: { label: "Retirement",       icon: "🌅", desc: "Learn the basics of retirement accounts and why starting early matters.", href: "retirement.html" },
+};
+
+let selected = new Set();
+
+function toggleTile(tile) {
+const key = tile.dataset.key;
+if (selected.has(key)) {
+selected.delete(key);
+tile.classList.remove('selected');
+} else {
+selected.add(key);
+tile.classList.add('selected');
+}
+const count = selected.size;
+document.getElementById('countNum').textContent = count;
+document.getElementById('buildBtn').disabled = count === 0;
+}
+
+function buildPlan() {
+if (selected.size === 0) return;
+const keys = Array.from(selected);
+window.location.href = 'plan.html?topics=' + encodeURIComponent(keys.join(','));
+}
+
+function restart() {
+selected.clear();
+document.querySelectorAll('.topic-tile').forEach(function(t) { t.classList.remove('selected'); });
+document.getElementById('countNum').textContent = '0';
+document.getElementById('buildBtn').disabled = true;
+document.getElementById('resultsStep').classList.add('hidden');
+document.getElementById('selectStep').classList.remove('hidden');
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
