@@ -63,8 +63,62 @@
 				margin: 0 auto;
 				display: flex;
 				align-items: center;
+				justify-content: space-between;
 				gap: 0.25rem;
 				height: 56px;
+				position: relative;
+			}
+
+			.nav-toggle {
+				display: none;
+				align-items: center;
+				justify-content: center;
+				width: 42px;
+				height: 42px;
+				border: 1px solid rgba(255, 255, 255, 0.18);
+				border-radius: 8px;
+				background: transparent;
+				color: #ffffff;
+				cursor: pointer;
+				flex-shrink: 0;
+				transition: background 180ms ease, border-color 180ms ease;
+			}
+
+			.nav-toggle:hover,
+			.nav-toggle:focus-visible {
+				background: rgba(255, 255, 255, 0.08);
+				border-color: rgba(255, 255, 255, 0.3);
+				outline: none;
+			}
+
+			.nav-toggle-bar {
+				display: block;
+				width: 18px;
+				height: 2px;
+				border-radius: 999px;
+				background: currentColor;
+				position: relative;
+			}
+
+			.nav-toggle-bar::before,
+			.nav-toggle-bar::after {
+				content: "";
+				position: absolute;
+				left: 0;
+				width: 18px;
+				height: 2px;
+				border-radius: 999px;
+				background: currentColor;
+			}
+
+			.nav-toggle-bar::before { top: -6px; }
+			.nav-toggle-bar::after { top: 6px; }
+
+			.nav-links {
+				display: flex;
+				align-items: center;
+				gap: 0.25rem;
+				margin-left: auto;
 			}
 
 			.nav-brand {
@@ -442,9 +496,12 @@
 			}
 
 			@media (max-width: 600px) {
-				.top-nav-inner { height: auto; flex-wrap: wrap; padding: 0.5rem 0; gap: 0.2rem; }
-				.nav-brand { width: 100%; padding: 0.3rem 0 0.2rem; }
-				.nav-btn { font-size: 0.8rem; padding: 0.3rem 0.65rem; }
+				.top-nav-inner { height: auto; flex-wrap: wrap; padding: 0.45rem 0; gap: 0.5rem; }
+				.nav-brand { margin-right: auto; padding: 0.25rem 0; }
+				.nav-toggle { display: inline-flex; }
+				.nav-links { display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 0.2rem; padding: 0.3rem 0 0.15rem; margin-left: 0; }
+				.top-nav[data-open="true"] .nav-links { display: flex; }
+				.nav-btn { font-size: 0.84rem; padding: 0.65rem 0.8rem; border-radius: 8px; }
 			}
 
 			@media (max-width: 420px) {
@@ -456,13 +513,18 @@
 		<nav class="top-nav" aria-label="Site navigation">
 			<div class="top-nav-inner">
 				<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
-				<a class="nav-btn active" href="index.html">Home</a>
-				<a class="nav-btn" href="budgeting.html">Budgeting</a>
-				<a class="nav-btn" href="debt.html">Debt</a>
-				<a class="nav-btn" href="saving.html">Saving</a>
-				<a class="nav-btn" href="spending.html">Spending</a>
-				<a class="nav-btn" href="investment.html">Investing</a>
-				<a class="nav-btn" href="retirement.html">Retirement</a>
+				<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+					<span class="nav-toggle-bar" aria-hidden="true"></span>
+				</button>
+				<div class="nav-links" id="site-nav-links">
+					<a class="nav-btn active" href="index.html">Home</a>
+					<a class="nav-btn" href="budgeting.html">Budgeting</a>
+					<a class="nav-btn" href="debt.html">Debt</a>
+					<a class="nav-btn" href="saving.html">Saving</a>
+					<a class="nav-btn" href="spending.html">Spending</a>
+					<a class="nav-btn" href="investment.html">Investing</a>
+					<a class="nav-btn" href="retirement.html">Retirement</a>
+				</div>
 			</div>
 		</nav>
 		<main class="page">
@@ -598,6 +660,8 @@
 
 				const filterSelect = document.getElementById("topicFilter");
 				const sortSelect = document.getElementById("topicSort");
+				const topNav = document.querySelector(".top-nav");
+				const navToggle = document.querySelector(".nav-toggle");
 				const cardsContainer = document.getElementById("topicCards");
 				const cards = Array.from(cardsContainer.querySelectorAll(".card"));
 				const summary = document.getElementById("topicSummary");
@@ -606,6 +670,14 @@
 				const savedView = prefs.topicGridView || {};
 				if (savedView.filter) filterSelect.value = savedView.filter;
 				if (savedView.sort) sortSelect.value = savedView.sort;
+
+				if (navToggle && topNav) {
+					navToggle.addEventListener("click", function () {
+						const isOpen = topNav.getAttribute("data-open") === "true";
+						topNav.setAttribute("data-open", isOpen ? "false" : "true");
+						navToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
+					});
+				}
 
 				function applyTopicView() {
 					const filterValue = filterSelect.value;

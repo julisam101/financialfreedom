@@ -275,6 +275,10 @@ to   { transform: translateY(0);    opacity: 1; }
 <nav class="top-nav" aria-label="Site navigation">
 <div class="top-nav-inner">
 <a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
+<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+<span class="nav-toggle-bar" aria-hidden="true"></span>
+</button>
+<div class="nav-links" id="site-nav-links">
 <a class="nav-btn" href="index.html">Home</a>
 <a class="nav-btn" href="budgeting.html">Budgeting</a>
 <a class="nav-btn" href="debt.html">Debt</a>
@@ -282,6 +286,7 @@ to   { transform: translateY(0);    opacity: 1; }
 <a class="nav-btn" href="spending.html">Spending</a>
 <a class="nav-btn" href="investment.html">Investing</a>
 <a class="nav-btn" href="retirement.html">Retirement</a>
+</div>
 </div>
 </nav>
 
@@ -399,6 +404,8 @@ retirement: { label: "Retirement",       icon: "🌅", desc: "Learn the basics o
 
 const STORAGE_KEY = 'ffSitePrefs';
 let selected = new Set();
+const topNav = document.querySelector('.top-nav');
+const navToggle = document.querySelector('.nav-toggle');
 const goalForm = document.getElementById('goalForm');
 const goalTopic = document.getElementById('goalTopic');
 const goalAmount = document.getElementById('goalAmount');
@@ -449,6 +456,14 @@ if (saved.month) goalMonth.value = saved.month;
 } catch (error) {
 /* ignore invalid saved data */
 }
+}
+
+if (navToggle && topNav) {
+navToggle.addEventListener('click', function () {
+const isOpen = topNav.getAttribute('data-open') === 'true';
+topNav.setAttribute('data-open', isOpen ? 'false' : 'true');
+navToggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+});
 }
 
 function updateGoalTopicOptions() {

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -289,13 +289,18 @@
 		<nav class="top-nav" aria-label="Site navigation">
 			<div class="top-nav-inner">
 				<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
-				<a class="nav-btn" href="index.html">Home</a>
-				<a class="nav-btn" href="budgeting.html">Budgeting</a>
-				<a class="nav-btn" href="debt.html">Debt</a>
-				<a class="nav-btn" href="saving.html">Saving</a>
-				<a class="nav-btn active" href="spending.html">Spending</a>
-				<a class="nav-btn" href="investment.html">Investing</a>
-				<a class="nav-btn" href="retirement.html">Retirement</a>
+				<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+					<span class="nav-toggle-bar" aria-hidden="true"></span>
+				</button>
+				<div class="nav-links" id="site-nav-links">
+					<a class="nav-btn" href="index.html">Home</a>
+					<a class="nav-btn" href="budgeting.html">Budgeting</a>
+					<a class="nav-btn" href="debt.html">Debt</a>
+					<a class="nav-btn" href="saving.html">Saving</a>
+					<a class="nav-btn active" href="spending.html">Spending</a>
+					<a class="nav-btn" href="investment.html">Investing</a>
+					<a class="nav-btn" href="retirement.html">Retirement</a>
+				</div>
 			</div>
 		</nav>
 		<main class="page">
@@ -367,49 +372,49 @@
 
 						<div class="spending-rows" id="spendingRows">
 							<div class="spend-row" data-key="housing" data-color="#0d7a5f">
-								<div class="spend-name">ðŸ  Rent / Housing</div>
+								<div class="spend-name">🏠 Rent / Housing</div>
 								<input class="spend-slider" type="range" min="0" max="3000" step="10" value="1200" />
 								<input class="spend-input" type="number" min="0" step="10" value="1200" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="groceries" data-color="#4dd9b0">
-								<div class="spend-name">ðŸ¥— Groceries</div>
+								<div class="spend-name">🥗 Groceries</div>
 								<input class="spend-slider" type="range" min="0" max="1500" step="10" value="350" />
 								<input class="spend-input" type="number" min="0" step="10" value="350" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="eatingOut" data-color="#f59e6b">
-								<div class="spend-name">ðŸ” Eating Out</div>
+								<div class="spend-name">🍔 Eating Out</div>
 								<input class="spend-slider" type="range" min="0" max="1000" step="10" value="250" />
 								<input class="spend-input" type="number" min="0" step="10" value="250" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="shopping" data-color="#fde8e0">
-								<div class="spend-name">ðŸ›ï¸ Shopping</div>
+								<div class="spend-name">🛍️ Shopping</div>
 								<input class="spend-slider" type="range" min="0" max="1000" step="10" value="180" />
 								<input class="spend-input" type="number" min="0" step="10" value="180" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="subscriptions" data-color="#e6f4f1">
-								<div class="spend-name">ðŸŽ§ Subscriptions</div>
+								<div class="spend-name">🎧 Subscriptions</div>
 								<input class="spend-slider" type="range" min="0" max="600" step="5" value="90" />
 								<input class="spend-input" type="number" min="0" step="5" value="90" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="transportation" data-color="#7ec8e3">
-								<div class="spend-name">ðŸš— Transportation</div>
+								<div class="spend-name">🚗 Transportation</div>
 								<input class="spend-slider" type="range" min="0" max="1200" step="10" value="260" />
 								<input class="spend-input" type="number" min="0" step="10" value="260" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="entertainment" data-color="#0f2d3d">
-								<div class="spend-name">ðŸŽ¬ Entertainment</div>
+								<div class="spend-name">🎬 Entertainment</div>
 								<input class="spend-slider" type="range" min="0" max="1000" step="10" value="150" />
 								<input class="spend-input" type="number" min="0" step="10" value="150" />
 								<div class="spend-share">0%</div>
 							</div>
 							<div class="spend-row" data-key="other" data-color="#dde3e8">
-								<div class="spend-name">ðŸ“¦ Other</div>
+								<div class="spend-name">📦 Other</div>
 								<input class="spend-slider" type="range" min="0" max="1200" step="10" value="140" />
 								<input class="spend-input" type="number" min="0" step="10" value="140" />
 								<div class="spend-share">0%</div>
@@ -746,6 +751,19 @@
 			})();
 		</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+(function () {
+	var topNav = document.querySelector(".top-nav");
+	var navToggle = document.querySelector(".nav-toggle");
+	if (navToggle && topNav) {
+		navToggle.addEventListener("click", function () {
+			var isOpen = topNav.getAttribute("data-open") === "true";
+			topNav.setAttribute("data-open", isOpen ? "false" : "true");
+			navToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
+		});
+	}
+})();
+</script>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script>
 (function () {
@@ -754,14 +772,13 @@ var ctx = document.getElementById('wbChart').getContext('2d');
 var wbChart = new Chart(ctx, {
 type: 'doughnut',
 data: { labels:[], datasets:[{ data:[], backgroundColor:COLORS, borderWidth:2, borderColor:'#fff' }] },
-options: { responsive:true, plugins:{ legend:{ position:'bottom', labels:{ font:{ family:'Plus Jakarta Sans', size:12 }, padding:12 } }, tooltip:{ callbacks:{ label:function(c){ return c.label+': 
-+Number(c.raw).toLocaleString(); } } } } }
+options: { responsive:true, plugins:{ legend:{ position:'bottom', labels:{ font:{ family:'Plus Jakarta Sans', size:12 }, padding:12 } }, tooltip:{ callbacks:{ label:function(c){ return c.label+': $'+Number(c.raw).toLocaleString(); } } } } }
 });
 function getSpendingData() {
-var rows = document.querySelectorAll('#spendingRows .spending-row');
+var rows = document.querySelectorAll('#spendingRows .spend-row');
 var labels=[], values=[];
 rows.forEach(function(row){
-var label = row.querySelector('.spend-label');
+var label = row.querySelector('.spend-name');
 var slider = row.querySelector('.spend-slider');
 if(label && slider) {
 labels.push(label.textContent.trim());

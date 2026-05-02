@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -18,6 +18,58 @@
 				display: grid;
 				grid-template-columns: 1.2fr .8fr;
 				gap: .8rem;
+			}
+
+			.debt-context {
+				margin-top: 2rem;
+				display: grid;
+				grid-template-columns: 1.1fr .9fr;
+				gap: .85rem;
+			}
+
+			.context-card {
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				padding: 1rem 1.05rem;
+				box-shadow: var(--shadow-sm);
+			}
+
+			.context-card h3 {
+				margin: 0;
+				font-size: 1rem;
+				color: var(--navy);
+			}
+
+			.context-card p {
+				margin: .35rem 0 0;
+				font-size: .9rem;
+				color: var(--text-muted);
+				line-height: 1.6;
+			}
+
+			.type-list,
+			.priority-list {
+				margin: .7rem 0 0;
+				padding: 0;
+				list-style: none;
+				display: grid;
+				gap: .55rem;
+			}
+
+			.type-list li,
+			.priority-list li {
+				padding: .7rem .8rem;
+				border-radius: 10px;
+				background: var(--bg);
+				border: 1px solid var(--border);
+			}
+
+			.type-list strong,
+			.priority-list strong {
+				display: block;
+				color: var(--navy);
+				margin-bottom: .15rem;
 			}
 
 			.debt-table {
@@ -120,9 +172,7 @@
 			}
 
 			.mountain-label { font-size: .88rem; font-weight: 600; text-align: center; color: var(--text-muted); }
-
 			.mountain-stats { display: grid; gap: .4rem; }
-
 			.stat-row {
 				display: flex;
 				justify-content: space-between;
@@ -135,11 +185,38 @@
 				font-weight: 600;
 			}
 
+			.hardship {
+				margin-top: 2rem;
+			}
+
+			.hardship-copy {
+				margin: 0;
+				padding: 1rem 1.05rem;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-left: 4px solid #f59e6b;
+				border-radius: 12px;
+				box-shadow: var(--shadow-sm);
+				font-size: .92rem;
+				line-height: 1.65;
+				color: var(--text);
+			}
+
+			.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
+			.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
+			.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
+			.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
+			.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
+
 			@media (max-width: 680px) {
-				.unstuck-grid { grid-template-columns: 1fr; }
+				.unstuck-grid,
+				.debt-context,
+				.control-strip,
+				.result-grid {
+					grid-template-columns: 1fr;
+				}
 				.debt-row { grid-template-columns: 1fr 1fr; }
 				.debt-row.head { display: none; }
-				.control-strip, .result-grid { grid-template-columns: 1fr; }
 				.mountain-shell { height: 240px; }
 			}
 		</style>
@@ -148,13 +225,18 @@
 		<nav class="top-nav" aria-label="Site navigation">
 			<div class="top-nav-inner">
 				<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
-				<a class="nav-btn" href="index.html">Home</a>
-				<a class="nav-btn" href="budgeting.html">Budgeting</a>
-				<a class="nav-btn active" href="debt.html">Debt</a>
-				<a class="nav-btn" href="saving.html">Saving</a>
-				<a class="nav-btn" href="spending.html">Spending</a>
-				<a class="nav-btn" href="investment.html">Investing</a>
-				<a class="nav-btn" href="retirement.html">Retirement</a>
+				<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+					<span class="nav-toggle-bar" aria-hidden="true"></span>
+				</button>
+				<div class="nav-links" id="site-nav-links">
+					<a class="nav-btn" href="index.html">Home</a>
+					<a class="nav-btn" href="budgeting.html">Budgeting</a>
+					<a class="nav-btn active" href="debt.html">Debt</a>
+					<a class="nav-btn" href="saving.html">Saving</a>
+					<a class="nav-btn" href="spending.html">Spending</a>
+					<a class="nav-btn" href="investment.html">Investing</a>
+					<a class="nav-btn" href="retirement.html">Retirement</a>
+				</div>
 			</div>
 		</nav>
 		<main class="page">
@@ -163,6 +245,7 @@
 				<h1>Debt Payoff Basics</h1>
 				<p>Debt can feel overwhelming, but a clear plan reduces stress. Focus on progress, not perfection.</p>
 			</section>
+
 			<section class="cards" aria-label="Debt essentials">
 				<article class="card">
 					<span class="chip">Know Your Numbers</span>
@@ -180,11 +263,34 @@
 					<p>Even small extra payments each month speed up your debt-free date.</p>
 				</article>
 			</section>
+
 			<ol class="steps" aria-label="Three simple debt steps">
 				<li><span class="step-title">Step 1:</span> Pay all minimums on time.</li>
 				<li><span class="step-title">Step 2:</span> Choose one target debt for extra payments.</li>
 				<li><span class="step-title">Step 3:</span> Celebrate each paid-off account and roll payments forward.</li>
 			</ol>
+
+			<section class="debt-context section" aria-label="Debt types and priorities">
+				<article class="context-card">
+					<h3>Know what kind of debt you have</h3>
+					<p>Before choosing snowball or avalanche, it helps to know which debts are usually the most urgent. Interest rate and missed-payment consequences matter more than the name of the loan.</p>
+					<ul class="type-list">
+						<li><strong>Credit card debt: often 18% to 29% APR</strong> Usually the fastest-growing balance and often the first one to target after you stay current on all minimums.</li>
+						<li><strong>Student loans: often 5% to 7% APR</strong> Usually lower-rate than credit cards, so they are often a later priority if high-interest debt is also present.</li>
+						<li><strong>Car loans or personal loans</strong> These often have fixed payments and lower rates than cards, but missed payments can still create serious problems.</li>
+					</ul>
+				</article>
+				<article class="context-card">
+					<h3>Good debt vs. bad debt</h3>
+					<p>"Good" debt usually helps build earning power or buy a long-term asset. "Bad" debt usually charges high interest on things that lose value quickly. A simple beginner order is:</p>
+					<ul class="priority-list">
+						<li><strong>1. Protect minimums first</strong> Avoid late fees and credit damage.</li>
+						<li><strong>2. Attack high-interest balances</strong> Credit cards usually cost the most.</li>
+						<li><strong>3. Build a small emergency buffer</strong> This helps stop new debt from replacing old debt.</li>
+						<li><strong>4. Then move to lower-rate loans</strong> Student and auto loans often come after the expensive balances are under control.</li>
+					</ul>
+				</article>
+			</section>
 
 			<section class="unstuck" aria-label="Getting Unstuck interactive debt tool">
 				<span class="chip">Getting Unstuck</span>
@@ -249,6 +355,7 @@
 							<div class="result-box best" style="grid-column: 1 / -1;">
 								<span>Recommended by lower interest</span>
 								<strong id="bestMethod">-</strong>
+								<span id="debtFreeDate">Debt-free by: -</span>
 							</div>
 						</div>
 						<div class="helper" id="debtHelper">Adjust balances and payments to compare both methods in real time.</div>
@@ -269,50 +376,57 @@
 					</div>
 				</div>
 			</section>
-<style>
-.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
-.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
-.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
-.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
-.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
-</style>
 
-<section class="section" id="workbook" aria-label="Your debt snapshot">
-<div class="section-header"><h2>Your Debt Snapshot</h2><span class="section-tag">Export Ready</span></div>
-<div class="wb-card">
-<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
-<p class="wb-hint">Chart shows your debt balances. Download an editable Excel file with your debts, payoff timelines, and interest totals.</p>
-<button class="wb-btn" onclick="exportDebtExcel()">&#128229; Download as Excel</button>
-</div>
-</section>
+			<section class="hardship section" aria-label="What if I cannot pay minimums">
+				<div class="section-header">
+					<h2>What if I can't pay minimums?</h2>
+					<span class="section-tag">Important</span>
+				</div>
+				<p class="hardship-copy">If minimum payments are not possible right now, focus on essentials first: housing, food, transportation, and utilities. Then contact lenders before you miss payments and ask about hardship programs, temporary reduced payments, fee waivers, or due-date changes. For federal student loans, check income-driven repayment options. A nonprofit credit counseling agency can also help you compare safe next steps.</p>
+			</section>
+
+			<section class="section" id="workbook" aria-label="Your debt snapshot">
+				<div class="section-header"><h2>Your Debt Snapshot</h2><span class="section-tag">Export Ready</span></div>
+				<div class="wb-card">
+					<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
+					<p class="wb-hint">Chart shows your debt balances. Download an editable Excel file with your debts, payoff timelines, interest totals, and debt-free date.</p>
+					<button class="wb-btn" onclick="exportDebtExcel()">&#128229; Download as Excel</button>
+				</div>
+			</section>
 
 			<footer>&copy; 2026 Financial Freedom &mdash; Consistency beats intensity when paying off debt.</footer>
 		</main>
+
 		<script>
-			(function () {
+			(() => {
+				const topNav = document.querySelector(".top-nav");
+				const navToggle = document.querySelector(".nav-toggle");
 				const debtRows = Array.from(document.querySelectorAll("#debtTable .debt-row:not(.head)"));
 				const extraPayment = document.getElementById("extraPayment");
 				const strategyView = document.getElementById("strategyView");
-
 				const snowballMonths = document.getElementById("snowballMonths");
 				const snowballInterest = document.getElementById("snowballInterest");
 				const avalancheMonths = document.getElementById("avalancheMonths");
 				const avalancheInterest = document.getElementById("avalancheInterest");
 				const bestMethod = document.getElementById("bestMethod");
+				const debtFreeDate = document.getElementById("debtFreeDate");
 				const debtHelper = document.getElementById("debtHelper");
-
 				const mountainFill = document.getElementById("mountainFill");
 				const mountainLabel = document.getElementById("mountainLabel");
 				const totalDebtNode = document.getElementById("totalDebt");
 				const baseTimeline = document.getElementById("baseTimeline");
 				const currentTimeline = document.getElementById("currentTimeline");
 
+				if (navToggle && topNav) {
+					navToggle.addEventListener("click", function () {
+						const isOpen = topNav.getAttribute("data-open") === "true";
+						topNav.setAttribute("data-open", isOpen ? "false" : "true");
+						navToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
+					});
+				}
+
 				function usd(value) {
-					return new Intl.NumberFormat("en-US", {
-						style: "currency",
-						currency: "USD",
-						maximumFractionDigits: 0,
-					}).format(value);
+					return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
 				}
 
 				function formatMonths(months) {
@@ -322,6 +436,13 @@
 					if (years === 0) return months + " months";
 					if (rem === 0) return years + (years === 1 ? " year" : " years");
 					return years + (years === 1 ? " year " : " years ") + rem + " mo";
+				}
+
+				function payoffDateLabel(months) {
+					if (!Number.isFinite(months) || months <= 0) return "Debt-free by: -";
+					const payoffDate = new Date();
+					payoffDate.setMonth(payoffDate.getMonth() + months);
+					return "Debt-free by: " + payoffDate.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 				}
 
 				function getDebts() {
@@ -383,7 +504,6 @@
 						});
 
 						let budget = totalMin + extra;
-
 						debts.forEach(function (d) {
 							if (d.balance <= 0) return;
 							const pay = Math.min(d.min, d.balance, budget);
@@ -402,11 +522,7 @@
 					}
 
 					const paidOff = debts.every(function (d) { return d.balance <= 0.01; });
-					return {
-						months: paidOff ? months : Infinity,
-						interestPaid: paidOff ? interestPaid : Infinity,
-						paidOff: paidOff,
-					};
+					return { months: paidOff ? months : Infinity, interestPaid: paidOff ? interestPaid : Infinity, paidOff: paidOff };
 				}
 
 				function updateDebtTool() {
@@ -420,7 +536,7 @@
 					const highlighted = strategyView.value === "snowball" ? snow : ava;
 
 					snowballMonths.textContent = formatMonths(snow.months);
-					snowballInterest.textContent = "Interest: " + (Number.isFinite(snow.interestPaid) ? usd(snow.interestPaid) : "-" );
+					snowballInterest.textContent = "Interest: " + (Number.isFinite(snow.interestPaid) ? usd(snow.interestPaid) : "-");
 					avalancheMonths.textContent = formatMonths(ava.months);
 					avalancheInterest.textContent = "Interest: " + (Number.isFinite(ava.interestPaid) ? usd(ava.interestPaid) : "-");
 
@@ -434,6 +550,7 @@
 						bestMethod.textContent = "Both methods are similar here. Choose the one you can stick with.";
 					}
 
+					debtFreeDate.textContent = payoffDateLabel(highlighted.months);
 					totalDebtNode.textContent = usd(totalDebt);
 					baseTimeline.textContent = formatMonths(base.months);
 					currentTimeline.textContent = formatMonths(highlighted.months);
@@ -442,107 +559,123 @@
 					const safeCurrentMonths = Number.isFinite(highlighted.months) ? highlighted.months : safeBaseMonths;
 					const mountainPct = Math.max(8, Math.min(100, (safeCurrentMonths / safeBaseMonths) * 100));
 					mountainFill.style.height = mountainPct.toFixed(1) + "%";
-
-					mountainLabel.textContent =
-						"As extra payment rises, your mountain gets smaller. Current height: " + Math.round(mountainPct) + "% of baseline.";
+					mountainLabel.textContent = "As extra payment rises, your mountain gets smaller. Current height: " + Math.round(mountainPct) + "% of baseline.";
 
 					if (totalDebt === 0) {
 						debtHelper.textContent = "You are debt-free in this planner. You can redirect payments toward savings goals.";
 					} else if (!Number.isFinite(highlighted.months)) {
 						debtHelper.textContent = "Your current payments may be too low to pay off all debt. Try increasing minimums or extra payment.";
 					} else {
-						debtHelper.textContent =
-							"With your current settings, " +
-							(strategyView.value === "snowball" ? "Snowball" : "Avalanche") +
-							" takes about " +
-							formatMonths(highlighted.months) +
-							".";
+						debtHelper.textContent = "With your current settings, " + (strategyView.value === "snowball" ? "Snowball" : "Avalanche") + " takes about " + formatMonths(highlighted.months) + ".";
 					}
 				}
 
-				[
-					extraPayment,
-					strategyView,
-					...Array.from(document.querySelectorAll(".debt-balance, .debt-apr, .debt-min")),
-				].forEach(function (el) {
+				[extraPayment, strategyView, ...Array.from(document.querySelectorAll(".debt-balance, .debt-apr, .debt-min"))].forEach(function (el) {
 					el.addEventListener("input", updateDebtTool);
 				});
 
 				updateDebtTool();
 			})();
 		</script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-<script>
-(function () {
-function usd(v){ return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(v); }
-function getDebts() {
-return Array.from(document.querySelectorAll('#debtTable .debt-row:not(.head)')).map(function(r){
-return { name: r.dataset.name||'Debt', balance: parseFloat(r.querySelector('.debt-balance').value)||0, apr: parseFloat(r.querySelector('.debt-apr').value)||0, min: parseFloat(r.querySelector('.debt-min').value)||0 };
-});
-}
-var ctx = document.getElementById('wbChart').getContext('2d');
-var wbChart = new Chart(ctx, {
-type: 'bar',
-data: { labels:[], datasets:[{ label:'Balance ($)', data:[], backgroundColor:'#4dd9b0', borderRadius:6 }] },
-options: { indexAxis:'y', responsive:true, plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:function(c){ return ' 
-+Number(c.raw).toLocaleString(); } } } }, scales:{ x:{ ticks:{ callback:function(v){ return '
-+v.toLocaleString(); } } } } }
-});
-function refreshChart() {
-var debts = getDebts();
-wbChart.data.labels = debts.map(function(d){ return d.name; });
-wbChart.data.datasets[0].data = debts.map(function(d){ return d.balance; });
-wbChart.update();
-}
-document.querySelectorAll('#debtTable input').forEach(function(el){ el.addEventListener('input', refreshChart); });
-refreshChart();
-window.exportDebtExcel = function() {
-var debts = getDebts();
-var extra = parseFloat(document.getElementById('extraPayment').value)||0;
-var sbText = document.getElementById('snowballMonths').textContent;
-var avText = document.getElementById('avalancheMonths').textContent;
-var sbInt  = document.getElementById('snowballInterest').textContent;
-var avInt  = document.getElementById('avalancheInterest').textContent;
-var rows = [
-['Financial Freedom — My Debt Payoff Plan'],
-['Generated', new Date().toLocaleDateString()],
-[],
-['Debt Name','Balance ($)','APR (%)','Min Payment ($/mo)'],
-];
-debts.forEach(function(d){ rows.push([d.name, d.balance, d.apr, d.min]); });
-rows.push([]);
-rows.push(['Extra Monthly Payment', extra]);
-rows.push([]);
-rows.push(['Strategy','Payoff Timeline','Total Interest']);
-rows.push(['Snowball', sbText, sbInt.replace('Interest: ','')]);
-rows.push(['Avalanche', avText, avInt.replace('Interest: ','')]);
-var wb=XLSX.utils.book_new();
-var ws=XLSX.utils.aoa_to_sheet(rows);
-ws['!cols']=[{wch:24},{wch:16},{wch:12},{wch:22}];
-XLSX.utils.book_append_sheet(wb,ws,'My Debt Plan');
-XLSX.writeFile(wb,'my-debt-plan.xlsx');
-};
-})();
-</script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+		<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+		<script>
+			(function () {
+				function getDebts() {
+					return Array.from(document.querySelectorAll("#debtTable .debt-row:not(.head)")).map(function (row) {
+						return {
+							name: row.dataset.name || "Debt",
+							balance: parseFloat(row.querySelector(".debt-balance").value) || 0,
+							apr: parseFloat(row.querySelector(".debt-apr").value) || 0,
+							min: parseFloat(row.querySelector(".debt-min").value) || 0,
+						};
+					});
+				}
 
-<script>
-(function () {
-var STORAGE_KEY = 'ffSitePrefs';
-var prefs;
-try {
-prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-} catch (error) {
-prefs = {};
-}
-prefs.lastVisitedPage = 'debt.html';
-prefs.lastVisitedAt = new Date().toISOString();
-prefs.selectedTopics = Array.from(new Set((prefs.selectedTopics || []).concat(['debt'])));
-prefs.viewedTopics = Array.from(new Set((prefs.viewedTopics || []).concat(['debt'])));
-localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
-})();
-</script>
+				var ctx = document.getElementById("wbChart").getContext("2d");
+				var wbChart = new Chart(ctx, {
+					type: "bar",
+					data: { labels: [], datasets: [{ label: "Balance ($)", data: [], backgroundColor: "#4dd9b0", borderRadius: 6 }] },
+					options: {
+						indexAxis: "y",
+						responsive: true,
+						plugins: {
+							legend: { display: false },
+							tooltip: {
+								callbacks: {
+									label: function (context) {
+										return "$" + Number(context.raw).toLocaleString();
+									},
+								},
+							},
+						},
+						scales: {
+							x: {
+								ticks: {
+									callback: function (value) {
+										return "$" + Number(value).toLocaleString();
+									},
+								},
+							},
+						},
+					},
+				});
 
+				function refreshChart() {
+					var debts = getDebts();
+					wbChart.data.labels = debts.map(function (d) { return d.name; });
+					wbChart.data.datasets[0].data = debts.map(function (d) { return d.balance; });
+					wbChart.update();
+				}
+
+				document.querySelectorAll("#debtTable input").forEach(function (el) { el.addEventListener("input", refreshChart); });
+				refreshChart();
+
+				window.exportDebtExcel = function () {
+					var debts = getDebts();
+					var extra = parseFloat(document.getElementById("extraPayment").value) || 0;
+					var sbText = document.getElementById("snowballMonths").textContent;
+					var avText = document.getElementById("avalancheMonths").textContent;
+					var sbInt = document.getElementById("snowballInterest").textContent;
+					var avInt = document.getElementById("avalancheInterest").textContent;
+					var payoffDate = document.getElementById("debtFreeDate").textContent.replace("Debt-free by: ", "");
+					var rows = [
+						["Financial Freedom - My Debt Payoff Plan"],
+						["Generated", new Date().toLocaleDateString()],
+						[],
+						["Debt Name", "Balance ($)", "APR (%)", "Min Payment ($/mo)"],
+					];
+					debts.forEach(function (d) { rows.push([d.name, d.balance, d.apr, d.min]); });
+					rows.push([]);
+					rows.push(["Extra Monthly Payment", extra]);
+					rows.push(["Projected Debt-Free Date", payoffDate]);
+					rows.push([]);
+					rows.push(["Strategy", "Payoff Timeline", "Total Interest"]);
+					rows.push(["Snowball", sbText, sbInt.replace("Interest: ", "")]);
+					rows.push(["Avalanche", avText, avInt.replace("Interest: ", "")]);
+					var wb = XLSX.utils.book_new();
+					var ws = XLSX.utils.aoa_to_sheet(rows);
+					ws["!cols"] = [{ wch: 24 }, { wch: 16 }, { wch: 12 }, { wch: 22 }];
+					XLSX.utils.book_append_sheet(wb, ws, "My Debt Plan");
+					XLSX.writeFile(wb, "my-debt-plan.xlsx");
+				};
+			})();
+		</script>
+		<script>
+			(function () {
+				var STORAGE_KEY = "ffSitePrefs";
+				var prefs;
+				try {
+					prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+				} catch (error) {
+					prefs = {};
+				}
+				prefs.lastVisitedPage = "debt.html";
+				prefs.lastVisitedAt = new Date().toISOString();
+				prefs.selectedTopics = Array.from(new Set((prefs.selectedTopics || []).concat(["debt"])));
+				prefs.viewedTopics = Array.from(new Set((prefs.viewedTopics || []).concat(["debt"])));
+				localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+			})();
+		</script>
 	</body>
 </html>
-

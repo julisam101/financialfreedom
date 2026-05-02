@@ -165,8 +165,13 @@ padding: 0.75rem 0.9rem;
 <nav class="top-nav" aria-label="Site navigation">
 <div class="top-nav-inner">
 <a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
+<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+<span class="nav-toggle-bar" aria-hidden="true"></span>
+</button>
+<div class="nav-links" id="site-nav-links">
 <a class="nav-btn" href="customize.html">Customize</a>
 <a class="nav-btn" href="index.html">Home</a>
+</div>
 </div>
 </nav>
 
@@ -174,6 +179,8 @@ padding: 0.75rem 0.9rem;
 
 <script>
 (function () {
+const topNav = document.querySelector('.top-nav');
+const navToggle = document.querySelector('.nav-toggle');
 const TOPICS = {
 budgeting:  { label: "Budgeting",       href: "budgeting.html"  },
 debt:       { label: "Paying Off Debt", href: "debt.html"       },
@@ -182,6 +189,14 @@ spending:   { label: "Spending Habits", href: "spending.html"   },
 investing:  { label: "Investing",       href: "investment.html" },
 retirement: { label: "Retirement",      href: "retirement.html" }
 };
+
+if (navToggle && topNav) {
+navToggle.addEventListener('click', function () {
+const isOpen = topNav.getAttribute('data-open') === 'true';
+topNav.setAttribute('data-open', isOpen ? 'false' : 'true');
+navToggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+});
+}
 
 const STORAGE_KEY = 'ffSitePrefs';
 const root = document.getElementById('planRoot');

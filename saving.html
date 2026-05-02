@@ -92,10 +92,66 @@
 				color: var(--teal);
 			}
 
+			.milestone-badge {
+				margin-top: .45rem;
+				padding: .5rem .6rem;
+				border-radius: 8px;
+				border: 1px solid #f2c27d;
+				background: #fff6ea;
+				font-size: .86rem;
+				font-weight: 700;
+				color: #8a4a02;
+			}
+
+			.hysa-note {
+				margin-top: 1.4rem;
+				padding: 1rem 1.1rem;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-left: 4px solid var(--teal);
+				border-radius: 12px;
+				box-shadow: var(--shadow-sm);
+			}
+
+			.hysa-note p {
+				margin: 0;
+				font-size: .92rem;
+				line-height: 1.65;
+				color: var(--text);
+			}
+
 			.compound-note { margin-top: .55rem; font-size: .86rem; color: var(--text-muted); }
 
+			.decision-grid {
+				margin-top: .85rem;
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: .75rem;
+			}
+
+			.decision-result {
+				margin-top: .65rem;
+				padding: .8rem .9rem;
+				background: var(--teal-light);
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				font-size: .9rem;
+				font-weight: 600;
+				line-height: 1.55;
+				color: var(--teal);
+			}
+
+			.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
+			.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
+			.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
+			.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
+			.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
+
 			@media (max-width: 680px) {
-				.safety-grid { grid-template-columns: 1fr; }
+				.safety-grid,
+				.decision-grid {
+					grid-template-columns: 1fr;
+				}
 			}
 		</style>
 	</head>
@@ -103,21 +159,28 @@
 		<nav class="top-nav" aria-label="Site navigation">
 			<div class="top-nav-inner">
 				<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
-				<a class="nav-btn" href="index.html">Home</a>
-				<a class="nav-btn" href="budgeting.html">Budgeting</a>
-				<a class="nav-btn" href="debt.html">Debt</a>
-				<a class="nav-btn active" href="saving.html">Saving</a>
-				<a class="nav-btn" href="spending.html">Spending</a>
-				<a class="nav-btn" href="investment.html">Investing</a>
-				<a class="nav-btn" href="retirement.html">Retirement</a>
+				<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+					<span class="nav-toggle-bar" aria-hidden="true"></span>
+				</button>
+				<div class="nav-links" id="site-nav-links">
+					<a class="nav-btn" href="index.html">Home</a>
+					<a class="nav-btn" href="budgeting.html">Budgeting</a>
+					<a class="nav-btn" href="debt.html">Debt</a>
+					<a class="nav-btn active" href="saving.html">Saving</a>
+					<a class="nav-btn" href="spending.html">Spending</a>
+					<a class="nav-btn" href="investment.html">Investing</a>
+					<a class="nav-btn" href="retirement.html">Retirement</a>
+				</div>
 			</div>
 		</nav>
+
 		<main class="page">
 			<section class="hero">
 				<p class="hero-eyebrow">Saving</p>
 				<h1>Saving Basics</h1>
 				<p>Saving gives you breathing room. It turns emergencies into manageable moments instead of crises.</p>
 			</section>
+
 			<section class="cards" aria-label="Saving essentials">
 				<article class="card">
 					<span class="chip">Priority</span>
@@ -135,11 +198,16 @@
 					<p>Saving for specific goals feels more rewarding than saving without purpose.</p>
 				</article>
 			</section>
+
 			<ol class="steps" aria-label="Three simple saving steps">
 				<li><span class="step-title">Step 1:</span> Open a separate savings account.</li>
 				<li><span class="step-title">Step 2:</span> Start with a weekly auto-transfer you can keep.</li>
 				<li><span class="step-title">Step 3:</span> Increase the amount every few months.</li>
 			</ol>
+
+			<section class="hysa-note" aria-label="Why account choice matters">
+				<p>A beginner mistake is focusing only on how much to save, not where to keep it. Many checking accounts earn around 0.01% APY, while a high-yield savings account (HYSA) may earn around 4% to 5% in higher-rate periods. On the same emergency fund, that difference can add up over time. Keep money you might need soon in a safe, liquid account, and compare APY regularly.</p>
+			</section>
 
 			<section class="safety-net" aria-label="Your Safety Net interactive tools">
 				<div class="safety-head">
@@ -171,6 +239,7 @@
 							<div class="mini-card"><span>Still needed</span><strong id="emergencyRemaining">$0</strong></div>
 						</div>
 						<div class="progress-track"><div id="emergencyProgress" class="progress-fill"></div></div>
+						<div class="milestone-badge" id="emergencyMilestone">First milestone: build your first month of essentials.</div>
 					</article>
 
 					<article class="tool-box" aria-label="Savings goal tracker">
@@ -212,27 +281,58 @@
 					</article>
 				</div>
 			</section>
-<style>
-.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
-.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
-.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
-.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
-.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
-</style>
 
-<section class="section" id="workbook" aria-label="Your savings snapshot">
-<div class="section-header"><h2>Your Savings Snapshot</h2><span class="section-tag">Export Ready</span></div>
-<div class="wb-card">
-<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
-<p class="wb-hint">Chart shows your projected savings growth over time. Download an editable Excel file with your emergency fund and goal tracker data.</p>
-<button class="wb-btn" onclick="exportSavingExcel()">&#128229; Download as Excel</button>
-</div>
-</section>
+			<section class="section" aria-label="Saving versus paying debt helper">
+				<div class="section-header">
+					<h2>Saving vs. Paying Debt</h2>
+					<span class="section-tag">Decision Helper</span>
+				</div>
+				<p>Use this quick rule of thumb when you are deciding where each extra dollar should go first.</p>
+				<div class="decision-grid">
+					<div class="tool-box">
+						<label for="hasStarterFund">Do you already have at least $1,000 in emergency savings?</label>
+						<select id="hasStarterFund">
+							<option value="no">No</option>
+							<option value="yes">Yes</option>
+						</select>
+					</div>
+					<div class="tool-box">
+						<label for="hasHighAprDebt">Do you have debt with APR above 7%?</label>
+						<select id="hasHighAprDebt">
+							<option value="yes">Yes</option>
+							<option value="no">No</option>
+						</select>
+					</div>
+					<div class="tool-box">
+						<label for="incomeStable">Is your income fairly stable month to month?</label>
+						<select id="incomeStable">
+							<option value="no">No</option>
+							<option value="yes">Yes</option>
+						</select>
+					</div>
+				</div>
+				<div class="decision-result" id="decisionResult">Set your answers to see the recommended first move.</div>
+			</section>
+
+			<section class="section" id="workbook" aria-label="Your savings snapshot">
+				<div class="section-header"><h2>Your Savings Snapshot</h2><span class="section-tag">Export Ready</span></div>
+				<div class="wb-card">
+					<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
+					<p class="wb-hint">Chart shows your projected savings growth over time. Download an editable Excel file with your emergency fund and goal tracker data.</p>
+					<button class="wb-btn" onclick="exportSavingExcel()">&#128229; Download as Excel</button>
+				</div>
+			</section>
 
 			<footer>&copy; 2026 Financial Freedom &mdash; Saving is not about being perfect. It is about being prepared.</footer>
 		</main>
+
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+		<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 		<script>
 			(function () {
+				const topNav = document.querySelector(".top-nav");
+				const navToggle = document.querySelector(".nav-toggle");
+
 				const monthlyEssentials = document.getElementById("monthlyEssentials");
 				const coverageMonths = document.getElementById("coverageMonths");
 				const coverageMonthsLabel = document.getElementById("coverageMonthsLabel");
@@ -240,6 +340,7 @@
 				const emergencyTarget = document.getElementById("emergencyTarget");
 				const emergencyRemaining = document.getElementById("emergencyRemaining");
 				const emergencyProgress = document.getElementById("emergencyProgress");
+				const emergencyMilestone = document.getElementById("emergencyMilestone");
 
 				const goalTarget = document.getElementById("goalTarget");
 				const goalCurrent = document.getElementById("goalCurrent");
@@ -252,6 +353,19 @@
 				const projectionYearsLabel = document.getElementById("projectionYearsLabel");
 				const futureValue = document.getElementById("futureValue");
 				const interestEarned = document.getElementById("interestEarned");
+
+				const hasStarterFund = document.getElementById("hasStarterFund");
+				const hasHighAprDebt = document.getElementById("hasHighAprDebt");
+				const incomeStable = document.getElementById("incomeStable");
+				const decisionResult = document.getElementById("decisionResult");
+
+				if (navToggle && topNav) {
+					navToggle.addEventListener("click", function () {
+						const isOpen = topNav.getAttribute("data-open") === "true";
+						topNav.setAttribute("data-open", isOpen ? "false" : "true");
+						navToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
+					});
+				}
 
 				function usd(value) {
 					return new Intl.NumberFormat("en-US", {
@@ -286,6 +400,112 @@
 					return Math.max(0, Math.min(100, value));
 				}
 
+				function emergencyMilestoneText(percent, coveredMonths, targetMonths) {
+					if (percent >= 100) {
+						return "Goal complete: your emergency fund now covers " + coveredMonths.toFixed(1) + " months.";
+					}
+					if (percent >= 75) {
+						return "Three-quarter badge unlocked: you have around " + coveredMonths.toFixed(1) + " months covered.";
+					}
+					if (percent >= 50) {
+						return "Halfway there - you have already covered " + coveredMonths.toFixed(1) + " months of emergencies.";
+					}
+					if (percent >= 25) {
+						return "Quarter-way milestone: you are building real protection already.";
+					}
+					return "First milestone: build your first month toward your " + targetMonths + "-month target.";
+				}
+
+				function updateDecisionHelper() {
+					const starter = hasStarterFund.value;
+					const highApr = hasHighAprDebt.value;
+					const stable = incomeStable.value;
+
+					if (starter === "no") {
+						decisionResult.textContent = "Start with a mini emergency fund first (about $1,000), then split new money between debt and savings.";
+						return;
+					}
+
+					if (highApr === "yes") {
+						if (stable === "yes") {
+							decisionResult.textContent = "Keep a starter emergency fund, then prioritize high-interest debt payoff. It usually beats extra saving returns.";
+						} else {
+							decisionResult.textContent = "Because income is less stable, keep 1 to 2 months of essentials in savings, then attack high-interest debt.";
+						}
+						return;
+					}
+
+					if (stable === "no") {
+						decisionResult.textContent = "With lower-rate debt and variable income, grow your emergency fund toward 3 to 6 months first.";
+						return;
+					}
+
+					decisionResult.textContent = "You are in a balanced zone: continue saving steadily and pay debt on schedule. You can split extra money between both goals.";
+				}
+
+				function fv(pv, pmt, annualRate, months) {
+					if (annualRate === 0) return pv + pmt * months;
+					const r = annualRate / 12;
+					return pv * Math.pow(1 + r, months) + pmt * ((Math.pow(1 + r, months) - 1) / r);
+				}
+
+				let wbChart;
+				(function initWorkbookChart() {
+					const ctx = document.getElementById("wbChart").getContext("2d");
+					wbChart = new Chart(ctx, {
+						type: "line",
+						data: {
+							labels: [],
+							datasets: [
+								{ label: "Projected Balance", data: [], borderColor: "#4dd9b0", backgroundColor: "rgba(77,217,176,0.12)", fill: true, tension: 0.4, pointRadius: 3 },
+								{ label: "Goal Target", data: [], borderColor: "#f59e6b", borderDash: [6, 4], borderWidth: 2, pointRadius: 0, fill: false },
+							],
+						},
+						options: {
+							responsive: true,
+							plugins: {
+								legend: { position: "bottom", labels: { font: { family: "Plus Jakarta Sans", size: 13 } } },
+								tooltip: {
+									callbacks: {
+										label: function (context) {
+											return context.dataset.label + ": $" + Number(context.raw).toLocaleString();
+										},
+									},
+								},
+							},
+							scales: {
+								y: {
+									ticks: {
+										callback: function (value) {
+											return "$" + Number(value).toLocaleString();
+										},
+									},
+								},
+							},
+						},
+					});
+				})();
+
+				function refreshChart() {
+					const current = Math.max(0, parseFloat(goalCurrent.value) || 0);
+					const monthly = Math.max(0, parseFloat(goalMonthly.value) || 0);
+					const rate = Math.max(0, parseFloat(interestRate.value) || 0) / 100;
+					const years = Math.max(1, parseInt(projectionYears.value, 10) || 5);
+					const target = Math.max(0, parseFloat(goalTarget.value) || 0);
+					const labels = [];
+					const projected = [];
+					const goalLine = [];
+					for (let year = 0; year <= years; year += 1) {
+						labels.push("Yr " + year);
+						projected.push(Math.round(fv(current, monthly, rate, year * 12)));
+						goalLine.push(target);
+					}
+					wbChart.data.labels = labels;
+					wbChart.data.datasets[0].data = projected;
+					wbChart.data.datasets[1].data = goalLine;
+					wbChart.update();
+				}
+
 				function updateSafetyNet() {
 					const essentials = Math.max(0, Number(monthlyEssentials.value) || 0);
 					const months = Math.max(1, Number(coverageMonths.value) || 1);
@@ -295,10 +515,12 @@
 					const target = essentials * months;
 					const remaining = Math.max(0, target - saved);
 					const emergencyPct = target > 0 ? (saved / target) * 100 : 0;
+					const coveredMonths = essentials > 0 ? saved / essentials : 0;
 
 					animateMoney(emergencyTarget, target);
 					animateMoney(emergencyRemaining, remaining);
 					emergencyProgress.style.width = clampPercent(emergencyPct).toFixed(1) + "%";
+					emergencyMilestone.textContent = emergencyMilestoneText(clampPercent(emergencyPct), coveredMonths, months);
 
 					const gTarget = Math.max(0, Number(goalTarget.value) || 0);
 					const gCurrent = Math.max(0, Number(goalCurrent.value) || 0);
@@ -330,20 +552,73 @@
 					const totalPeriods = years * periodsPerYear;
 					const monthlyRate = annualRate / periodsPerYear;
 
-					let fv = 0;
+					let future = 0;
 					if (monthlyRate === 0) {
-						fv = gCurrent + gMonthly * totalPeriods;
+						future = gCurrent + gMonthly * totalPeriods;
 					} else {
 						const growthFactor = Math.pow(1 + monthlyRate, totalPeriods);
-						fv = gCurrent * growthFactor + gMonthly * ((growthFactor - 1) / monthlyRate);
+						future = gCurrent * growthFactor + gMonthly * ((growthFactor - 1) / monthlyRate);
 					}
 
 					const contributionTotal = gCurrent + gMonthly * totalPeriods;
-					const interestOnly = Math.max(0, fv - contributionTotal);
+					const interestOnly = Math.max(0, future - contributionTotal);
 
-					animateMoney(futureValue, fv);
+					animateMoney(futureValue, future);
 					animateMoney(interestEarned, interestOnly);
+					refreshChart();
 				}
+
+				window.exportSavingExcel = function () {
+					const essentials = Math.max(0, parseFloat(monthlyEssentials.value) || 0);
+					const coverage = Math.max(1, parseInt(coverageMonths.value, 10) || 3);
+					const saved = Math.max(0, parseFloat(emergencySaved.value) || 0);
+					const targetEf = essentials * coverage;
+					const remaining = Math.max(0, targetEf - saved);
+
+					const goalTgt = Math.max(0, parseFloat(goalTarget.value) || 0);
+					const goalCur = Math.max(0, parseFloat(goalCurrent.value) || 0);
+					const goalMo = Math.max(0, parseFloat(goalMonthly.value) || 0);
+					const rate = Math.max(0, parseFloat(interestRate.value) || 0) / 100;
+					const years = Math.max(1, parseInt(projectionYears.value, 10) || 5);
+
+					const projectedFinal = Math.round(fv(goalCur, goalMo, rate, years * 12));
+					const interestFinal = Math.max(0, Math.round(projectedFinal - goalCur - goalMo * years * 12));
+
+					const rows = [
+						["Financial Freedom - My Savings Plan"],
+						["Generated", new Date().toLocaleDateString()],
+						[],
+						["EMERGENCY FUND"],
+						["Monthly Essentials ($)", essentials],
+						["Coverage Months", coverage],
+						["Emergency Fund Target ($)", targetEf],
+						["Already Saved ($)", saved],
+						["Still Needed ($)", remaining],
+						["Milestone Message", emergencyMilestone.textContent],
+						[],
+						["SAVINGS GOAL"],
+						["Goal Target ($)", goalTgt],
+						["Already Saved ($)", goalCur],
+						["Monthly Contribution ($)", goalMo],
+						["Interest Rate (%)", (rate * 100).toFixed(1)],
+						["Projection Years", years],
+						["Projected Value ($)", projectedFinal],
+						["Estimated Interest Earned ($)", interestFinal],
+						[],
+						["YEAR-BY-YEAR PROJECTION"],
+						["Year", "Projected Balance ($)", "Goal Target ($)"],
+					];
+
+					for (let year = 0; year <= years; year += 1) {
+						rows.push([year, Math.round(fv(goalCur, goalMo, rate, year * 12)), goalTgt]);
+					}
+
+					const wb = XLSX.utils.book_new();
+					const ws = XLSX.utils.aoa_to_sheet(rows);
+					ws["!cols"] = [{ wch: 32 }, { wch: 22 }, { wch: 18 }];
+					XLSX.utils.book_append_sheet(wb, ws, "My Savings Plan");
+					XLSX.writeFile(wb, "my-savings-plan.xlsx");
+				};
 
 				[
 					monthlyEssentials,
@@ -358,116 +633,31 @@
 					input.addEventListener("input", updateSafetyNet);
 				});
 
+				[hasStarterFund, hasHighAprDebt, incomeStable].forEach(function (input) {
+					input.addEventListener("change", updateDecisionHelper);
+				});
+
 				updateSafetyNet();
+				updateDecisionHelper();
 			})();
 		</script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-<script>
-(function () {
-var ctx = document.getElementById('wbChart').getContext('2d');
-var wbChart = new Chart(ctx, {
-type: 'line',
-data: { labels:[], datasets:[
-{ label:'Projected Balance', data:[], borderColor:'#4dd9b0', backgroundColor:'rgba(77,217,176,0.12)', fill:true, tension:0.4, pointRadius:3 },
-{ label:'Goal Target', data:[], borderColor:'#f59e6b', borderDash:[6,4], borderWidth:2, pointRadius:0, fill:false }
-]},
-options: { responsive:true, plugins:{ legend:{ position:'bottom', labels:{ font:{ family:'Plus Jakarta Sans', size:13 } } }, tooltip:{ callbacks:{ label:function(c){ return c.dataset.label+': 
-+Number(c.raw).toLocaleString(); } } } }, scales:{ y:{ ticks:{ callback:function(v){ return '
-+v.toLocaleString(); } } } } }
-});
-function fv(pv, pmt, rate, n) {
-if(rate===0) return pv + pmt*n;
-var r = rate/12;
-return pv*Math.pow(1+r,n) + pmt*(Math.pow(1+r,n)-1)/r;
-}
-function refreshChart() {
-var current = parseFloat(document.getElementById('goalCurrent').value)||0;
-var monthly = parseFloat(document.getElementById('goalMonthly').value)||0;
-var rate    = (parseFloat(document.getElementById('interestRate').value)||0)/100;
-var years   = parseInt(document.getElementById('projectionYears').value)||5;
-var target  = parseFloat(document.getElementById('goalTarget').value)||0;
-var labels=[], proj=[], goal=[];
-for(var y=0;y<=years;y++){
-labels.push('Yr '+y);
-proj.push(Math.round(fv(current,monthly,rate,y*12)));
-goal.push(target);
-}
-wbChart.data.labels=labels;
-wbChart.data.datasets[0].data=proj;
-wbChart.data.datasets[1].data=goal;
-wbChart.update();
-}
-['goalCurrent','goalMonthly','interestRate','goalTarget'].forEach(function(id){
-var el=document.getElementById(id);
-if(el) el.addEventListener('input',refreshChart);
-});
-document.getElementById('projectionYears').addEventListener('input',refreshChart);
-refreshChart();
-window.exportSavingExcel = function() {
-var essentials = parseFloat(document.getElementById('monthlyEssentials').value)||0;
-var coverage   = parseInt(document.getElementById('coverageMonths').value)||3;
-var saved      = parseFloat(document.getElementById('emergencySaved').value)||0;
-var target_ef  = essentials * coverage;
-var remaining  = Math.max(0, target_ef - saved);
-var goalTgt    = parseFloat(document.getElementById('goalTarget').value)||0;
-var goalCur    = parseFloat(document.getElementById('goalCurrent').value)||0;
-var goalMo     = parseFloat(document.getElementById('goalMonthly').value)||0;
-var rate       = (parseFloat(document.getElementById('interestRate').value)||0)/100;
-var years      = parseInt(document.getElementById('projectionYears').value)||5;
-function fvCalc(pv,pmt,r,n){ if(r===0) return pv+pmt*n; var rm=r/12; return pv*Math.pow(1+rm,n)+pmt*(Math.pow(1+rm,n)-1)/rm; }
-var projFinal  = Math.round(fvCalc(goalCur,goalMo,rate,years*12));
-var intEarned  = Math.round(projFinal - goalCur - goalMo*years*12);
-var rows=[
-['Financial Freedom — My Savings Plan'],
-['Generated', new Date().toLocaleDateString()],
-[],
-['EMERGENCY FUND'],
-['Monthly Essentials ($)', essentials],
-['Coverage Months', coverage],
-['Emergency Fund Target ($)', target_ef],
-['Already Saved ($)', saved],
-['Still Needed ($)', remaining],
-[],
-['SAVINGS GOAL'],
-['Goal Target ($)', goalTgt],
-['Already Saved ($)', goalCur],
-['Monthly Contribution ($)', goalMo],
-['Interest Rate (%)', (rate*100).toFixed(1)],
-['Projection Years', years],
-['Projected Value ($)', projFinal],
-['Estimated Interest Earned ($)', intEarned>0?intEarned:0],
-[],
-['YEAR-BY-YEAR PROJECTION'],
-['Year','Projected Balance ($)','Goal Target ($)']
-];
-for(var y=0;y<=years;y++){ rows.push([y, Math.round(fvCalc(goalCur,goalMo,rate,y*12)), goalTgt]); }
-var wb=XLSX.utils.book_new();
-var ws=XLSX.utils.aoa_to_sheet(rows);
-ws['!cols']=[{wch:30},{wch:22},{wch:18}];
-XLSX.utils.book_append_sheet(wb,ws,'My Savings Plan');
-XLSX.writeFile(wb,'my-savings-plan.xlsx');
-};
-})();
-</script>
 
-<script>
-(function () {
-var STORAGE_KEY = 'ffSitePrefs';
-var prefs;
-try {
-prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-} catch (error) {
-prefs = {};
-}
-prefs.lastVisitedPage = 'saving.html';
-prefs.lastVisitedAt = new Date().toISOString();
-prefs.selectedTopics = Array.from(new Set((prefs.selectedTopics || []).concat(['saving'])));
-prefs.viewedTopics = Array.from(new Set((prefs.viewedTopics || []).concat(['saving'])));
-localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
-})();
-</script>
-
+		<script>
+			(function () {
+				const STORAGE_KEY = "ffSitePrefs";
+				let prefs;
+				try {
+					prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+				} catch (error) {
+					prefs = {};
+				}
+				prefs.lastVisitedPage = "saving.html";
+				prefs.lastVisitedAt = new Date().toISOString();
+				prefs.selectedTopics = Array.from(new Set((prefs.selectedTopics || []).concat(["saving"])));
+				prefs.viewedTopics = Array.from(new Set((prefs.viewedTopics || []).concat(["saving"])));
+				localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+			})();
+		</script>
 	</body>
 </html>
 

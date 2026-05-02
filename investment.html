@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -24,6 +24,56 @@
 
 			.traditional h2 { font-size: clamp(1.35rem, 3vw, 1.85rem); color: var(--navy); }
 			.traditional p { margin: .45rem 0 0; }
+
+			.order-ops {
+				margin-top: 2rem;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 1.25rem;
+				box-shadow: var(--shadow-sm);
+			}
+
+			.order-ops h2 { font-size: clamp(1.2rem, 2.7vw, 1.65rem); color: var(--navy); }
+
+			.ops-list {
+				margin: .8rem 0 0;
+				padding: 0;
+				list-style: none;
+				display: grid;
+				gap: .55rem;
+			}
+
+			.ops-list li {
+				display: grid;
+				grid-template-columns: 34px 1fr;
+				gap: .55rem;
+				align-items: flex-start;
+				background: var(--bg);
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: .62rem .7rem;
+			}
+
+			.op-step {
+				display: grid;
+				place-items: center;
+				height: 28px;
+				border-radius: 999px;
+				font-size: .8rem;
+				font-weight: 800;
+				background: var(--teal-light);
+				color: var(--teal);
+			}
+
+			.op-copy strong {
+				display: block;
+				font-size: .9rem;
+				color: var(--navy);
+				margin-bottom: .1rem;
+			}
+
+			.op-copy span { font-size: .84rem; color: var(--text-muted); line-height: 1.5; }
 
 			.building-grid {
 				margin-top: .8rem;
@@ -162,8 +212,68 @@
 
 			.principal-tag { margin-top: .35rem; font-size: .78rem; font-weight: 700; text-align: right; color: var(--teal); }
 
+			.mistakes {
+				margin-top: 2rem;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 1.25rem;
+				box-shadow: var(--shadow-sm);
+			}
+
+			.mistake-list {
+				margin: .7rem 0 0;
+				padding-left: 1.1rem;
+				display: grid;
+				gap: .45rem;
+				font-size: .9rem;
+				line-height: 1.55;
+			}
+
+			.glossary {
+				margin-top: 2rem;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 1.25rem;
+				box-shadow: var(--shadow-sm);
+			}
+
+			.glossary details {
+				background: var(--bg);
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: .55rem .65rem;
+			}
+
+			.glossary details + details { margin-top: .45rem; }
+
+			.glossary summary {
+				cursor: pointer;
+				font-size: .9rem;
+				font-weight: 700;
+				color: var(--navy);
+			}
+
+			.glossary p {
+				margin: .5rem 0 0;
+				font-size: .88rem;
+				line-height: 1.55;
+				color: var(--text-muted);
+			}
+
+			.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
+			.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
+			.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
+			.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
+			.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
+
 			@media (max-width: 680px) {
-				.building-grid, .interactive-grid { grid-template-columns: 1fr; }
+				.building-grid,
+				.interactive-grid {
+					grid-template-columns: 1fr;
+				}
+
 				.growth-row { grid-template-columns: 38px 1fr 72px; }
 			}
 		</style>
@@ -172,21 +282,28 @@
 		<nav class="top-nav" aria-label="Site navigation">
 			<div class="top-nav-inner">
 				<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
-				<a class="nav-btn" href="index.html">Home</a>
-				<a class="nav-btn" href="budgeting.html">Budgeting</a>
-				<a class="nav-btn" href="debt.html">Debt</a>
-				<a class="nav-btn" href="saving.html">Saving</a>
-				<a class="nav-btn" href="spending.html">Spending</a>
-				<a class="nav-btn active" href="investment.html">Investing</a>
-				<a class="nav-btn" href="retirement.html">Retirement</a>
+				<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+					<span class="nav-toggle-bar" aria-hidden="true"></span>
+				</button>
+				<div class="nav-links" id="site-nav-links">
+					<a class="nav-btn" href="index.html">Home</a>
+					<a class="nav-btn" href="budgeting.html">Budgeting</a>
+					<a class="nav-btn" href="debt.html">Debt</a>
+					<a class="nav-btn" href="saving.html">Saving</a>
+					<a class="nav-btn" href="spending.html">Spending</a>
+					<a class="nav-btn active" href="investment.html">Investing</a>
+					<a class="nav-btn" href="retirement.html">Retirement</a>
+				</div>
 			</div>
 		</nav>
+
 		<main class="page">
 			<section class="hero">
 				<p class="hero-eyebrow">Investing</p>
 				<h1>Investing Basics</h1>
 				<p>Investing helps your money grow over time. Start with simple ideas and a long-term mindset.</p>
 			</section>
+
 			<section class="cards" aria-label="Investing essentials">
 				<article class="card">
 					<span class="chip">Big Idea</span>
@@ -204,11 +321,40 @@
 					<p>Set a steady amount each month to build discipline and consistency.</p>
 				</article>
 			</section>
+
 			<ol class="steps" aria-label="Three simple investing steps">
 				<li><span class="step-title">Step 1:</span> Build an emergency fund before aggressive investing.</li>
 				<li><span class="step-title">Step 2:</span> Choose a simple diversified strategy.</li>
 				<li><span class="step-title">Step 3:</span> Invest regularly and avoid panic decisions.</li>
 			</ol>
+
+			<section class="order-ops" aria-label="Investing order of operations">
+				<span class="chip">Start Here</span>
+				<h2>Investing Order of Operations</h2>
+				<p>If you are not sure where to put your next dollar, this beginner sequence usually works well.</p>
+				<ul class="ops-list">
+					<li>
+						<div class="op-step">1</div>
+						<div class="op-copy"><strong>Emergency fund first</strong><span>Build a starter emergency cushion so surprise expenses do not force new debt.</span></div>
+					</li>
+					<li>
+						<div class="op-step">2</div>
+						<div class="op-copy"><strong>401(k) to get the employer match</strong><span>That match is immediate extra money from your employer, so do not leave it on the table.</span></div>
+					</li>
+					<li>
+						<div class="op-step">3</div>
+						<div class="op-copy"><strong>Pay high-interest debt</strong><span>Debt above about 7% to 8% APR often costs more than typical long-term investing returns.</span></div>
+					</li>
+					<li>
+						<div class="op-step">4</div>
+						<div class="op-copy"><strong>Roth IRA</strong><span>After high-interest debt, a Roth IRA can be a strong next step for long-term tax-free growth.</span></div>
+					</li>
+					<li>
+						<div class="op-step">5</div>
+						<div class="op-copy"><strong>Taxable brokerage</strong><span>Use this once tax-advantaged space is used or for goals before retirement age.</span></div>
+					</li>
+				</ul>
+			</section>
 
 			<section class="traditional" aria-label="Grow your money the traditional way">
 				<span class="chip">Grow Your Money the Traditional Way</span>
@@ -270,7 +416,7 @@
 							<div class="growth-row"><span>Mid</span><div class="growth-track"><div id="growthMid" class="growth-fill mid"></div></div><span id="growthMidVal">$0</span></div>
 							<div class="growth-row"><span>High</span><div class="growth-track"><div id="growthHigh" class="growth-fill high"></div></div><span id="growthHighVal">$0</span></div>
 						</div>
-						<div class="helper">Illustrative historical-style ranges only, not a prediction.</div>
+						<div class="helper">Illustrative ranges only, not a prediction.</div>
 					</article>
 
 					<article class="tool">
@@ -302,27 +448,75 @@
 					</article>
 				</div>
 			</section>
-<style>
-.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
-.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
-.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
-.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
-.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
-</style>
 
-<section class="section" id="workbook" aria-label="Your investment snapshot">
-<div class="section-header"><h2>Your Investment Snapshot</h2><span class="section-tag">Export Ready</span></div>
-<div class="wb-card">
-<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
-<p class="wb-hint">Chart compares Low / Mid / High growth scenarios over your chosen time horizon. Download an editable Excel file with year-by-year projections.</p>
-<button class="wb-btn" onclick="exportInvestExcel()">&#128229; Download as Excel</button>
-</div>
-</section>
+			<section class="mistakes" aria-label="Common beginner investing mistakes">
+				<div class="section-header">
+					<h2>Common Beginner Mistakes</h2>
+					<span class="section-tag">Avoid These</span>
+				</div>
+				<ul class="mistake-list">
+					<li><strong>Panic selling:</strong> Selling after a drop locks in losses and can make it harder to recover.</li>
+					<li><strong>Trying to time the market:</strong> Most beginners miss the best rebound days by waiting for the perfect moment.</li>
+					<li><strong>Ignoring fees:</strong> Expense ratios and account fees quietly reduce long-term returns.</li>
+					<li><strong>Chasing hot trends:</strong> Buying what is already popular can mean buying at high prices.</li>
+					<li><strong>No written plan:</strong> Without target allocations, emotional decisions happen during volatility.</li>
+				</ul>
+			</section>
+
+			<section class="section" id="workbook" aria-label="Your investment snapshot">
+				<div class="section-header"><h2>Your Investment Snapshot</h2><span class="section-tag">Export Ready</span></div>
+				<div class="wb-card">
+					<div class="field">
+						<label for="wbMonthly">Monthly investment amount ($)</label>
+						<input id="wbMonthly" type="number" min="0" step="25" value="250" />
+					</div>
+					<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
+					<p class="wb-hint">Chart compares Low / Mid / High growth scenarios over your chosen time horizon. Download an editable Excel file with year-by-year projections.</p>
+					<button class="wb-btn" onclick="exportInvestExcel()">&#128229; Download as Excel</button>
+				</div>
+			</section>
+
+			<section class="glossary" aria-label="Investing glossary">
+				<div class="section-header">
+					<h2>Investing Glossary</h2>
+					<span class="section-tag">Plain English</span>
+				</div>
+				<details>
+					<summary>Time horizon</summary>
+					<p>The number of years until you need the money, which helps determine how much risk makes sense.</p>
+				</details>
+				<details>
+					<summary>Diversify</summary>
+					<p>Spread your money across many investments so one bad result hurts less.</p>
+				</details>
+				<details>
+					<summary>ETF</summary>
+					<p>An exchange-traded fund is a basket of investments you can buy like a stock.</p>
+				</details>
+				<details>
+					<summary>Mutual fund</summary>
+					<p>A pooled fund managed by a company that buys many securities for investors together.</p>
+				</details>
+				<details>
+					<summary>Expense ratio</summary>
+					<p>The annual fee a fund charges, shown as a percentage of your money in that fund.</p>
+				</details>
+				<details>
+					<summary>Asset allocation</summary>
+					<p>How you split your portfolio across stocks, bonds, and cash.</p>
+				</details>
+			</section>
 
 			<footer>&copy; 2026 Financial Freedom &mdash; Simple, consistent investing habits usually win over time.</footer>
 		</main>
+
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+		<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 		<script>
 			(function () {
+				const topNav = document.querySelector(".top-nav");
+				const navToggle = document.querySelector(".nav-toggle");
+
 				const investChoice = document.getElementById("investChoice");
 				const investYears = document.getElementById("investYears");
 				const investYearsLabel = document.getElementById("investYearsLabel");
@@ -343,6 +537,18 @@
 				const stockBehaviorPath = document.getElementById("stockBehaviorPath");
 				const bondBehaviorPath = document.getElementById("bondBehaviorPath");
 
+				const wbMonthly = document.getElementById("wbMonthly");
+				const wbCtx = document.getElementById("wbChart").getContext("2d");
+				let wbChart;
+
+				if (navToggle && topNav) {
+					navToggle.addEventListener("click", function () {
+						const isOpen = topNav.getAttribute("data-open") === "true";
+						topNav.setAttribute("data-open", isOpen ? "false" : "true");
+						navToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
+					});
+				}
+
 				function usd(value) {
 					return new Intl.NumberFormat("en-US", {
 						style: "currency",
@@ -353,6 +559,12 @@
 
 				function compound(amount, rate, years) {
 					return amount * Math.pow(1 + rate, years);
+				}
+
+				function fvMonthly(pmt, annualRate, years) {
+					if (annualRate === 0) return pmt * years * 12;
+					const r = annualRate / 12;
+					return pmt * ((Math.pow(1 + r, years * 12) - 1) / r);
 				}
 
 				function getRanges(choice) {
@@ -382,7 +594,7 @@
 				function buildPath(points) {
 					return points
 						.map(function (p, idx) {
-							return (idx * 20) + "," + p.toFixed(1);
+							return idx * 20 + "," + p.toFixed(1);
 						})
 						.join(" ");
 				}
@@ -439,95 +651,122 @@
 					bondBehaviorPath.setAttribute("points", buildPath(bondPoints));
 				}
 
+				function initWorkbookChart() {
+					wbChart = new Chart(wbCtx, {
+						type: "bar",
+						data: {
+							labels: ["Low (3%)", "Mid (6%)", "High (9%)"],
+							datasets: [
+								{
+									data: [0, 0, 0],
+									backgroundColor: ["#7ec8e3", "#4dd9b0", "#0d7a5f"],
+									borderRadius: 6,
+								},
+							],
+						},
+						options: {
+							responsive: true,
+							plugins: {
+								legend: { display: false },
+								tooltip: {
+									callbacks: {
+										label: function (context) {
+											return "$" + Number(context.raw).toLocaleString();
+										},
+									},
+								},
+							},
+							scales: {
+								y: {
+									ticks: {
+										callback: function (value) {
+											return "$" + Number(value).toLocaleString();
+										},
+									},
+								},
+							},
+						},
+					});
+				}
+
+				function refreshWorkbookChart() {
+					const years = Number(investYears.value);
+					const monthly = Math.max(0, Number(wbMonthly.value) || 0);
+					const low = Math.round(fvMonthly(monthly, 0.03, years));
+					const mid = Math.round(fvMonthly(monthly, 0.06, years));
+					const high = Math.round(fvMonthly(monthly, 0.09, years));
+					wbChart.data.datasets[0].data = [low, mid, high];
+					wbChart.update();
+				}
+
+				window.exportInvestExcel = function () {
+					const years = Number(investYears.value);
+					const monthly = Math.max(0, Number(wbMonthly.value) || 0);
+
+					const lowValue = Math.round(fvMonthly(monthly, 0.03, years));
+					const midValue = Math.round(fvMonthly(monthly, 0.06, years));
+					const highValue = Math.round(fvMonthly(monthly, 0.09, years));
+					const contributed = monthly * years * 12;
+
+					const rows = [
+						["Financial Freedom - My Investment Projection"],
+						["Generated", new Date().toLocaleDateString()],
+						["Monthly Investment", "$" + monthly.toLocaleString() + "/mo"],
+						["Time Horizon (years)", years],
+						[],
+						["Scenario", "Annual Return", "Projected Value ($)", "Total Contributions ($)"],
+						["Low Growth", "3%", lowValue, contributed],
+						["Mid Growth", "6%", midValue, contributed],
+						["High Growth", "9%", highValue, contributed],
+						[],
+						["YEAR-BY-YEAR (Mid / 6%)"],
+						["Year", "Projected Balance ($)", "Total Contributed ($)"],
+					];
+
+					for (let year = 1; year <= years; year += 1) {
+						rows.push([year, Math.round(fvMonthly(monthly, 0.06, year)), monthly * year * 12]);
+					}
+
+					const wb = XLSX.utils.book_new();
+					const ws = XLSX.utils.aoa_to_sheet(rows);
+					ws["!cols"] = [{ wch: 26 }, { wch: 16 }, { wch: 24 }, { wch: 26 }];
+					XLSX.utils.book_append_sheet(wb, ws, "My Investment Plan");
+					XLSX.writeFile(wb, "my-investment-plan.xlsx");
+				};
+
 				investChoice.addEventListener("change", updateInvestSimulator);
-				investYears.addEventListener("input", updateInvestSimulator);
+				investYears.addEventListener("input", function () {
+					updateInvestSimulator();
+					refreshWorkbookChart();
+				});
 				riskSlider.addEventListener("input", updateRiskView);
+				wbMonthly.addEventListener("input", refreshWorkbookChart);
 
 				updateInvestSimulator();
 				updateRiskView();
 				updateBehaviorAnimation();
 				setInterval(updateBehaviorAnimation, 1100);
+
+				initWorkbookChart();
+				refreshWorkbookChart();
 			})();
 		</script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-<script>
-(function () {
-var INVEST_OPTIONS = {
-'100':  { label:'$100/mo',  amount:100,  low:0.03, mid:0.06, high:0.09 },
-'250':  { label:'$250/mo',  amount:250,  low:0.03, mid:0.06, high:0.09 },
-'500':  { label:'$500/mo',  amount:500,  low:0.03, mid:0.06, high:0.09 },
-'1000': { label:'
-	</body>
-</html>,000/mo',amount:1000, low:0.03, mid:0.06, high:0.09 }
-};
-function fv(pmt, rate, n) {
-if(rate===0) return pmt*n*12;
-var r=rate/12; return pmt*(Math.pow(1+r,n*12)-1)/r;
-}
-var ctx = document.getElementById('wbChart').getContext('2d');
-var wbChart = new Chart(ctx, {
-type: 'bar',
-data: { labels:['Low (3%)','Mid (6%)','High (9%)'], datasets:[{ data:[0,0,0], backgroundColor:['#7ec8e3','#4dd9b0','#0d7a5f'], borderRadius:6 }] },
-options: { responsive:true, plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:function(c){ return ' 
-+Number(c.raw).toLocaleString(); } } } }, scales:{ y:{ ticks:{ callback:function(v){ return '
-+v.toLocaleString(); } } } } }
-});
-function refreshChart() {
-var key = document.getElementById('investChoice').value || '250';
-var years = parseInt(document.getElementById('investYears').value)||20;
-var opt = INVEST_OPTIONS[key] || INVEST_OPTIONS['250'];
-wbChart.data.datasets[0].data = [Math.round(fv(opt.amount,opt.low,years)), Math.round(fv(opt.amount,opt.mid,years)), Math.round(fv(opt.amount,opt.high,years))];
-wbChart.update();
-}
-document.getElementById('investChoice').addEventListener('change', refreshChart);
-document.getElementById('investYears').addEventListener('input', refreshChart);
-refreshChart();
-window.exportInvestExcel = function() {
-var key = document.getElementById('investChoice').value || '250';
-var years = parseInt(document.getElementById('investYears').value)||20;
-var opt = INVEST_OPTIONS[key] || INVEST_OPTIONS['250'];
-var rows=[
-['Financial Freedom — My Investment Projection'],
-['Generated', new Date().toLocaleDateString()],
-['Monthly Investment', opt.label],
-['Time Horizon (years)', years],
-[],
-['Scenario','Annual Return','Projected Value ($)','Total Contributions ($)'],
-['Low Growth', '3%', Math.round(fv(opt.amount,opt.low,years)), opt.amount*years*12],
-['Mid Growth', '6%', Math.round(fv(opt.amount,opt.mid,years)), opt.amount*years*12],
-['High Growth','9%', Math.round(fv(opt.amount,opt.high,years)),opt.amount*years*12],
-[],
-['YEAR-BY-YEAR (Mid / 6%)'],
-['Year','Projected Balance ($)','Total Contributed ($)']
-];
-for(var y=1;y<=years;y++){ rows.push([y, Math.round(fv(opt.amount,opt.mid,y)), opt.amount*y*12]); }
-var wb=XLSX.utils.book_new();
-var ws=XLSX.utils.aoa_to_sheet(rows);
-ws['!cols']=[{wch:26},{wch:16},{wch:24},{wch:26}];
-XLSX.utils.book_append_sheet(wb,ws,'My Investment Plan');
-XLSX.writeFile(wb,'my-investment-plan.xlsx');
-};
-})();
-</script>
 
-<script>
-(function () {
-var STORAGE_KEY = 'ffSitePrefs';
-var prefs;
-try {
-prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-} catch (error) {
-prefs = {};
-}
-prefs.lastVisitedPage = 'investment.html';
-prefs.lastVisitedAt = new Date().toISOString();
-prefs.selectedTopics = Array.from(new Set((prefs.selectedTopics || []).concat(['investing'])));
-prefs.viewedTopics = Array.from(new Set((prefs.viewedTopics || []).concat(['investing'])));
-localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
-})();
-</script>
-
+		<script>
+			(function () {
+				const STORAGE_KEY = "ffSitePrefs";
+				let prefs;
+				try {
+					prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+				} catch (error) {
+					prefs = {};
+				}
+				prefs.lastVisitedPage = "investment.html";
+				prefs.lastVisitedAt = new Date().toISOString();
+				prefs.selectedTopics = Array.from(new Set((prefs.selectedTopics || []).concat(["investing"])));
+				prefs.viewedTopics = Array.from(new Set((prefs.viewedTopics || []).concat(["investing"])));
+				localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+			})();
+		</script>
 	</body>
 </html>
-

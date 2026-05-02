@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -40,6 +40,46 @@
 			}
 
 			.panel h3 { font-size: 1rem; color: var(--navy); }
+
+			.account-compare {
+				margin-top: 2rem;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 1.2rem;
+				box-shadow: var(--shadow-sm);
+			}
+
+			.table-wrap {
+				margin-top: .65rem;
+				overflow-x: auto;
+			}
+
+			.compare-table {
+				width: 100%;
+				border-collapse: collapse;
+				min-width: 620px;
+			}
+
+			.compare-table th,
+			.compare-table td {
+				border: 1px solid var(--border);
+				padding: .6rem .7rem;
+				font-size: .88rem;
+				vertical-align: top;
+			}
+
+			.compare-table th {
+				background: var(--teal-light);
+				text-align: left;
+				color: var(--navy);
+			}
+
+			.compare-table td:first-child {
+				font-weight: 700;
+				color: var(--navy);
+				background: #fbfcfd;
+			}
 
 			.avatar-wrap {
 				display: grid;
@@ -160,8 +200,70 @@
 				color: var(--teal);
 			}
 
+			.late-start {
+				margin-top: 2rem;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 1.2rem;
+				box-shadow: var(--shadow-sm);
+			}
+
+			.late-grid {
+				margin-top: .75rem;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: .6rem;
+			}
+
+			.late-card {
+				background: var(--bg);
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: .7rem;
+			}
+
+			.late-card h3 {
+				margin: 0;
+				font-size: .98rem;
+				color: var(--navy);
+			}
+
+			.late-card p {
+				margin: .35rem 0 0;
+				font-size: .86rem;
+				line-height: 1.55;
+				color: var(--text-muted);
+			}
+
+			.social-security {
+				margin-top: 2rem;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 1.2rem;
+				box-shadow: var(--shadow-sm);
+			}
+
+			.social-security p {
+				margin-top: .4rem;
+				font-size: .9rem;
+				line-height: 1.6;
+			}
+
+			.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
+			.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
+			.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
+			.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
+			.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
+
 			@media (max-width: 680px) {
-				.future-grid, .field-grid, .result-grid { grid-template-columns: 1fr; }
+				.future-grid,
+				.field-grid,
+				.result-grid,
+				.late-grid {
+					grid-template-columns: 1fr;
+				}
 			}
 		</style>
 	</head>
@@ -169,21 +271,28 @@
 		<nav class="top-nav" aria-label="Site navigation">
 			<div class="top-nav-inner">
 				<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
-				<a class="nav-btn" href="index.html">Home</a>
-				<a class="nav-btn" href="budgeting.html">Budgeting</a>
-				<a class="nav-btn" href="debt.html">Debt</a>
-				<a class="nav-btn" href="saving.html">Saving</a>
-				<a class="nav-btn" href="spending.html">Spending</a>
-				<a class="nav-btn" href="investment.html">Investing</a>
-				<a class="nav-btn active" href="retirement.html">Retirement</a>
+				<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+					<span class="nav-toggle-bar" aria-hidden="true"></span>
+				</button>
+				<div class="nav-links" id="site-nav-links">
+					<a class="nav-btn" href="index.html">Home</a>
+					<a class="nav-btn" href="budgeting.html">Budgeting</a>
+					<a class="nav-btn" href="debt.html">Debt</a>
+					<a class="nav-btn" href="saving.html">Saving</a>
+					<a class="nav-btn" href="spending.html">Spending</a>
+					<a class="nav-btn" href="investment.html">Investing</a>
+					<a class="nav-btn active" href="retirement.html">Retirement</a>
+				</div>
 			</div>
 		</nav>
+
 		<main class="page">
 			<section class="hero">
 				<p class="hero-eyebrow">Retirement</p>
 				<h1>Retirement Basics</h1>
 				<p>Retirement planning is about giving your future self options. Small monthly actions matter.</p>
 			</section>
+
 			<section class="cards" aria-label="Retirement essentials">
 				<article class="card">
 					<span class="chip">Why Start Now</span>
@@ -201,11 +310,58 @@
 					<p>Raise contributions little by little as your income grows.</p>
 				</article>
 			</section>
+
 			<ol class="steps" aria-label="Three simple retirement steps">
 				<li><span class="step-title">Step 1:</span> Start with an amount you can maintain each month.</li>
 				<li><span class="step-title">Step 2:</span> Automate contributions after each paycheck.</li>
 				<li><span class="step-title">Step 3:</span> Review once a year and adjust up when possible.</li>
 			</ol>
+
+			<section class="account-compare" aria-label="401k versus Roth IRA comparison">
+				<div class="section-header">
+					<h2>401(k) vs Roth IRA</h2>
+					<span class="section-tag">Beginner Compare</span>
+				</div>
+				<p>Both accounts can be great. This quick table shows the most important beginner differences.</p>
+				<div class="table-wrap">
+					<table class="compare-table">
+						<thead>
+							<tr>
+								<th>Feature</th>
+								<th>401(k)</th>
+								<th>Roth IRA</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Tax treatment now</td>
+								<td>Usually pre-tax, which can lower taxable income today.</td>
+								<td>Contributions are after-tax, so no upfront tax deduction.</td>
+							</tr>
+							<tr>
+								<td>Tax treatment later</td>
+								<td>Withdrawals in retirement are generally taxed as income.</td>
+								<td>Qualified withdrawals are generally tax-free in retirement.</td>
+							</tr>
+							<tr>
+								<td>Contribution limits</td>
+								<td>Usually much higher annual limits than IRAs.</td>
+								<td>Lower annual limits and income eligibility rules can apply.</td>
+							</tr>
+							<tr>
+								<td>Employer match</td>
+								<td>Can include employer match, which is often the first priority.</td>
+								<td>No employer match.</td>
+							</tr>
+							<tr>
+								<td>Withdrawal rules</td>
+								<td>Early withdrawals can trigger taxes and penalties in many cases.</td>
+								<td>Contributions can often be withdrawn more flexibly than earnings.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
 
 			<section class="future" aria-label="Future You interactive tools">
 				<span class="chip">Future You</span>
@@ -294,25 +450,47 @@
 					</div>
 				</div>
 			</section>
-<style>
-.wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
-.wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
-.wb-hint { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
-.wb-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 0.68rem 1.35rem; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 180ms, transform 180ms; }
-.wb-btn:hover { background: #0b6b52; transform: translateY(-1px); }
-</style>
 
-<section class="section" id="workbook" aria-label="Your retirement snapshot">
-<div class="section-header"><h2>Your Retirement Snapshot</h2><span class="section-tag">Export Ready</span></div>
-<div class="wb-card">
-<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
-<p class="wb-hint">Chart shows your projected retirement nest egg growing year over year. Download an editable Excel file with all your retirement numbers.</p>
-<button class="wb-btn" onclick="exportRetirementExcel()">&#128229; Download as Excel</button>
-</div>
-</section>
+			<section class="late-start" aria-label="What if I started late">
+				<div class="section-header">
+					<h2>What If I Started Late?</h2>
+					<span class="section-tag">It Is Not Too Late</span>
+				</div>
+				<p>Starting later can still work. You may need to save a higher monthly amount, but consistent contributions can still build meaningful retirement income.</p>
+				<div class="late-grid">
+					<div class="late-card">
+						<h3>Starting at age 35</h3>
+						<p>Contributing $500/month for 30 years at 7% annual growth could grow to roughly $610,000.</p>
+					</div>
+					<div class="late-card">
+						<h3>Starting at age 45</h3>
+						<p>Contributing $500/month for 20 years at 7% annual growth could grow to roughly $260,000. Later starts can still build real progress.</p>
+					</div>
+				</div>
+			</section>
 
-					<footer>&copy; 2026 Financial Freedom &mdash; Your future lifestyle is built by today's small choices.</footer>
+			<section class="social-security" aria-label="Social Security basics">
+				<div class="section-header">
+					<h2>Social Security Basics</h2>
+					<span class="section-tag">Retirement Income</span>
+				</div>
+				<p>Social Security is designed to replace part of your income in retirement, not all of it. You can claim as early as age 62, but monthly benefits are reduced if you claim early. Waiting longer increases your monthly check, up to age 70. A practical plan is to treat Social Security as one income stream alongside 401(k), IRA, and other savings.</p>
+			</section>
+
+			<section class="section" id="workbook" aria-label="Your retirement snapshot">
+				<div class="section-header"><h2>Your Retirement Snapshot</h2><span class="section-tag">Export Ready</span></div>
+				<div class="wb-card">
+					<div class="wb-chart-wrap"><canvas id="wbChart" height="220"></canvas></div>
+					<p class="wb-hint">Chart shows your projected retirement nest egg growing year over year. Download an editable Excel file with all your retirement numbers.</p>
+					<button class="wb-btn" onclick="exportRetirementExcel()">&#128229; Download as Excel</button>
+				</div>
+			</section>
+
+			<footer>&copy; 2026 Financial Freedom &mdash; Your future lifestyle is built by today's small choices.</footer>
 		</main>
+
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+		<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 		<script>
 			(function () {
 				const currentAge = document.getElementById("currentAge");
@@ -335,6 +513,18 @@
 				const avatarBadge = document.getElementById("avatarBadge");
 				const avatarMessage = document.getElementById("avatarMessage");
 				const timelineHelper = document.getElementById("timelineHelper");
+				const topNav = document.querySelector(".top-nav");
+				const navToggle = document.querySelector(".nav-toggle");
+
+				let wbChart;
+
+				if (navToggle && topNav) {
+					navToggle.addEventListener("click", function () {
+						const isOpen = topNav.getAttribute("data-open") === "true";
+						topNav.setAttribute("data-open", isOpen ? "false" : "true");
+						navToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
+					});
+				}
 
 				function usd(value) {
 					return new Intl.NumberFormat("en-US", {
@@ -377,7 +567,7 @@
 					return current * growth + monthlyContribution * ((growth - 1) / monthlyRate);
 				}
 
-				function updateRetirement() {
+				function getModelInputs() {
 					const ageNow = Math.max(18, Number(currentAge.value) || 18);
 					const ageRetire = Math.max(ageNow + 1, Number(retireAge.value) || ageNow + 1);
 					retireAge.value = String(ageRetire);
@@ -397,18 +587,48 @@
 					const annual401kTotal = employee401k + employerMatch;
 					const annualIraTotal = monthlyIra * 12;
 					const annualContribution = annual401kTotal + annualIraTotal;
-
 					const projected = futureValue(startingBalance, annualContribution, yearsLeft, annualReturn);
 					const monthlyRetIncome = (projected * 0.04) / 12;
 
-					retireAgeLabel.textContent = ageRetire + " (" + yearsLeft + " years left)";
-					animateValue(nestEgg, projected);
-					animateValue(retIncome, monthlyRetIncome);
-					animateValue(annual401k, annual401kTotal);
-					animateValue(annualIra, annualIraTotal);
+					return {
+						ageNow: ageNow,
+						ageRetire: ageRetire,
+						yearsLeft: yearsLeft,
+						annualSalary: annualSalary,
+						startingBalance: startingBalance,
+						annualReturn: annualReturn,
+						annual401kTotal: annual401kTotal,
+						annualIraTotal: annualIraTotal,
+						annualContribution: annualContribution,
+						projected: projected,
+						monthlyRetIncome: monthlyRetIncome,
+					};
+				}
 
-					const currentMonthlyIncome = annualSalary / 12;
-					const replacementRate = currentMonthlyIncome > 0 ? monthlyRetIncome / currentMonthlyIncome : 0;
+				function refreshWorkbookChart(inputs) {
+					if (!wbChart) return;
+					const labels = [];
+					const values = [];
+					for (let y = 0; y <= inputs.yearsLeft; y += 1) {
+						labels.push("Age " + (inputs.ageNow + y));
+						values.push(Math.round(futureValue(inputs.startingBalance, inputs.annualContribution, y, inputs.annualReturn)));
+					}
+					wbChart.data.labels = labels;
+					wbChart.data.datasets[0].data = values;
+					wbChart.update();
+				}
+
+				function updateRetirement() {
+					const m = getModelInputs();
+					retireAgeLabel.textContent = m.ageRetire + " (" + m.yearsLeft + " years left)";
+
+					animateValue(nestEgg, m.projected);
+					animateValue(retIncome, m.monthlyRetIncome);
+					animateValue(annual401k, m.annual401kTotal);
+					animateValue(annualIra, m.annualIraTotal);
+
+					const currentMonthlyIncome = m.annualSalary / 12;
+					const replacementRate = currentMonthlyIncome > 0 ? m.monthlyRetIncome / currentMonthlyIncome : 0;
 
 					futureAvatar.classList.remove("strong", "cautious", "needs-work");
 					if (replacementRate >= 0.7) {
@@ -428,18 +648,91 @@
 						avatarMessage.textContent = "Future You needs a boost. Try raising 401(k) or IRA contributions step by step.";
 					}
 
-					impactNote.textContent =
-						"Estimated monthly retirement income is " +
-						usd(monthlyRetIncome) +
-						" (about " +
-						Math.round(replacementRate * 100) +
-						"% of current monthly income).";
+					impactNote.textContent = "Estimated monthly retirement income is " + usd(m.monthlyRetIncome) + " (about " + Math.round(replacementRate * 100) + "% of current monthly income).";
+					timelineHelper.textContent = "Timeline set to " + m.yearsLeft + " years. Longer timelines increase the power of compounding.";
 
-					timelineHelper.textContent =
-						"Timeline set to " +
-						yearsLeft +
-						" years. Longer timelines increase the power of compounding.";
+					refreshWorkbookChart(m);
 				}
+
+				wbChart = new Chart(document.getElementById("wbChart").getContext("2d"), {
+					type: "line",
+					data: {
+						labels: [],
+						datasets: [
+							{
+								label: "Projected Nest Egg",
+								data: [],
+								borderColor: "#4dd9b0",
+								backgroundColor: "rgba(77,217,176,0.12)",
+								fill: true,
+								tension: 0.4,
+								pointRadius: 2,
+							},
+						],
+					},
+					options: {
+						responsive: true,
+						plugins: {
+							legend: { display: false },
+							tooltip: {
+								callbacks: {
+									label: function (context) {
+										return "$" + Number(context.raw).toLocaleString();
+									},
+								},
+							},
+						},
+						scales: {
+							y: {
+								ticks: {
+									callback: function (value) {
+										return "$" + Number(value).toLocaleString();
+									},
+								},
+							},
+						},
+					},
+				});
+
+				window.exportRetirementExcel = function () {
+					const m = getModelInputs();
+					const rows = [
+						["Financial Freedom - My Retirement Plan"],
+						["Generated", new Date().toLocaleDateString()],
+						[],
+						["MY INPUTS"],
+						["Current Age", m.ageNow],
+						["Target Retirement Age", m.ageRetire],
+						["Years to Retirement", m.yearsLeft],
+						["Annual Salary ($)", m.annualSalary],
+						["Current Retirement Balance ($)", m.startingBalance],
+						["Expected Annual Return (%)", (m.annualReturn * 100).toFixed(1)],
+						["Annual 401(k) + Match ($)", Math.round(m.annual401kTotal)],
+						["Annual IRA Contribution ($)", Math.round(m.annualIraTotal)],
+						[],
+						["PROJECTED RESULTS"],
+						["Projected Nest Egg ($)", Math.round(m.projected)],
+						["Estimated Monthly Retirement Income ($)", Math.round(m.monthlyRetIncome)],
+						[],
+						["YEAR-BY-YEAR GROWTH"],
+						["Age", "Year", "Projected Balance ($)", "Annual Contribution ($)"],
+					];
+
+					for (let y = 0; y <= m.yearsLeft; y += 1) {
+						rows.push([
+							m.ageNow + y,
+							new Date().getFullYear() + y,
+							Math.round(futureValue(m.startingBalance, m.annualContribution, y, m.annualReturn)),
+							Math.round(m.annualContribution),
+						]);
+					}
+
+					const wb = XLSX.utils.book_new();
+					const ws = XLSX.utils.aoa_to_sheet(rows);
+					ws["!cols"] = [{ wch: 30 }, { wch: 10 }, { wch: 24 }, { wch: 24 }];
+					XLSX.utils.book_append_sheet(wb, ws, "My Retirement Plan");
+					XLSX.writeFile(wb, "my-retirement-plan.xlsx");
+				};
 
 				[
 					currentAge,
@@ -458,118 +751,22 @@
 				updateRetirement();
 			})();
 		</script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-<script>
-(function () {
-function futureValue(pv, annualPmt, years, rate) {
-if(rate===0) return pv + annualPmt*years;
-return pv*Math.pow(1+rate,years) + annualPmt*(Math.pow(1+rate,years)-1)/rate;
-}
-var ctx = document.getElementById('wbChart').getContext('2d');
-var wbChart = new Chart(ctx, {
-type: 'line',
-data: { labels:[], datasets:[{ label:'Projected Nest Egg', data:[], borderColor:'#4dd9b0', backgroundColor:'rgba(77,217,176,0.12)', fill:true, tension:0.4, pointRadius:2 }] },
-options: { responsive:true, plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:function(c){ return '
-+Number(c.raw).toLocaleString(); } } } }, scales:{ y:{ ticks:{ callback:function(v){ return '
-+v.toLocaleString(); } } } } }
-});
-function getInputs() {
-return {
-ageNow:    parseInt(document.getElementById('currentAge').value)||25,
-salary:    parseFloat(document.getElementById('salary').value)||0,
-balance:   parseFloat(document.getElementById('currentBalance').value)||0,
-rate:      (parseFloat(document.getElementById('returnRate').value)||7)/100,
-k401pct:   (parseFloat(document.getElementById('contrib401k').value)||0)/100,
-iraMonthly:parseFloat(document.getElementById('iraMonthly').value)||0,
-matchPct:  (parseFloat(document.getElementById('matchPercent').value)||0)/100,
-matchCap:  (parseFloat(document.getElementById('matchLimit').value)||0)/100,
-retireAge: parseInt(document.getElementById('retireAge').value)||65
-};
-}
-function refreshChart() {
-var inp = getInputs();
-var yearsLeft = Math.max(1, inp.retireAge - inp.ageNow);
-var emp401k   = inp.salary * inp.k401pct;
-var matchBase = inp.salary * Math.min(inp.k401pct, inp.matchCap);
-var match     = matchBase>0 ? matchBase*(inp.matchPct/Math.max(inp.matchCap,0.0001)) : 0;
-var annualContrib = emp401k + match + inp.iraMonthly*12;
-var labels=[], values=[];
-for(var y=0;y<=yearsLeft;y++){
-labels.push('Age '+(inp.ageNow+y));
-values.push(Math.round(futureValue(inp.balance, annualContrib, y, inp.rate)));
-}
-wbChart.data.labels=labels;
-wbChart.data.datasets[0].data=values;
-wbChart.update();
-}
-['currentAge','salary','currentBalance','returnRate','contrib401k','iraMonthly','matchPercent','matchLimit'].forEach(function(id){
-var el=document.getElementById(id);
-if(el) el.addEventListener('input',refreshChart);
-});
-document.getElementById('retireAge').addEventListener('input',refreshChart);
-refreshChart();
-window.exportRetirementExcel = function() {
-var inp = getInputs();
-var yearsLeft = Math.max(1, inp.retireAge - inp.ageNow);
-var emp401k   = inp.salary * inp.k401pct;
-var matchBase = inp.salary * Math.min(inp.k401pct, inp.matchCap);
-var match     = matchBase>0 ? matchBase*(inp.matchPct/Math.max(inp.matchCap,0.0001)) : 0;
-var annualContrib = emp401k + match + inp.iraMonthly*12;
-var nestEgg   = Math.round(futureValue(inp.balance, annualContrib, yearsLeft, inp.rate));
-var monthly   = Math.round((nestEgg*0.04)/12);
-var rows=[
-['Financial Freedom — My Retirement Plan'],
-['Generated', new Date().toLocaleDateString()],
-[],
-['MY INPUTS'],
-['Current Age', inp.ageNow],
-['Target Retirement Age', inp.retireAge],
-['Years to Retirement', yearsLeft],
-['Annual Salary ($)', inp.salary],
-['Current Retirement Balance ($)', inp.balance],
-['Expected Annual Return (%)', (inp.rate*100).toFixed(1)],
-['401(k) Contribution (%)', (inp.k401pct*100).toFixed(1)],
-['Monthly IRA Contribution ($)', inp.iraMonthly],
-['Employer Match (%)', (inp.matchPct*100).toFixed(1)],
-['Employer Match Cap (%)', (inp.matchCap*100).toFixed(1)],
-[],
-['PROJECTED RESULTS'],
-['Projected Nest Egg ($)', nestEgg],
-['Estimated Monthly Retirement Income ($)', monthly],
-['Annual 401(k) Contribution ($)', Math.round(emp401k+match)],
-['Annual IRA Contribution ($)', Math.round(inp.iraMonthly*12)],
-[],
-['YEAR-BY-YEAR GROWTH'],
-['Age','Year','Projected Balance ($)','Annual Contribution ($)']
-];
-for(var y=0;y<=yearsLeft;y++){ rows.push([inp.ageNow+y, new Date().getFullYear()+y, Math.round(futureValue(inp.balance,annualContrib,y,inp.rate)), Math.round(annualContrib)]); }
-var wb=XLSX.utils.book_new();
-var ws=XLSX.utils.aoa_to_sheet(rows);
-ws['!cols']=[{wch:30},{wch:10},{wch:24},{wch:24}];
-XLSX.utils.book_append_sheet(wb,ws,'My Retirement Plan');
-XLSX.writeFile(wb,'my-retirement-plan.xlsx');
-};
-})();
-</script>
 
-<script>
-(function () {
-var STORAGE_KEY = 'ffSitePrefs';
-var prefs;
-try {
-prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-} catch (error) {
-prefs = {};
-}
-prefs.lastVisitedPage = 'retirement.html';
-prefs.lastVisitedAt = new Date().toISOString();
-prefs.selectedTopics = Array.from(new Set((prefs.selectedTopics || []).concat(['retirement'])));
-prefs.viewedTopics = Array.from(new Set((prefs.viewedTopics || []).concat(['retirement'])));
-localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
-})();
-</script>
-
+		<script>
+			(function () {
+				const STORAGE_KEY = "ffSitePrefs";
+				let prefs;
+				try {
+					prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+				} catch (error) {
+					prefs = {};
+				}
+				prefs.lastVisitedPage = "retirement.html";
+				prefs.lastVisitedAt = new Date().toISOString();
+				prefs.selectedTopics = Array.from(new Set((prefs.selectedTopics || []).concat(["retirement"])));
+				prefs.viewedTopics = Array.from(new Set((prefs.viewedTopics || []).concat(["retirement"])));
+				localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+			})();
+		</script>
 	</body>
 </html>
-

@@ -202,8 +202,116 @@
 				border-radius: 50%;
 			}
 
+			.bucket-guides {
+				margin-top: 1rem;
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 0.75rem;
+			}
+
+			.guide-card {
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				padding: 0.95rem 1rem;
+			}
+
+			.guide-card h3 {
+				font-size: 0.98rem;
+				margin: 0;
+				color: var(--navy);
+			}
+
+			.guide-amount {
+				margin-top: 0.2rem;
+				font-size: 1.05rem;
+				font-weight: 800;
+				color: var(--teal);
+			}
+
+			.guide-copy {
+				margin: 0.35rem 0 0.55rem;
+				font-size: 0.88rem;
+				color: var(--text-muted);
+			}
+
+			.guide-list {
+				margin: 0;
+				padding-left: 1rem;
+				font-size: 0.88rem;
+				color: var(--text);
+			}
+
+			.guide-list li + li {
+				margin-top: 0.22rem;
+			}
+
+			.glossary-term {
+				position: relative;
+				display: inline-flex;
+				align-items: center;
+				gap: 0.2rem;
+				border-bottom: 1px dashed var(--teal);
+				color: var(--navy);
+				cursor: help;
+			}
+
+			.glossary-term::after {
+				content: attr(data-definition);
+				position: absolute;
+				left: 50%;
+				bottom: calc(100% + 10px);
+				transform: translateX(-50%);
+				width: min(240px, 70vw);
+				padding: 0.6rem 0.7rem;
+				border-radius: 10px;
+				background: #12394d;
+				color: #fff;
+				font-size: 0.8rem;
+				font-weight: 500;
+				line-height: 1.45;
+				box-shadow: var(--shadow-md);
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 160ms ease;
+				z-index: 5;
+			}
+
+			.glossary-term:hover::after,
+			.glossary-term:focus::after,
+			.glossary-term:focus-visible::after {
+				opacity: 1;
+			}
+
+			.mistakes {
+				margin-top: 2rem;
+			}
+
+			.mistake-list {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				display: grid;
+				gap: 0.65rem;
+			}
+
+			.mistake-list li {
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-left: 4px solid #f59e6b;
+				border-radius: 10px;
+				padding: 0.9rem 1rem;
+				box-shadow: var(--shadow-sm);
+			}
+
+			.mistake-list strong {
+				display: block;
+				margin-bottom: 0.2rem;
+				color: var(--navy);
+			}
+
 			@media (max-width: 680px) {
-				.controls, .results, .chart-wrap { grid-template-columns: 1fr; }
+				.controls, .results, .chart-wrap, .bucket-guides { grid-template-columns: 1fr; }
 				.bar-row { grid-template-columns: 84px 1fr; }
 			}
 		</style>
@@ -212,13 +320,18 @@
 		<nav class="top-nav" aria-label="Site navigation">
 			<div class="top-nav-inner">
 				<a class="nav-brand" href="index.html">Financial <span>Freedom</span></a>
-				<a class="nav-btn" href="index.html">Home</a>
-				<a class="nav-btn active" href="budgeting.html">Budgeting</a>
-				<a class="nav-btn" href="debt.html">Debt</a>
-				<a class="nav-btn" href="saving.html">Saving</a>
-				<a class="nav-btn" href="spending.html">Spending</a>
-				<a class="nav-btn" href="investment.html">Investing</a>
-				<a class="nav-btn" href="retirement.html">Retirement</a>
+				<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+					<span class="nav-toggle-bar" aria-hidden="true"></span>
+				</button>
+				<div class="nav-links" id="site-nav-links">
+					<a class="nav-btn" href="index.html">Home</a>
+					<a class="nav-btn active" href="budgeting.html">Budgeting</a>
+					<a class="nav-btn" href="debt.html">Debt</a>
+					<a class="nav-btn" href="saving.html">Saving</a>
+					<a class="nav-btn" href="spending.html">Spending</a>
+					<a class="nav-btn" href="investment.html">Investing</a>
+					<a class="nav-btn" href="retirement.html">Retirement</a>
+				</div>
 			</div>
 		</nav>
 		<main class="page">
@@ -344,13 +457,62 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="bucket-guides" aria-label="Budget bucket examples">
+					<article class="guide-card">
+						<h3>Needs examples</h3>
+						<div class="guide-amount" id="needsGuideAmount">About $2,000</div>
+						<p class="guide-copy">These are bills you need to keep life running.</p>
+						<ul class="guide-list" id="needsGuideList">
+							<li>Rent or mortgage</li>
+							<li>Utilities and internet</li>
+							<li>Groceries and insurance</li>
+							<li>Minimum debt payments</li>
+						</ul>
+					</article>
+					<article class="guide-card">
+						<h3>Wants examples</h3>
+						<div class="guide-amount" id="wantsGuideAmount">About $1,200</div>
+						<p class="guide-copy">These are optional choices that make life more enjoyable.</p>
+						<ul class="guide-list" id="wantsGuideList">
+							<li>Dining out and coffee runs</li>
+							<li>Streaming and subscriptions</li>
+							<li>Shopping and hobbies</li>
+							<li>Travel and entertainment</li>
+						</ul>
+					</article>
+					<article class="guide-card">
+						<h3>Savings or debt goals</h3>
+						<div class="guide-amount" id="savingsGuideAmount">About $800</div>
+						<p class="guide-copy">This bucket moves you forward instead of just covering today.</p>
+						<ul class="guide-list" id="savingsGuideList">
+							<li>Emergency fund</li>
+							<li>Extra debt payoff</li>
+							<li>Retirement investing</li>
+							<li>Short-term sinking funds</li>
+						</ul>
+					</article>
+				</div>
 			</section>
 
 			<ol class="steps" aria-label="Three simple budgeting steps">
 				<li><span class="step-title">Step 1:</span> List your income after taxes.</li>
-				<li><span class="step-title">Step 2:</span> List fixed bills first, then variable spending.</li>
+				<li><span class="step-title">Step 2:</span> List <span class="glossary-term" tabindex="0" data-definition="Fixed expenses usually stay close to the same each month, like rent, insurance, or a car payment.">fixed expenses</span> first, then <span class="glossary-term" tabindex="0" data-definition="Variable expenses change month to month, like groceries, gas, eating out, or gifts.">variable expenses</span>.</li>
 				<li><span class="step-title">Step 3:</span> Move money to savings right after payday.</li>
 			</ol>
+
+			<section class="mistakes section" aria-label="Common budgeting mistakes">
+				<div class="section-header">
+					<h2>Common Budgeting Mistakes</h2>
+					<span class="section-tag">Beginner Traps</span>
+				</div>
+				<ul class="mistake-list">
+					<li><strong>Forgetting irregular expenses</strong> Things like car registration, annual fees, gifts, and back-to-school costs still count even if they do not happen monthly.</li>
+					<li><strong>Budgeting only bills</strong> If you do not make room for fun, eating out, or small treats, your plan usually feels too strict to last.</li>
+					<li><strong>Skipping a misc buffer</strong> A small cushion helps when groceries run high or a week gets more expensive than expected.</li>
+					<li><strong>Never reviewing the plan</strong> A budget should adjust with your real life. Ten minutes a week is usually enough to stay on track.</li>
+				</ul>
+			</section>
 <style>
 .wb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.4rem; margin-bottom: 0.5rem; }
 .wb-chart-wrap { position: relative; margin-bottom: 1.2rem; }
@@ -373,6 +535,8 @@
 		</main>
 		<script>
 			(function () {
+				const topNav = document.querySelector(".top-nav");
+				const navToggle = document.querySelector(".nav-toggle");
 				const incomeInput = document.getElementById("income");
 				const payFrequencySelect = document.getElementById("payFrequency");
 				const monthlyIncomeNote = document.getElementById("monthlyIncomeNote");
@@ -397,6 +561,17 @@
 				const wantsBar = document.getElementById("wantsBar");
 				const savingsBar = document.getElementById("savingsBar");
 				const pieChart = document.getElementById("pieChart");
+				const needsGuideAmount = document.getElementById("needsGuideAmount");
+				const wantsGuideAmount = document.getElementById("wantsGuideAmount");
+				const savingsGuideAmount = document.getElementById("savingsGuideAmount");
+
+				if (navToggle && topNav) {
+					navToggle.addEventListener("click", function () {
+						const isOpen = topNav.getAttribute("data-open") === "true";
+						topNav.setAttribute("data-open", isOpen ? "false" : "true");
+						navToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
+					});
+				}
 
 				function formatCurrency(value) {
 					return new Intl.NumberFormat("en-US", {
@@ -499,6 +674,9 @@
 					animateNumber(needsAmountNode, needsAmount);
 					animateNumber(wantsAmountNode, wantsAmount);
 					animateNumber(savingsAmountNode, savingsAmount);
+					needsGuideAmount.textContent = "About " + formatCurrency(needsAmount);
+					wantsGuideAmount.textContent = "About " + formatCurrency(wantsAmount);
+					savingsGuideAmount.textContent = "About " + formatCurrency(savingsAmount);
 
 					needsBar.style.width = safeNeeds + "%";
 					wantsBar.style.width = safeWants + "%";
@@ -532,46 +710,61 @@
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script>
 (function () {
-function parseMoney(str) { return parseFloat((str||'0').replace(/[$,]/g,''))||0; }
+function parseMoney(str) { return parseFloat((str || '0').replace(/[$,]/g, '')) || 0; }
 var ctx = document.getElementById('wbChart').getContext('2d');
 var wbChart = new Chart(ctx, {
 type: 'doughnut',
-data: { labels: ['Needs','Wants','Savings'], datasets: [{ data:[0,0,0], backgroundColor:['#4dd9b0','#f59e6b','#7ec8e3'], borderWidth:2, borderColor:'#fff' }] },
-options: { responsive:true, plugins: { legend:{ position:'bottom', labels:{ font:{ family:'Plus Jakarta Sans', size:13 }, padding:16 } }, tooltip:{ callbacks:{ label: function(c){ return c.label+': 
-+Number(c.raw).toLocaleString(); } } } } }
+data: {
+labels: ['Needs', 'Wants', 'Savings'],
+datasets: [{ data: [0, 0, 0], backgroundColor: ['#4dd9b0', '#f59e6b', '#7ec8e3'], borderWidth: 2, borderColor: '#fff' }]
+},
+options: {
+responsive: true,
+plugins: {
+legend: { position: 'bottom', labels: { font: { family: 'Plus Jakarta Sans', size: 13 }, padding: 16 } },
+tooltip: {
+callbacks: {
+label: function (context) {
+return context.label + ': $' + Number(context.raw).toLocaleString();
+}
+}
+}
+}
+}
 });
 function refreshChart() {
-var n=parseMoney(document.getElementById('needsAmount').textContent);
-var w=parseMoney(document.getElementById('wantsAmount').textContent);
-var s=parseMoney(document.getElementById('savingsAmount').textContent);
-wbChart.data.datasets[0].data=[n,w,s]; wbChart.update();
+var n = parseMoney(document.getElementById('needsAmount').textContent);
+var w = parseMoney(document.getElementById('wantsAmount').textContent);
+var s = parseMoney(document.getElementById('savingsAmount').textContent);
+wbChart.data.datasets[0].data = [n, w, s];
+wbChart.update();
 }
-['needsAmount','wantsAmount','savingsAmount'].forEach(function(id){
-var el=document.getElementById(id);
-if(el) new MutationObserver(refreshChart).observe(el,{childList:true,subtree:true,characterData:true});
+['needsAmount', 'wantsAmount', 'savingsAmount'].forEach(function (id) {
+var el = document.getElementById(id);
+if (el) new MutationObserver(refreshChart).observe(el, { childList: true, subtree: true, characterData: true });
 });
 refreshChart();
-window.exportBudgetExcel = function() {
-var n=parseMoney(document.getElementById('needsAmount').textContent);
-var w=parseMoney(document.getElementById('wantsAmount').textContent);
-var s=parseMoney(document.getElementById('savingsAmount').textContent);
-var t=n+w+s;
-var pct=function(v){ return t?+(v/t*100).toFixed(1):0; };
-var data=[
-['Financial Freedom — My Budget'],
-['Generated',new Date().toLocaleDateString()],
+window.exportBudgetExcel = function () {
+var n = parseMoney(document.getElementById('needsAmount').textContent);
+var w = parseMoney(document.getElementById('wantsAmount').textContent);
+var s = parseMoney(document.getElementById('savingsAmount').textContent);
+var t = n + w + s;
+var pct = function (value) { return t ? +(value / t * 100).toFixed(1) : 0; };
+var data = [
+['Financial Freedom - My Budget'],
+['Generated', new Date().toLocaleDateString()],
 [],
-['Category','Monthly Amount ($)','% of Budget'],
-['Needs',n,pct(n)],
-['Wants',w,pct(w)],
-['Savings / Investments',s,pct(s)],
-['Total Income',t,100]
+['Category', 'Monthly Amount ($)', '% of Budget'],
+['Needs', n, pct(n)],
+['Wants', w, pct(w)],
+['Savings / Investments', s, pct(s)],
+['Total Income', t, 100]
 ];
-var wb=XLSX.utils.book_new();
-var ws=XLSX.utils.aoa_to_sheet(data);
-ws['!cols']=[{wch:26},{wch:22},{wch:16}];
-XLSX.utils.book_append_sheet(wb,ws,'My Budget');
-XLSX.writeFile(wb,'my-budget.xlsx');
+var wb = XLSX.utils.book_new();
+var ws = XLSX.utils.aoa_to_sheet(data);
+ws['!cols'] = [{ wch: 26 }, { wch: 22 }, { wch: 16 }];
+XLSX.utils.book_append_sheet(wb, ws, 'My Budget');
+XLSX.writeFile(wb, 'my-budget.xlsx');
 };
 })();
 </script>
