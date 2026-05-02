@@ -486,7 +486,19 @@
 						<p>Stocks are partial ownership in a company. Daily prices can move a lot, but long-term trends have historically grown over decades.</p>
 						<div class="visual">
 							<svg viewBox="0 0 220 120" aria-label="Stocks movement visual">
-								<polyline points="0,95 20,83 40,88 60,75 80,82 100,67 120,73 140,55 160,63 180,47 200,44 220,34" fill="none" stroke="#0d7a5f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+								<defs>
+									<linearGradient id="stockAreaGrad" x1="0" y1="0" x2="0" y2="1">
+										<stop offset="0%" stop-color="#0d7a5f" stop-opacity="0.28"/>
+										<stop offset="100%" stop-color="#0d7a5f" stop-opacity="0.03"/>
+									</linearGradient>
+								</defs>
+								<line x1="0" y1="30" x2="220" y2="30" stroke="#0d7a5f" stroke-opacity="0.13" stroke-width="1"/>
+								<line x1="0" y1="60" x2="220" y2="60" stroke="#0d7a5f" stroke-opacity="0.13" stroke-width="1"/>
+								<line x1="0" y1="90" x2="220" y2="90" stroke="#0d7a5f" stroke-opacity="0.13" stroke-width="1"/>
+								<path d="M0,95 L20,83 L40,88 L60,75 L80,82 L100,67 L120,73 L140,55 L160,63 L180,47 L200,44 L220,34 L220,120 L0,120 Z" fill="url(#stockAreaGrad)"/>
+								<polyline points="0,95 20,83 40,88 60,75 80,82 100,67 120,73 140,55 160,63 180,47 200,44 220,34" fill="none" stroke="#0d7a5f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+								<circle cx="220" cy="34" r="4.5" fill="#0d7a5f"/>
+								<circle cx="220" cy="34" r="7.5" fill="#0d7a5f" fill-opacity="0.18"/>
 							</svg>
 						</div>
 					</article>
@@ -496,13 +508,29 @@
 						<p>Bonds are loans to a company or government. They usually pay steadier interest and return principal at maturity.</p>
 						<div class="visual">
 							<svg viewBox="0 0 220 120" aria-label="Bonds stability visual">
-								<line x1="0" y1="78" x2="220" y2="52" stroke="#4dd9b0" stroke-width="4" />
-								<circle cx="35" cy="73" r="5" fill="#e6f4f1" />
-								<circle cx="75" cy="68" r="5" fill="#e6f4f1" />
-								<circle cx="115" cy="63" r="5" fill="#e6f4f1" />
-								<circle cx="155" cy="58" r="5" fill="#e6f4f1" />
-								<rect x="178" y="40" width="34" height="18" rx="6" fill="#f4f6f8" stroke="#0f2d3d" />
-								<text x="184" y="53" font-size="8" font-weight="700" fill="#0f2d3d">PRINCIPAL</text>
+								<defs>
+									<linearGradient id="bondAreaGrad" x1="0" y1="0" x2="0" y2="1">
+										<stop offset="0%" stop-color="#4dd9b0" stop-opacity="0.32"/>
+										<stop offset="100%" stop-color="#4dd9b0" stop-opacity="0.03"/>
+									</linearGradient>
+								</defs>
+								<line x1="0" y1="35" x2="220" y2="35" stroke="#0d7a5f" stroke-opacity="0.13" stroke-width="1"/>
+								<line x1="0" y1="65" x2="220" y2="65" stroke="#0d7a5f" stroke-opacity="0.13" stroke-width="1"/>
+								<line x1="0" y1="95" x2="220" y2="95" stroke="#0d7a5f" stroke-opacity="0.13" stroke-width="1"/>
+								<path d="M0,78 L220,52 L220,120 L0,120 Z" fill="url(#bondAreaGrad)"/>
+								<line x1="0" y1="78" x2="220" y2="52" stroke="#0d7a5f" stroke-width="2.5"/>
+								<!-- Coupon payment dots -->
+								<circle cx="35" cy="73" r="7" fill="#fff" stroke="#0d7a5f" stroke-width="1.5"/>
+								<text x="35" y="76.5" font-size="8" font-weight="800" text-anchor="middle" fill="#0d7a5f">$</text>
+								<circle cx="75" cy="68" r="7" fill="#fff" stroke="#0d7a5f" stroke-width="1.5"/>
+								<text x="75" y="71.5" font-size="8" font-weight="800" text-anchor="middle" fill="#0d7a5f">$</text>
+								<circle cx="115" cy="63" r="7" fill="#fff" stroke="#0d7a5f" stroke-width="1.5"/>
+								<text x="115" y="66.5" font-size="8" font-weight="800" text-anchor="middle" fill="#0d7a5f">$</text>
+								<circle cx="155" cy="58" r="7" fill="#fff" stroke="#0d7a5f" stroke-width="1.5"/>
+								<text x="155" y="61.5" font-size="8" font-weight="800" text-anchor="middle" fill="#0d7a5f">$</text>
+								<!-- Principal return badge -->
+								<rect x="174" y="36" width="42" height="19" rx="6" fill="#0f2d3d"/>
+								<text x="195" y="49" font-size="7.5" font-weight="700" fill="#fff" text-anchor="middle">+PRINCIPAL</text>
 							</svg>
 						</div>
 					</article>
@@ -584,7 +612,8 @@
 
 			<section class="section" id="workbook" aria-label="Your investment snapshot">
 				<div class="section-header"><h2>Your Investment Snapshot</h2><span class="section-tag">Export Ready</span></div>
-				<div class="wb-card">
+					<div class="wb-card">
+					<div class="wb-chart-wrap"><canvas id="wbChart" height="160" aria-label="Investment projection chart"></canvas></div>
 					<div class="field">
 						<label for="wbMonthly">Monthly investment amount ($)</label>
 						<input id="wbMonthly" type="number" min="0" step="25" value="250" />
