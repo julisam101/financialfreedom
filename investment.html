@@ -1012,9 +1012,10 @@
 
 		<script>
 			/* ── Marketstack Live Market Snapshot ──────────────────────────
-			   Free plan is HTTP-only. Fetch is skipped if page is on HTTPS.
-			   sessionStorage caching (4-hour TTL) keeps API usage low.
-			   Tickers: SPY = S&P 500 · DIA = Dow Jones · QQQ = Nasdaq-100
+			   Marketstack free tier is HTTP-only, so HTTPS/file pages use
+			   a proxy fallback. sessionStorage caching (4-hour TTL) keeps
+			   API usage low. Tickers: SPY = S&P 500 · DIA = Dow Jones ·
+			   QQQ = Nasdaq-100
 			   ─────────────────────────────────────────────────────────── */
 			(function () {
 				var API_KEY   = 'a3e44ac43e6674239c8f9aced75c15a9';
@@ -1065,6 +1066,16 @@
 					noteEl.textContent = 'Unavailable';
 				}
 
+				function fetchJson(url) {
+					return fetch(url, {
+						mode: 'cors',
+						referrerPolicy: 'no-referrer'
+					}).then(function (res) {
+						if (!res.ok) { throw new Error('HTTP ' + res.status); }
+						return res.json();
+					});
+				}
+
 				/* Try sessionStorage cache first */
 				try {
 					var cached = JSON.parse(sessionStorage.getItem(CACHE_KEY));
@@ -1074,22 +1085,15 @@
 					}
 				} catch (e) { /* ignore */ }
 
-				/* Marketstack free tier is HTTP-only; skip if page is on HTTPS */
-				if (window.location.protocol === 'https:') {
-					showError('Live prices require the page to be opened over HTTP. Data unavailable in hosted/HTTPS mode.');
-					return;
-				}
-
 				/* Fetch last 2 EOD records per symbol to calculate day change */
-				var url = 'http://api.marketstack.com/v1/eod' +
+				var directUrl = 'http://api.marketstack.com/v1/eod' +
 				          '?access_key=' + API_KEY +
 				          '&symbols=SPY,DIA,QQQ&limit=10&sort=DESC';
+				var url = window.location.protocol === 'http:'
+					? directUrl
+					: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(directUrl);
 
-				fetch(url)
-					.then(function (res) {
-						if (!res.ok) { throw new Error('HTTP ' + res.status); }
-						return res.json();
-					})
+				fetchJson(url)
 					.then(function (json) {
 						if (!json.data || json.data.length === 0) { throw new Error('empty'); }
 
@@ -1118,7 +1122,7 @@
 						render(snap);
 					})
 					.catch(function () {
-						showError('Market data unavailable right now. Try again later.');
+						showError('Live market data is temporarily unavailable. Refresh to try again.');
 					});
 			})();
 		</script>
